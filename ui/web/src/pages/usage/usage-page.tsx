@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useQueryState } from "nuqs";
+import { parseAsInteger } from "nuqs";
 import { BarChart3, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,8 +17,8 @@ export function UsagePage() {
   const { records, total, summary, loading, loadRecords, loadSummary } = useUsage();
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && records.length === 0);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
