@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useQueryState } from "nuqs";
+import { parseAsString, parseAsInteger } from "nuqs";
 import { Radio, Plus, RefreshCw, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +21,6 @@ import { ChannelsStatusView, channelTypeLabels } from "./channels-status-view";
 import { useAgents } from "@/pages/agents/hooks/use-agents";
 import { useMinLoading } from "@/hooks/use-min-loading";
 import { useDeferredLoading } from "@/hooks/use-deferred-loading";
-import { usePagination } from "@/hooks/use-pagination";
 
 export function ChannelsPage() {
   const { channels, loading: statusLoading, refresh: refreshStatus } = useChannels();
@@ -38,7 +39,10 @@ export function ChannelsPage() {
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && instances.length === 0);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
+
   const [formOpen, setFormOpen] = useState(false);
   const [editInstance, setEditInstance] = useState<ChannelInstanceData | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<ChannelInstanceData | null>(null);
@@ -61,18 +65,39 @@ export function ChannelsPage() {
     );
   }
 
-  const filtered = instances.filter(
-    (inst) =>
-      inst.name.toLowerCase().includes(search.toLowerCase()) ||
-      (inst.display_name || "").toLowerCase().includes(search.toLowerCase()) ||
-      inst.channel_type.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = useMemo(() => {
+    if (!search) return instances;
+    const q = search.toLowerCase();
+    return instances.filter(
+      (inst) =>
+        inst.name.toLowerCase().includes(q) ||
+        (inst.display_name || "").toLowerCase().includes(q) ||
+        inst.channel_type.toLowerCase().includes(q)
+    );
+  }, [instances, search]);
 
-  const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
-
+  // Reset page when search reduces results below current page
   useEffect(() => {
-    resetPage();
-  }, [search, resetPage]);
+    const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+    if (page > totalPages) {
+      setPage(1);
+    }
+  }, [filtered.length, page, pageSize, setPage]);
+
+  const start = (page - 1) * pageSize;
+  const pageItems = useMemo(
+    () => filtered.slice(start, start + pageSize),
+    [filtered, start, pageSize]
+  );
+  const pagination = useMemo(
+    () => ({
+      page,
+      pageSize,
+      total: filtered.length,
+      totalPages: Math.ceil(filtered.length / pageSize) || 1,
+    }),
+    [page, pageSize, filtered.length]
+  );
 
   const handleCreate = async (data: ChannelInstanceInput) => {
     await createInstance(data);
