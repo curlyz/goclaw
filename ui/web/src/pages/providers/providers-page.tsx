@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useQueryState } from "nuqs";
+import { parseAsString, parseAsInteger } from "nuqs";
 import { Cpu, Plus, RefreshCw, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +14,6 @@ import { useProviders, type ProviderData, type ProviderInput } from "./hooks/use
 import { ProviderFormDialog } from "./provider-form-dialog";
 import { useMinLoading } from "@/hooks/use-min-loading";
 import { useDeferredLoading } from "@/hooks/use-deferred-loading";
-import { usePagination } from "@/hooks/use-pagination";
 
 const typeBadge: Record<string, { label: string; variant: "default" | "secondary" | "outline" }> = {
   anthropic_native: { label: "Anthropic", variant: "default" },
@@ -24,23 +25,47 @@ export function ProvidersPage() {
     useProviders();
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && providers.length === 0);
-  const [search, setSearch] = useState("");
+
+  const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
+
   const [formOpen, setFormOpen] = useState(false);
   const [editProvider, setEditProvider] = useState<ProviderData | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<ProviderData | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  const filtered = providers.filter(
-    (p) =>
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      (p.display_name || "").toLowerCase().includes(search.toLowerCase())
+  const filtered = useMemo(() => {
+    if (!search) return providers;
+    const q = search.toLowerCase();
+    return providers.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) || (p.display_name || "").toLowerCase().includes(q)
+    );
+  }, [providers, search]);
+
+  const start = (page - 1) * pageSize;
+  const pageItems = useMemo(
+    () => filtered.slice(start, start + pageSize),
+    [filtered, start, pageSize]
   );
 
-  const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
+  const pagination = useMemo(
+    () => ({
+      page,
+      pageSize,
+      total: filtered.length,
+      totalPages: Math.ceil(filtered.length / pageSize) || 1,
+    }),
+    [page, pageSize, filtered.length]
+  );
 
   useEffect(() => {
-    resetPage();
-  }, [search, resetPage]);
+    const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+    if (page > totalPages) {
+      setPage(1);
+    }
+  }, [filtered.length, page, pageSize, setPage]);
 
   const handleCreate = async (data: ProviderInput) => {
     await createProvider(data);
@@ -198,8 +223,8 @@ export function ProvidersPage() {
               pageSize={pagination.pageSize}
               total={pagination.total}
               totalPages={pagination.totalPages}
-              onPageChange={setPage}
-              onPageSizeChange={setPageSize}
+              onPageChange={(p) => setPage(p)}
+              onPageSizeChange={(s) => setPageSize(s)}
             />
           </div>
         )}
