@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useQueryState } from "nuqs";
+import { parseAsString, parseAsInteger } from "nuqs";
 import { Plug, Plus, RefreshCw, Pencil, Trash2, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +15,6 @@ import { MCPFormDialog } from "./mcp-form-dialog";
 import { MCPGrantsDialog } from "./mcp-grants-dialog";
 import { useMinLoading } from "@/hooks/use-min-loading";
 import { useDeferredLoading } from "@/hooks/use-deferred-loading";
-import { usePagination } from "@/hooks/use-pagination";
 
 const transportBadge: Record<string, string> = {
   stdio: "default",
@@ -35,24 +36,49 @@ export function MCPPage() {
   } = useMCP();
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && servers.length === 0);
-  const [search, setSearch] = useState("");
+
+  const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
+
   const [formOpen, setFormOpen] = useState(false);
   const [editServer, setEditServer] = useState<MCPServerData | null>(null);
   const [grantsServer, setGrantsServer] = useState<MCPServerData | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<MCPServerData | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  const filtered = servers.filter(
-    (s) =>
-      s.name.toLowerCase().includes(search.toLowerCase()) ||
-      (s.display_name || "").toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = useMemo(() => {
+    if (!search) return servers;
+    const q = search.toLowerCase();
+    return servers.filter(
+      (s) =>
+        s.name.toLowerCase().includes(q) ||
+        (s.display_name || "").toLowerCase().includes(q)
+    );
+  }, [servers, search]);
 
-  const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
-
+  // Reset page when search reduces results below current page
   useEffect(() => {
-    resetPage();
-  }, [search, resetPage]);
+    const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+    if (page > totalPages) {
+      setPage(1);
+    }
+  }, [filtered.length, page, pageSize, setPage]);
+
+  const start = (page - 1) * pageSize;
+  const pageItems = useMemo(
+    () => filtered.slice(start, start + pageSize),
+    [filtered, start, pageSize]
+  );
+  const pagination = useMemo(
+    () => ({
+      page,
+      pageSize,
+      total: filtered.length,
+      totalPages: Math.ceil(filtered.length / pageSize) || 1,
+    }),
+    [page, pageSize, filtered.length]
+  );
 
   const handleCreate = async (data: MCPServerInput) => {
     await createServer(data);
