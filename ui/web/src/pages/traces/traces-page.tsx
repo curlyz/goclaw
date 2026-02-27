@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Activity, RefreshCw, Search } from "lucide-react";
+import { useQueryState } from "nuqs";
+import { parseAsInteger } from "nuqs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -23,8 +25,8 @@ export function TracesPage() {
   const showSkeleton = useDeferredLoading(loading && traces.length === 0);
   const [agentFilter, setAgentFilter] = useState("");
   const [selectedTraceId, setSelectedTraceId] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
