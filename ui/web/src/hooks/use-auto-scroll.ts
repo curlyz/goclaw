@@ -25,8 +25,8 @@ export function useAutoScroll<T extends HTMLElement>(deps: unknown[], threshold 
     if (isNearBottom.current) {
       scrollToBottom();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+    // Intentionally not including scrollToBottom in deps to avoid re-scrolling on every change
+  }, [deps]);
 
   return { ref, onScroll: checkScroll, scrollToBottom };
 }

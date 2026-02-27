@@ -52,6 +52,7 @@ export function AgentConfigTab({ agent, onUpdate }: AgentConfigTabProps) {
   const initialGates = (
     Array.isArray(otherObj.quality_gates) ? otherObj.quality_gates : []
   ) as QualityGateConfig[];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { quality_gates: _qg, ...otherWithoutGates } = otherObj;
 
   const [qgEnabled, setQgEnabled] = useState(initialGates.length > 0);
