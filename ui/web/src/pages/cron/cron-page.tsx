@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useQueryState } from "nuqs";
+import { parseAsInteger } from "nuqs";
 import { Clock, Plus, Play, Trash2, History, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +15,6 @@ import { CronFormDialog } from "./cron-form-dialog";
 import { CronRunLogDialog } from "./cron-run-log-dialog";
 import { useMinLoading } from "@/hooks/use-min-loading";
 import { useDeferredLoading } from "@/hooks/use-deferred-loading";
-import { usePagination } from "@/hooks/use-pagination";
 
 function formatSchedule(job: CronJob): string {
   const s = job.schedule;
@@ -39,7 +40,23 @@ export function CronPage() {
   const [runLogLoading, setRunLogLoading] = useState(false);
   const [toggleTarget, setToggleTarget] = useState<{ job: CronJob; enabled: boolean } | null>(null);
 
-  const { pageItems, pagination, setPage, setPageSize } = usePagination(jobs);
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
+
+  const start = (page - 1) * pageSize;
+  const pageItems = useMemo(
+    () => jobs.slice(start, start + pageSize),
+    [jobs, start, pageSize]
+  );
+  const pagination = useMemo(
+    () => ({
+      page,
+      pageSize,
+      total: jobs.length,
+      totalPages: Math.ceil(jobs.length / pageSize) || 1,
+    }),
+    [page, pageSize, jobs.length]
+  );
 
   const handleShowRunLog = async (job: CronJob) => {
     setRunLogTarget(job);
@@ -164,8 +181,8 @@ export function CronPage() {
               pageSize={pagination.pageSize}
               total={pagination.total}
               totalPages={pagination.totalPages}
-              onPageChange={setPage}
-              onPageSizeChange={setPageSize}
+              onPageChange={(p) => setPage(p)}
+              onPageSizeChange={(s) => setPageSize(s)}
             />
           </div>
         )}
