@@ -16,11 +16,7 @@ interface RegenerateDialogProps {
   onRegenerate: (prompt: string) => Promise<void>;
 }
 
-export function RegenerateDialog({
-  open,
-  onOpenChange,
-  onRegenerate,
-}: RegenerateDialogProps) {
+export function RegenerateDialog({ open, onOpenChange, onRegenerate }: RegenerateDialogProps) {
   const [prompt, setPrompt] = useState("");
   const [regenerating, setRegenerating] = useState(false);
 
@@ -47,8 +43,8 @@ export function RegenerateDialog({
         </DialogHeader>
         <div className="space-y-3 py-2">
           <p className="text-sm text-muted-foreground">
-            Describe what you want to change. AI will read the current files and
-            update them accordingly.
+            Describe what you want to change. AI will read the current files and update them
+            accordingly.
           </p>
           <Textarea
             value={prompt}
@@ -58,11 +54,7 @@ export function RegenerateDialog({
           />
         </div>
         <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-            disabled={regenerating}
-          >
+          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={regenerating}>
             Cancel
           </Button>
           <Button

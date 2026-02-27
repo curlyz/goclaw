@@ -70,7 +70,7 @@ export function useMCP() {
       await load();
       return res;
     },
-    [http, load],
+    [http, load]
   );
 
   const updateServer = useCallback(
@@ -78,7 +78,7 @@ export function useMCP() {
       await http.put(`/v1/mcp/servers/${id}`, data);
       await load();
     },
-    [http, load],
+    [http, load]
   );
 
   const deleteServer = useCallback(
@@ -86,17 +86,14 @@ export function useMCP() {
       await http.delete(`/v1/mcp/servers/${id}`);
       await load();
     },
-    [http, load],
+    [http, load]
   );
 
-  const listAgentGrants = useCallback(
-    async (_serverId: string) => {
-      // Backend provides per-agent listing, not per-server.
-      // Grants dialog handles this by accepting agent IDs.
-      return [] as MCPAgentGrant[];
-    },
-    [],
-  );
+  const listAgentGrants = useCallback(async (_serverId: string) => {
+    // Backend provides per-agent listing, not per-server.
+    // Grants dialog handles this by accepting agent IDs.
+    return [] as MCPAgentGrant[];
+  }, []);
 
   const grantAgent = useCallback(
     async (serverId: string, agentId: string, toolAllow?: string[], toolDeny?: string[]) => {
@@ -106,14 +103,14 @@ export function useMCP() {
         tool_deny: toolDeny,
       });
     },
-    [http],
+    [http]
   );
 
   const revokeAgent = useCallback(
     async (serverId: string, agentId: string) => {
       await http.delete(`/v1/mcp/servers/${serverId}/grants/agent/${agentId}`);
     },
-    [http],
+    [http]
   );
 
   const listGrantsByAgent = useCallback(
@@ -121,7 +118,7 @@ export function useMCP() {
       const res = await http.get<{ grants: MCPAgentGrant[] }>(`/v1/mcp/grants/agent/${agentId}`);
       return res.grants ?? [];
     },
-    [http],
+    [http]
   );
 
   return {

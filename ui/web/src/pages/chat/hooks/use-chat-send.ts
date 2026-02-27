@@ -13,11 +13,7 @@ interface UseChatSendOptions {
  * Handles sending chat messages.
  * The sessionKey is passed directly to send() to avoid stale closures.
  */
-export function useChatSend({
-  agentId,
-  onMessageAdded,
-  onExpectRun,
-}: UseChatSendOptions) {
+export function useChatSend({ agentId, onMessageAdded, onExpectRun }: UseChatSendOptions) {
   const ws = useWs();
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +47,7 @@ export function useChatSend({
             message: trimmed,
             stream: true,
           },
-          120_000, // 2 min timeout for long runs
+          120_000 // 2 min timeout for long runs
         );
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to send message");
@@ -59,7 +55,7 @@ export function useChatSend({
         setSending(false);
       }
     },
-    [ws, agentId, onMessageAdded, onExpectRun],
+    [ws, agentId, onMessageAdded, onExpectRun]
   );
 
   const abort = useCallback(
@@ -71,7 +67,7 @@ export function useChatSend({
         // ignore abort errors
       }
     },
-    [ws],
+    [ws]
   );
 
   return { send, abort, sending, error };

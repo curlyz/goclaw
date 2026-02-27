@@ -12,23 +12,29 @@ export function useSessions(agentFilter?: string) {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const load = useCallback(async (opts?: { limit?: number; offset?: number }) => {
-    if (!ws.isConnected) return;
-    setLoading(true);
-    try {
-      const res = await ws.call<{ sessions: SessionInfo[]; total?: number }>(Methods.SESSIONS_LIST, {
-        agentId: agentFilter || undefined,
-        limit: opts?.limit,
-        offset: opts?.offset,
-      });
-      setSessions(res.sessions ?? []);
-      setTotal(res.total ?? 0);
-    } catch {
-      // ignore
-    } finally {
-      setLoading(false);
-    }
-  }, [ws, agentFilter]);
+  const load = useCallback(
+    async (opts?: { limit?: number; offset?: number }) => {
+      if (!ws.isConnected) return;
+      setLoading(true);
+      try {
+        const res = await ws.call<{ sessions: SessionInfo[]; total?: number }>(
+          Methods.SESSIONS_LIST,
+          {
+            agentId: agentFilter || undefined,
+            limit: opts?.limit,
+            offset: opts?.offset,
+          }
+        );
+        setSessions(res.sessions ?? []);
+        setTotal(res.total ?? 0);
+      } catch {
+        // ignore
+      } finally {
+        setLoading(false);
+      }
+    },
+    [ws, agentFilter]
+  );
 
   useEffect(() => {
     load();
@@ -45,7 +51,7 @@ export function useSessions(agentFilter?: string) {
         debouncedRefresh();
       }
     },
-    [debouncedRefresh],
+    [debouncedRefresh]
   );
 
   useWsEvent(Events.AGENT, handleAgentEvent);
@@ -55,11 +61,11 @@ export function useSessions(agentFilter?: string) {
       if (!ws.isConnected) return null;
       const res = await ws.call<{ key: string; messages: Message[]; summary?: string }>(
         Methods.SESSIONS_PREVIEW,
-        { key },
+        { key }
       );
       return { key: res.key, messages: res.messages ?? [], summary: res.summary };
     },
-    [ws],
+    [ws]
   );
 
   const deleteSession = useCallback(
@@ -68,7 +74,7 @@ export function useSessions(agentFilter?: string) {
       await ws.call(Methods.SESSIONS_DELETE, { key });
       setSessions((prev) => prev.filter((s) => s.key !== key));
     },
-    [ws],
+    [ws]
   );
 
   const resetSession = useCallback(
@@ -77,7 +83,7 @@ export function useSessions(agentFilter?: string) {
       await ws.call(Methods.SESSIONS_RESET, { key });
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
   const patchSession = useCallback(
@@ -86,8 +92,17 @@ export function useSessions(agentFilter?: string) {
       await ws.call(Methods.SESSIONS_PATCH, { key, ...updates });
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
-  return { sessions, total, loading, refresh: load, preview, deleteSession, resetSession, patchSession };
+  return {
+    sessions,
+    total,
+    loading,
+    refresh: load,
+    preview,
+    deleteSession,
+    resetSession,
+    patchSession,
+  };
 }

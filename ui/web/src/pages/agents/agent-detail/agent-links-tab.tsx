@@ -10,8 +10,7 @@ interface AgentLinksTabProps {
 }
 
 export function AgentLinksTab({ agentId }: AgentLinksTabProps) {
-  const { links, loading, load, createLink, updateLink, deleteLink } =
-    useAgentLinks(agentId);
+  const { links, loading, load, createLink, updateLink, deleteLink } = useAgentLinks(agentId);
   const { agents } = useAgents();
 
   const [editLink, setEditLink] = useState<AgentLinkData | null>(null);
@@ -33,7 +32,7 @@ export function AgentLinksTab({ agentId }: AgentLinksTabProps) {
           value: a.id,
           label: a.display_name || a.agent_key,
         })),
-    [agents, agentId],
+    [agents, agentId]
   );
 
   const handleStatusToggle = async (link: AgentLinkData) => {
@@ -51,16 +50,10 @@ export function AgentLinksTab({ agentId }: AgentLinksTabProps) {
         agentId={agentId}
         onStatusToggle={handleStatusToggle}
         onEdit={setEditLink}
-        onDelete={(link) =>
-          setDeleteTarget({ id: link.id, name: linkTargetName(link, agentId) })
-        }
+        onDelete={(link) => setDeleteTarget({ id: link.id, name: linkTargetName(link, agentId) })}
       />
 
-      <LinkEditDialog
-        link={editLink}
-        onClose={() => setEditLink(null)}
-        onSave={updateLink}
-      />
+      <LinkEditDialog link={editLink} onClose={() => setEditLink(null)} onSave={updateLink} />
 
       <ConfirmDialog
         open={!!deleteTarget}

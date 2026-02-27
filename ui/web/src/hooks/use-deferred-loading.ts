@@ -8,11 +8,7 @@ import { useState, useEffect, useRef } from "react";
  *
  * Phase 2 (min display): once shown, stays visible for at least `minDisplayMs`.
  */
-export function useDeferredLoading(
-  loading: boolean,
-  delayMs = 200,
-  minDisplayMs = 400,
-): boolean {
+export function useDeferredLoading(loading: boolean, delayMs = 200, minDisplayMs = 400): boolean {
   const [show, setShow] = useState(false);
   const delayTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const minTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

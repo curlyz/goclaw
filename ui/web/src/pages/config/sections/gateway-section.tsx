@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface GatewayData {
   host?: string;
@@ -100,7 +106,14 @@ export function GatewaySection({ data, onSave, saving }: Props) {
             <Label>Owner IDs</Label>
             <Input
               value={(draft.owner_ids ?? []).join(", ")}
-              onChange={(e) => update({ owner_ids: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })}
+              onChange={(e) =>
+                update({
+                  owner_ids: e.target.value
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean),
+                })
+              }
               placeholder="Comma-separated sender IDs"
             />
           </div>
@@ -108,7 +121,14 @@ export function GatewaySection({ data, onSave, saving }: Props) {
             <Label>Allowed Origins</Label>
             <Input
               value={(draft.allowed_origins ?? []).join(", ")}
-              onChange={(e) => update({ allowed_origins: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })}
+              onChange={(e) =>
+                update({
+                  allowed_origins: e.target.value
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean),
+                })
+              }
               placeholder="Empty = allow all"
             />
           </div>
@@ -146,7 +166,10 @@ export function GatewaySection({ data, onSave, saving }: Props) {
           </div>
           <div className="grid gap-1.5">
             <Label>Injection Action</Label>
-            <Select value={draft.injection_action ?? "warn"} onValueChange={(v) => update({ injection_action: v })}>
+            <Select
+              value={draft.injection_action ?? "warn"}
+              onValueChange={(v) => update({ injection_action: v })}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>

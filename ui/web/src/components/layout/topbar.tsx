@@ -10,7 +10,9 @@ export function Topbar() {
   const userId = useAuthStore((s) => s.userId);
   const logout = useAuthStore((s) => s.logout);
 
-  const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const isDark =
+    theme === "dark" ||
+    (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   return (
     <header className="flex h-14 items-center justify-between border-b bg-background px-4">
@@ -29,9 +31,7 @@ export function Topbar() {
       </div>
 
       <div className="flex items-center gap-2">
-        {userId && (
-          <span className="text-xs text-muted-foreground">{userId}</span>
-        )}
+        {userId && <span className="text-xs text-muted-foreground">{userId}</span>}
 
         <button
           onClick={() => setTheme(isDark ? "light" : "dark")}

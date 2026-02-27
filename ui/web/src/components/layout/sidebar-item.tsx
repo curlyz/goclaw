@@ -10,13 +10,7 @@ interface SidebarItemProps {
   collapsed?: boolean;
 }
 
-export function SidebarItem({
-  to,
-  icon: Icon,
-  label,
-  badge,
-  collapsed,
-}: SidebarItemProps) {
+export function SidebarItem({ to, icon: Icon, label, badge, collapsed }: SidebarItemProps) {
   const location = useLocation();
   const active = location.pathname === to || location.pathname.startsWith(to + "/");
 
@@ -27,7 +21,7 @@ export function SidebarItem({
         "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
         "hover:bg-accent hover:text-accent-foreground",
         active && "bg-accent text-accent-foreground font-medium",
-        collapsed && "justify-center px-2",
+        collapsed && "justify-center px-2"
       )}
       title={collapsed ? label : undefined}
     >

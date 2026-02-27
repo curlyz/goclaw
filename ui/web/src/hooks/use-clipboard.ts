@@ -23,7 +23,7 @@ export function useClipboard(timeout = 2000) {
         setTimeout(() => setCopied(false), timeout);
       }
     },
-    [timeout],
+    [timeout]
   );
 
   return { copied, copy };

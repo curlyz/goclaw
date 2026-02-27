@@ -127,8 +127,8 @@ export function useChatMessages(sessionKey: string, agentId: string) {
                     phase: event.payload?.is_error ? "error" : "completed",
                     updatedAt: Date.now(),
                   }
-                : t,
-            ),
+                : t
+            )
           );
           break;
         }
@@ -159,7 +159,7 @@ export function useChatMessages(sessionKey: string, agentId: string) {
         }
       }
     },
-    [loadHistory],
+    [loadHistory]
   );
 
   useWsEvent(Events.AGENT, handleAgentEvent);

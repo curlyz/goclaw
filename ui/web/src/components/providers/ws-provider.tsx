@@ -24,7 +24,7 @@ export function WsProvider({ children }: { children: React.ReactNode }) {
       () => useAuthStore.getState().senderID,
       (state: ConnectionState) => {
         useAuthStore.getState().setConnected(state === "connected");
-      },
+      }
     );
     wsRef.current.onAuthFailure = () => {
       useAuthStore.getState().logout();
@@ -36,7 +36,7 @@ export function WsProvider({ children }: { children: React.ReactNode }) {
     const client = new HttpClient(
       "",
       () => useAuthStore.getState().token,
-      () => useAuthStore.getState().userId,
+      () => useAuthStore.getState().userId
     );
     client.onAuthFailure = () => {
       useAuthStore.getState().logout();

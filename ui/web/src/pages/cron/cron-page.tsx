@@ -59,7 +59,13 @@ export function CronPage() {
         description="Schedule recurring agent tasks"
         actions={
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={refresh} disabled={spinning} className="gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={refresh}
+              disabled={spinning}
+              className="gap-1"
+            >
               <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
             </Button>
             <Button size="sm" onClick={() => setShowCreate(true)} className="gap-1">
@@ -102,7 +108,9 @@ export function CronPage() {
                     <td className="px-4 py-3">
                       <Switch
                         checked={job.enabled}
-                        onCheckedChange={(checked: boolean) => setToggleTarget({ job, enabled: checked })}
+                        onCheckedChange={(checked: boolean) =>
+                          setToggleTarget({ job, enabled: checked })
+                        }
                       />
                     </td>
                     <td className="px-4 py-3 font-medium">{job.name}</td>
@@ -163,11 +171,7 @@ export function CronPage() {
         )}
       </div>
 
-      <CronFormDialog
-        open={showCreate}
-        onOpenChange={setShowCreate}
-        onSubmit={createJob}
-      />
+      <CronFormDialog open={showCreate} onOpenChange={setShowCreate} onSubmit={createJob} />
 
       {toggleTarget && (
         <ConfirmDialog

@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface BindingMatch {
   channel?: string;
@@ -42,7 +48,7 @@ export function BindingsSection({ data, onSave, saving }: Props) {
 
   const updateMatch = (idx: number, patch: Partial<BindingMatch>) => {
     setDraft((prev) =>
-      prev.map((b, i) => (i === idx ? { ...b, match: { ...(b.match ?? {}), ...patch } } : b)),
+      prev.map((b, i) => (i === idx ? { ...b, match: { ...(b.match ?? {}), ...patch } } : b))
     );
     setDirty(true);
   };
@@ -52,14 +58,17 @@ export function BindingsSection({ data, onSave, saving }: Props) {
       prev.map((b, i) =>
         i === idx
           ? { ...b, match: { ...(b.match ?? {}), peer: { ...(b.match?.peer ?? {}), ...patch } } }
-          : b,
-      ),
+          : b
+      )
     );
     setDirty(true);
   };
 
   const addBinding = () => {
-    setDraft((prev) => [...prev, { ...EMPTY_BINDING, match: { ...EMPTY_BINDING.match, peer: { kind: "", id: "" } } }]);
+    setDraft((prev) => [
+      ...prev,
+      { ...EMPTY_BINDING, match: { ...EMPTY_BINDING.match, peer: { kind: "", id: "" } } },
+    ]);
     setDirty(true);
   };
 
@@ -85,7 +94,9 @@ export function BindingsSection({ data, onSave, saving }: Props) {
       </CardHeader>
       <CardContent className="space-y-3">
         {draft.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No bindings configured. Default agent routing applies.</p>
+          <p className="text-sm text-muted-foreground">
+            No bindings configured. Default agent routing applies.
+          </p>
         ) : (
           draft.map((binding, idx) => (
             <div key={idx} className="flex items-start gap-3 rounded-md border p-3">
@@ -100,7 +111,10 @@ export function BindingsSection({ data, onSave, saving }: Props) {
                 </div>
                 <div className="grid gap-1">
                   <Label className="text-xs">Channel</Label>
-                  <Select value={binding.match?.channel ?? ""} onValueChange={(v) => updateMatch(idx, { channel: v })}>
+                  <Select
+                    value={binding.match?.channel ?? ""}
+                    onValueChange={(v) => updateMatch(idx, { channel: v })}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Any" />
                     </SelectTrigger>
@@ -116,7 +130,10 @@ export function BindingsSection({ data, onSave, saving }: Props) {
                 </div>
                 <div className="grid gap-1">
                   <Label className="text-xs">Peer Kind</Label>
-                  <Select value={binding.match?.peer?.kind ?? ""} onValueChange={(v) => updatePeer(idx, { kind: v })}>
+                  <Select
+                    value={binding.match?.peer?.kind ?? ""}
+                    onValueChange={(v) => updatePeer(idx, { kind: v })}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Any" />
                     </SelectTrigger>
@@ -135,7 +152,12 @@ export function BindingsSection({ data, onSave, saving }: Props) {
                   />
                 </div>
               </div>
-              <Button variant="ghost" size="icon" className="mt-5 shrink-0" onClick={() => removeBinding(idx)}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="mt-5 shrink-0"
+                onClick={() => removeBinding(idx)}
+              >
                 <Trash2 className="h-4 w-4 text-muted-foreground" />
               </Button>
             </div>

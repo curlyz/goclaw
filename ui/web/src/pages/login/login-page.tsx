@@ -16,8 +16,7 @@ export function LoginPage() {
   const location = useLocation();
 
   const from =
-    (location.state as { from?: { pathname: string } })?.from?.pathname ??
-    ROUTES.OVERVIEW;
+    (location.state as { from?: { pathname: string } })?.from?.pathname ?? ROUTES.OVERVIEW;
 
   function handleTokenLogin(userId: string, token: string) {
     setCredentials(token, userId);

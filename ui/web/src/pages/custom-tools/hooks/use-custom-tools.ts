@@ -54,7 +54,7 @@ export function useCustomTools() {
       await load();
       return res;
     },
-    [http, load],
+    [http, load]
   );
 
   const updateTool = useCallback(
@@ -62,7 +62,7 @@ export function useCustomTools() {
       await http.put(`/v1/tools/custom/${id}`, data);
       await load();
     },
-    [http, load],
+    [http, load]
   );
 
   const deleteTool = useCallback(
@@ -70,7 +70,7 @@ export function useCustomTools() {
       await http.delete(`/v1/tools/custom/${id}`);
       await load();
     },
-    [http, load],
+    [http, load]
   );
 
   return { tools, loading, refresh: load, createTool, updateTool, deleteTool };

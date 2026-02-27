@@ -47,7 +47,7 @@ export function AgentCreateDialog({ open, onOpenChange, onCreate }: AgentCreateD
   // Look up provider ID from selected provider name for model fetching
   const selectedProviderId = useMemo(
     () => enabledProviders.find((p) => p.name === provider)?.id,
-    [enabledProviders, provider],
+    [enabledProviders, provider]
   );
   const { models, loading: modelsLoading } = useProviderModels(selectedProviderId);
   const { verify, verifying, result: verifyResult, reset: resetVerify } = useProviderVerify();
@@ -178,12 +178,18 @@ export function AgentCreateDialog({ open, onOpenChange, onCreate }: AgentCreateD
                 </Button>
               </div>
               {verifyResult && (
-                <p className={`text-xs ${verifyResult.valid ? "text-emerald-400" : "text-red-400"}`}>
-                  {verifyResult.valid ? "Model verified" : verifyResult.error || "Verification failed"}
+                <p
+                  className={`text-xs ${verifyResult.valid ? "text-emerald-400" : "text-red-400"}`}
+                >
+                  {verifyResult.valid
+                    ? "Model verified"
+                    : verifyResult.error || "Verification failed"}
                 </p>
               )}
               {!verifyResult && provider && !modelsLoading && models.length === 0 && (
-                <p className="text-xs text-muted-foreground">This provider doesn't list models — type the model ID manually.</p>
+                <p className="text-xs text-muted-foreground">
+                  This provider doesn't list models — type the model ID manually.
+                </p>
               )}
             </div>
           </div>
@@ -252,7 +258,17 @@ export function AgentCreateDialog({ open, onOpenChange, onCreate }: AgentCreateD
           {loading ? (
             <Button disabled>Creating...</Button>
           ) : (
-            <Button onClick={handleCreate} disabled={!displayName.trim() || !agentKey.trim() || !isValidSlug(agentKey) || !provider.trim() || !model.trim() || !verifyResult?.valid}>
+            <Button
+              onClick={handleCreate}
+              disabled={
+                !displayName.trim() ||
+                !agentKey.trim() ||
+                !isValidSlug(agentKey) ||
+                !provider.trim() ||
+                !model.trim() ||
+                !verifyResult?.valid
+              }
+            >
               Create
             </Button>
           )}

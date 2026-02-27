@@ -67,9 +67,7 @@ export function LinkEditDialog({ link, onClose, onSave }: LinkEditDialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit Link</DialogTitle>
-          <DialogDescription>
-            Update the delegation link settings.
-          </DialogDescription>
+          <DialogDescription>Update the delegation link settings.</DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-2">
           <div className="space-y-1.5">

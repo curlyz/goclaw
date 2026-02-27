@@ -1,12 +1,7 @@
 import { Info } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 /** Label with an (i) tooltip icon for field descriptions. */
 export function InfoLabel({ children, tip }: { children: React.ReactNode; tip: string }) {
@@ -72,7 +67,10 @@ export function numOrUndef(v: string): number | undefined {
 export function tagsToArray(s: string): string[] | undefined {
   const trimmed = s.trim();
   if (!trimmed) return undefined;
-  return trimmed.split(",").map((t) => t.trim()).filter(Boolean);
+  return trimmed
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
 }
 
 /** Convert string array to comma-separated display string. */

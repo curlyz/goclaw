@@ -49,13 +49,16 @@ export function DelegationsPage() {
   const pageSizeRef = useRef(pageSize);
   pageSizeRef.current = pageSize;
 
-  const buildFilters = useCallback(() => ({
-    source_agent_id: sourceRef.current || undefined,
-    target_agent_id: targetRef.current || undefined,
-    status: statusRef.current !== "all" ? statusRef.current : undefined,
-    limit: pageSizeRef.current,
-    offset: (pageRef.current - 1) * pageSizeRef.current,
-  }), []);
+  const buildFilters = useCallback(
+    () => ({
+      source_agent_id: sourceRef.current || undefined,
+      target_agent_id: targetRef.current || undefined,
+      status: statusRef.current !== "all" ? statusRef.current : undefined,
+      limit: pageSizeRef.current,
+      offset: (pageRef.current - 1) * pageSizeRef.current,
+    }),
+    []
+  );
 
   useEffect(() => {
     load({ limit: pageSize, offset: (page - 1) * pageSize });
@@ -73,7 +76,7 @@ export function DelegationsPage() {
         debouncedRefresh();
       }
     },
-    [debouncedRefresh],
+    [debouncedRefresh]
   );
 
   useWsEvent(Events.AGENT, handleAgentEvent);
@@ -90,7 +93,13 @@ export function DelegationsPage() {
         title="Delegations"
         description="Agent delegation history and results"
         actions={
-          <Button variant="outline" size="sm" onClick={handleRefresh} disabled={spinning} className="gap-1">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleRefresh}
+            disabled={spinning}
+            className="gap-1"
+          >
             <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
           </Button>
         }
@@ -163,9 +172,13 @@ export function DelegationsPage() {
                     onClick={() => setSelectedId(d.id)}
                   >
                     <td className="px-4 py-3">
-                      <span className="font-medium">{d.source_agent_key || d.source_agent_id.slice(0, 8)}</span>
+                      <span className="font-medium">
+                        {d.source_agent_key || d.source_agent_id.slice(0, 8)}
+                      </span>
                       <span className="mx-1 text-muted-foreground">&rarr;</span>
-                      <span className="font-medium">{d.target_agent_key || d.target_agent_id.slice(0, 8)}</span>
+                      <span className="font-medium">
+                        {d.target_agent_key || d.target_agent_id.slice(0, 8)}
+                      </span>
                     </td>
                     <td className="max-w-[300px] truncate px-4 py-3 text-muted-foreground">
                       {d.task}
@@ -174,14 +187,14 @@ export function DelegationsPage() {
                       <StatusBadge status={d.status} />
                     </td>
                     <td className="px-4 py-3">
-                      <Badge variant="outline" className="text-xs">{d.mode}</Badge>
+                      <Badge variant="outline" className="text-xs">
+                        {d.mode}
+                      </Badge>
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">
                       {formatDuration(d.duration_ms)}
                     </td>
-                    <td className="px-4 py-3 text-muted-foreground">
-                      {formatDate(d.created_at)}
-                    </td>
+                    <td className="px-4 py-3 text-muted-foreground">{formatDate(d.created_at)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -192,7 +205,10 @@ export function DelegationsPage() {
               total={total}
               totalPages={totalPages}
               onPageChange={setPage}
-              onPageSizeChange={(size) => { setPageSize(size); setPage(1); }}
+              onPageSizeChange={(size) => {
+                setPageSize(size);
+                setPage(1);
+              }}
             />
           </div>
         )}
@@ -219,5 +235,9 @@ function StatusBadge({ status }: { status: string }) {
           ? "info"
           : "secondary";
 
-  return <Badge variant={variant} className="text-xs">{status || "unknown"}</Badge>;
+  return (
+    <Badge variant={variant} className="text-xs">
+      {status || "unknown"}
+    </Badge>
+  );
 }

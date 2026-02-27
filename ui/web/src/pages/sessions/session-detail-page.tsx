@@ -58,7 +58,7 @@ export function SessionDetailPage({
             preview.messages.map((m, i) => ({
               ...m,
               timestamp: Date.now() - (preview.messages.length - i) * 1000,
-            })),
+            }))
           );
           setSummary(preview.summary ?? null);
         }
@@ -85,7 +85,7 @@ export function SessionDetailPage({
         debouncedRefresh();
       }
     },
-    [debouncedRefresh, parsed.agentId],
+    [debouncedRefresh, parsed.agentId]
   );
 
   useWsEvent(Events.AGENT, handleAgentEvent);
@@ -112,26 +112,35 @@ export function SessionDetailPage({
               <span>{formatDate(session.updated)}</span>
               {session.inputTokens != null && (
                 <span>
-                  {formatTokens(session.inputTokens)} in / {formatTokens(session.outputTokens ?? 0)} out
+                  {formatTokens(session.inputTokens)} in / {formatTokens(session.outputTokens ?? 0)}{" "}
+                  out
                 </span>
               )}
             </div>
           </div>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={() => setConfirmReset(true)} className="gap-1">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setConfirmReset(true)}
+            className="gap-1"
+          >
             <RotateCcw className="h-3.5 w-3.5" /> Reset
           </Button>
-          <Button variant="destructive" size="sm" onClick={() => setConfirmDelete(true)} className="gap-1">
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => setConfirmDelete(true)}
+            className="gap-1"
+          >
             <Trash2 className="h-3.5 w-3.5" /> Delete
           </Button>
         </div>
       </div>
 
       {/* Summary */}
-      {summary && (
-        <SummaryBlock text={summary} />
-      )}
+      {summary && <SummaryBlock text={summary} />}
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-6 py-4">
@@ -145,13 +154,15 @@ export function SessionDetailPage({
           </div>
         ) : (
           <div className="mx-auto max-w-3xl space-y-4">
-            {messages.filter(isDisplayable).map((msg, i) =>
-              isSystemMessage(msg) ? (
-                <SystemMessageBlock key={i} content={msg.content} />
-              ) : (
-                <MessageBubble key={i} message={msg} />
-              ),
-            )}
+            {messages
+              .filter(isDisplayable)
+              .map((msg, i) =>
+                isSystemMessage(msg) ? (
+                  <SystemMessageBlock key={i} content={msg.content} />
+                ) : (
+                  <MessageBubble key={i} message={msg} />
+                )
+              )}
           </div>
         )}
       </div>

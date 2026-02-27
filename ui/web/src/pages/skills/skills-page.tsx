@@ -20,7 +20,9 @@ export function SkillsPage() {
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && skills.length === 0);
   const [search, setSearch] = useState("");
-  const [selectedSkill, setSelectedSkill] = useState<(SkillInfo & { content: string }) | null>(null);
+  const [selectedSkill, setSelectedSkill] = useState<(SkillInfo & { content: string }) | null>(
+    null
+  );
   const [detailLoading, setDetailLoading] = useState(false);
   const [uploadOpen, setUploadOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<SkillInfo | null>(null);
@@ -29,12 +31,14 @@ export function SkillsPage() {
   const filtered = skills.filter(
     (s: SkillInfo) =>
       s.name.toLowerCase().includes(search.toLowerCase()) ||
-      s.description.toLowerCase().includes(search.toLowerCase()),
+      s.description.toLowerCase().includes(search.toLowerCase())
   );
 
   const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
 
-  useEffect(() => { resetPage(); }, [search, resetPage]);
+  useEffect(() => {
+    resetPage();
+  }, [search, resetPage]);
 
   const handleViewSkill = async (name: string) => {
     setDetailLoading(true);
@@ -70,10 +74,21 @@ export function SkillsPage() {
         description="Manage agent skills and capabilities"
         actions={
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => setUploadOpen(true)} className="gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setUploadOpen(true)}
+              className="gap-1"
+            >
               <Upload className="h-3.5 w-3.5" /> Upload
             </Button>
-            <Button variant="outline" size="sm" onClick={refresh} disabled={spinning} className="gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={refresh}
+              disabled={spinning}
+              className="gap-1"
+            >
               <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
             </Button>
           </div>
@@ -96,7 +111,9 @@ export function SkillsPage() {
           <EmptyState
             icon={Zap}
             title={search ? "No matching skills" : "No skills"}
-            description={search ? "Try a different search term." : "No skills have been registered yet."}
+            description={
+              search ? "Try a different search term." : "No skills have been registered yet."
+            }
           />
         ) : (
           <div className="rounded-md border">
@@ -164,17 +181,10 @@ export function SkillsPage() {
       </div>
 
       {selectedSkill && (
-        <SkillDetailDialog
-          skill={selectedSkill}
-          onClose={() => setSelectedSkill(null)}
-        />
+        <SkillDetailDialog skill={selectedSkill} onClose={() => setSelectedSkill(null)} />
       )}
 
-      <SkillUploadDialog
-        open={uploadOpen}
-        onOpenChange={setUploadOpen}
-        onUpload={handleUpload}
-      />
+      <SkillUploadDialog open={uploadOpen} onOpenChange={setUploadOpen} onUpload={handleUpload} />
 
       <ConfirmDialog
         open={!!deleteTarget}

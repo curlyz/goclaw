@@ -21,7 +21,7 @@ export interface UsePaginationReturn<T> {
 
 export function usePagination<T>(
   items: T[],
-  options: UsePaginationOptions = {},
+  options: UsePaginationOptions = {}
 ): UsePaginationReturn<T> {
   const [page, setPageRaw] = useState(1);
   const [pageSize, setPageSizeRaw] = useState(options.defaultPageSize ?? 20);
@@ -39,7 +39,7 @@ export function usePagination<T>(
     (p: number) => {
       setPageRaw(Math.max(1, Math.min(p, totalPages)));
     },
-    [totalPages],
+    [totalPages]
   );
 
   const setPageSize = useCallback((size: number) => {

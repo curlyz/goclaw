@@ -14,7 +14,7 @@ export function useAgentLinks(agentId: string) {
     try {
       const res = await ws.call<{ links: AgentLinkData[]; count: number }>(
         Methods.AGENTS_LINKS_LIST,
-        { agentId, direction: "all" },
+        { agentId, direction: "all" }
       );
       setLinks(res.links ?? []);
     } catch {
@@ -42,7 +42,7 @@ export function useAgentLinks(agentId: string) {
       });
       load();
     },
-    [ws, agentId, load],
+    [ws, agentId, load]
   );
 
   const updateLink = useCallback(
@@ -50,7 +50,7 @@ export function useAgentLinks(agentId: string) {
       await ws.call(Methods.AGENTS_LINKS_UPDATE, { linkId, ...updates });
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
   const deleteLink = useCallback(
@@ -58,7 +58,7 @@ export function useAgentLinks(agentId: string) {
       await ws.call(Methods.AGENTS_LINKS_DELETE, { linkId });
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
   return { links, loading, load, createLink, updateLink, deleteLink };

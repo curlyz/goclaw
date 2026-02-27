@@ -58,10 +58,14 @@ export function ChatPage() {
     (msg: { role: "user" | "assistant" | "tool"; content: string; timestamp?: number }) => {
       addLocalMessage(msg);
     },
-    [addLocalMessage],
+    [addLocalMessage]
   );
 
-  const { send, abort, error: sendError } = useChatSend({
+  const {
+    send,
+    abort,
+    error: sendError,
+  } = useChatSend({
     agentId,
     onMessageAdded: handleMessageAdded,
     onExpectRun: expectRun,
@@ -78,7 +82,7 @@ export function ChatPage() {
       setSessionKey(key);
       navigate(`/chat/${encodeURIComponent(key)}`);
     },
-    [navigate],
+    [navigate]
   );
 
   const handleAgentChange = useCallback(
@@ -88,7 +92,7 @@ export function ChatPage() {
       setSessionKey(newKey);
       navigate(`/chat/${encodeURIComponent(newKey)}`);
     },
-    [navigate, userId],
+    [navigate, userId]
   );
 
   const handleSend = useCallback(
@@ -102,7 +106,7 @@ export function ChatPage() {
       // Pass key directly so send() doesn't use a stale closure value
       send(message, key);
     },
-    [sessionKey, send, buildNewSessionKey, navigate],
+    [sessionKey, send, buildNewSessionKey, navigate]
   );
 
   const handleAbort = useCallback(() => {

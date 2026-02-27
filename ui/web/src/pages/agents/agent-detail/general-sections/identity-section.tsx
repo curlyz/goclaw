@@ -51,12 +51,7 @@ export function IdentitySection({
           <Label>Agent Key</Label>
           <div className="flex items-center gap-2">
             <Input value={agentKey} disabled className="font-mono text-sm" />
-            <Button
-              variant="ghost"
-              size="icon"
-              className="shrink-0"
-              onClick={copyAgentKey}
-            >
+            <Button variant="ghost" size="icon" className="shrink-0" onClick={copyAgentKey}>
               {copied ? (
                 <Check className="h-3.5 w-3.5 text-green-500" />
               ) : (
@@ -64,9 +59,7 @@ export function IdentitySection({
               )}
             </Button>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Unique identifier, cannot be changed.
-          </p>
+          <p className="text-xs text-muted-foreground">Unique identifier, cannot be changed.</p>
         </div>
         <div className="space-y-2">
           <Label htmlFor="displayName">Display Name</Label>

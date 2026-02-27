@@ -49,7 +49,7 @@ export function useProviders() {
       await load();
       return res;
     },
-    [http, load],
+    [http, load]
   );
 
   const updateProvider = useCallback(
@@ -57,7 +57,7 @@ export function useProviders() {
       await http.put(`/v1/providers/${id}`, data);
       await load();
     },
-    [http, load],
+    [http, load]
   );
 
   const deleteProvider = useCallback(
@@ -65,7 +65,7 @@ export function useProviders() {
       await http.delete(`/v1/providers/${id}`);
       await load();
     },
-    [http, load],
+    [http, load]
   );
 
   return {

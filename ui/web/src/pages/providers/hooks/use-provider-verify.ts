@@ -16,10 +16,7 @@ export function useProviderVerify() {
       setVerifying(true);
       setResult(null);
       try {
-        const res = await http.post<VerifyResult>(
-          `/v1/providers/${providerId}/verify`,
-          { model },
-        );
+        const res = await http.post<VerifyResult>(`/v1/providers/${providerId}/verify`, { model });
         setResult(res);
         return res;
       } catch (err) {
@@ -33,7 +30,7 @@ export function useProviderVerify() {
         setVerifying(false);
       }
     },
-    [http],
+    [http]
   );
 
   const reset = useCallback(() => setResult(null), []);

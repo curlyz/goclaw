@@ -102,7 +102,11 @@ export function ProvidersSection({ data, onSave, saving }: Props) {
                   className="flex w-full cursor-pointer items-center gap-2 px-3 py-2.5 text-left text-sm hover:bg-muted/50"
                   onClick={() => toggle(p.key)}
                 >
-                  {isOpen ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
+                  {isOpen ? (
+                    <ChevronDown className="h-3.5 w-3.5" />
+                  ) : (
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  )}
                   <span className="font-medium">{p.label}</span>
                   {entry.api_base && (
                     <span className="ml-auto text-xs text-muted-foreground">{entry.api_base}</span>

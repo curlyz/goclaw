@@ -36,7 +36,7 @@ export class WsClient {
     private getToken: () => string,
     private getUserId: () => string,
     private getSenderID: () => string,
-    private onStateChange: (state: ConnectionState) => void,
+    private onStateChange: (state: ConnectionState) => void
   ) {}
 
   connect(): void {
@@ -104,7 +104,7 @@ export class WsClient {
   async call<T = unknown>(
     method: string,
     params?: Record<string, unknown>,
-    timeoutMs?: number,
+    timeoutMs?: number
   ): Promise<T> {
     if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
       throw new ApiError("UNAVAILABLE", "WebSocket not connected");
@@ -125,9 +125,7 @@ export class WsClient {
         timeout: timer,
       });
 
-      this.ws!.send(
-        JSON.stringify({ type: "req", id, method, params }),
-      );
+      this.ws!.send(JSON.stringify({ type: "req", id, method, params }));
     });
   }
 
@@ -227,9 +225,7 @@ export class WsClient {
       if (err.code === "UNAUTHORIZED") {
         this.onAuthFailure?.();
       }
-      pending.reject(
-        new ApiError(err.code, err.message, err.details, err.retryable),
-      );
+      pending.reject(new ApiError(err.code, err.message, err.details, err.retryable));
     }
   }
 
@@ -270,7 +266,7 @@ export class WsClient {
 
     const delay = Math.min(
       this.baseReconnectDelay * Math.pow(2, this.reconnectAttempts),
-      this.maxReconnectDelay,
+      this.maxReconnectDelay
     );
     this.reconnectAttempts++;
 

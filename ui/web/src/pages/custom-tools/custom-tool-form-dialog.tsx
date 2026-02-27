@@ -21,7 +21,12 @@ interface CustomToolFormDialogProps {
   onSubmit: (data: CustomToolInput) => Promise<unknown>;
 }
 
-export function CustomToolFormDialog({ open, onOpenChange, tool, onSubmit }: CustomToolFormDialogProps) {
+export function CustomToolFormDialog({
+  open,
+  onOpenChange,
+  tool,
+  onSubmit,
+}: CustomToolFormDialogProps) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [command, setCommand] = useState("");
@@ -98,13 +103,26 @@ export function CustomToolFormDialog({ open, onOpenChange, tool, onSubmit }: Cus
         <div className="grid gap-4 py-2 overflow-y-auto min-h-0">
           <div className="grid gap-1.5">
             <Label htmlFor="ct-name">Name *</Label>
-            <Input id="ct-name" value={name} onChange={(e) => setName(slugify(e.target.value))} placeholder="my-tool" />
-            <p className="text-xs text-muted-foreground">Lowercase letters, numbers, and hyphens only</p>
+            <Input
+              id="ct-name"
+              value={name}
+              onChange={(e) => setName(slugify(e.target.value))}
+              placeholder="my-tool"
+            />
+            <p className="text-xs text-muted-foreground">
+              Lowercase letters, numbers, and hyphens only
+            </p>
           </div>
 
           <div className="grid gap-1.5">
             <Label htmlFor="ct-desc">Description</Label>
-            <Textarea id="ct-desc" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What this tool does..." rows={2} />
+            <Textarea
+              id="ct-desc"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="What this tool does..."
+              rows={2}
+            />
           </div>
 
           <div className="grid gap-1.5">
@@ -117,7 +135,9 @@ export function CustomToolFormDialog({ open, onOpenChange, tool, onSubmit }: Cus
               className="font-mono text-sm"
               rows={3}
             />
-            <p className="text-xs text-muted-foreground">Shell template. Use {"{{.key}}"} for parameter placeholders.</p>
+            <p className="text-xs text-muted-foreground">
+              Shell template. Use {"{{.key}}"} for parameter placeholders.
+            </p>
           </div>
 
           <div className="grid gap-1.5">
@@ -135,17 +155,33 @@ export function CustomToolFormDialog({ open, onOpenChange, tool, onSubmit }: Cus
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1.5">
               <Label htmlFor="ct-wd">Working Directory</Label>
-              <Input id="ct-wd" value={workingDir} onChange={(e) => setWorkingDir(e.target.value)} placeholder="/path/to/dir" />
+              <Input
+                id="ct-wd"
+                value={workingDir}
+                onChange={(e) => setWorkingDir(e.target.value)}
+                placeholder="/path/to/dir"
+              />
             </div>
             <div className="grid gap-1.5">
               <Label htmlFor="ct-timeout">Timeout (seconds)</Label>
-              <Input id="ct-timeout" type="number" value={timeout} onChange={(e) => setTimeout(Number(e.target.value))} min={1} />
+              <Input
+                id="ct-timeout"
+                type="number"
+                value={timeout}
+                onChange={(e) => setTimeout(Number(e.target.value))}
+                min={1}
+              />
             </div>
           </div>
 
           <div className="grid gap-1.5">
             <Label htmlFor="ct-agent">Agent ID (optional)</Label>
-            <Input id="ct-agent" value={agentId} onChange={(e) => setAgentId(e.target.value)} placeholder="Leave blank for global scope" />
+            <Input
+              id="ct-agent"
+              value={agentId}
+              onChange={(e) => setAgentId(e.target.value)}
+              placeholder="Leave blank for global scope"
+            />
           </div>
 
           <div className="flex items-center gap-2">
@@ -156,7 +192,9 @@ export function CustomToolFormDialog({ open, onOpenChange, tool, onSubmit }: Cus
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>Cancel</Button>
+          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>
+            Cancel
+          </Button>
           <Button onClick={handleSubmit} disabled={loading}>
             {loading ? "Saving..." : tool ? "Update" : "Create"}
           </Button>

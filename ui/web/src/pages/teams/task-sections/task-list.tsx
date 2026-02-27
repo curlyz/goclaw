@@ -10,11 +10,7 @@ interface TaskListProps {
 
 export function TaskList({ tasks, loading }: TaskListProps) {
   if (loading && tasks.length === 0) {
-    return (
-      <div className="py-8 text-center text-sm text-muted-foreground">
-        Loading tasks...
-      </div>
-    );
+    return <div className="py-8 text-center text-sm text-muted-foreground">Loading tasks...</div>;
   }
 
   if (tasks.length === 0) {
@@ -45,9 +41,7 @@ export function TaskList({ tasks, loading }: TaskListProps) {
           <div className="min-w-0">
             <span className="truncate text-sm font-medium">{task.subject}</span>
             {task.description && (
-              <p className="truncate text-xs text-muted-foreground/70">
-                {task.description}
-              </p>
+              <p className="truncate text-xs text-muted-foreground/70">{task.description}</p>
             )}
             {task.result && (
               <p className="mt-0.5 line-clamp-1 text-xs text-emerald-600 dark:text-emerald-400">
@@ -61,9 +55,7 @@ export function TaskList({ tasks, loading }: TaskListProps) {
           <span className="truncate text-sm text-muted-foreground">
             {task.owner_agent_key || "—"}
           </span>
-          <span className="text-sm text-muted-foreground">
-            {task.priority}
-          </span>
+          <span className="text-sm text-muted-foreground">{task.priority}</span>
         </div>
       ))}
     </div>

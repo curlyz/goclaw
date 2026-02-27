@@ -22,15 +22,12 @@ export function WorkspaceSection({
             {workspace || "No workspace configured"}
           </p>
           <p className="text-xs text-muted-foreground">
-            Automatically assigned when the agent is created. Per-user
-            subdirectories are created at runtime.
+            Automatically assigned when the agent is created. Per-user subdirectories are created at
+            runtime.
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Switch
-            checked={restrictToWorkspace}
-            onCheckedChange={onRestrictChange}
-          />
+          <Switch checked={restrictToWorkspace} onCheckedChange={onRestrictChange} />
           <div>
             <Label>Restrict to Workspace</Label>
             <p className="text-xs text-muted-foreground">

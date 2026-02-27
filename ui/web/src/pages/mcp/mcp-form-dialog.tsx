@@ -86,9 +86,13 @@ export function MCPFormDialog({ open, onOpenChange, server, onSubmit }: MCPFormD
       }
     }
 
-    const parsedArgs = isStdio && args.trim()
-      ? args.split(",").map((a) => a.trim()).filter(Boolean)
-      : undefined;
+    const parsedArgs =
+      isStdio && args.trim()
+        ? args
+            .split(",")
+            .map((a) => a.trim())
+            .filter(Boolean)
+        : undefined;
 
     setLoading(true);
     setError("");
@@ -123,13 +127,25 @@ export function MCPFormDialog({ open, onOpenChange, server, onSubmit }: MCPFormD
         <div className="grid gap-4 py-2 overflow-y-auto min-h-0">
           <div className="grid gap-1.5">
             <Label htmlFor="mcp-name">Name *</Label>
-            <Input id="mcp-name" value={name} onChange={(e) => setName(slugify(e.target.value))} placeholder="my-mcp-server" />
-            <p className="text-xs text-muted-foreground">Lowercase letters, numbers, and hyphens only</p>
+            <Input
+              id="mcp-name"
+              value={name}
+              onChange={(e) => setName(slugify(e.target.value))}
+              placeholder="my-mcp-server"
+            />
+            <p className="text-xs text-muted-foreground">
+              Lowercase letters, numbers, and hyphens only
+            </p>
           </div>
 
           <div className="grid gap-1.5">
             <Label htmlFor="mcp-display">Display Name</Label>
-            <Input id="mcp-display" value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="My MCP Server" />
+            <Input
+              id="mcp-display"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              placeholder="My MCP Server"
+            />
           </div>
 
           <div className="grid gap-1.5">
@@ -153,22 +169,46 @@ export function MCPFormDialog({ open, onOpenChange, server, onSubmit }: MCPFormD
             <>
               <div className="grid gap-1.5">
                 <Label htmlFor="mcp-cmd">Command *</Label>
-                <Input id="mcp-cmd" value={command} onChange={(e) => setCommand(e.target.value)} placeholder="npx -y @modelcontextprotocol/server-everything" className="font-mono text-sm" />
+                <Input
+                  id="mcp-cmd"
+                  value={command}
+                  onChange={(e) => setCommand(e.target.value)}
+                  placeholder="npx -y @modelcontextprotocol/server-everything"
+                  className="font-mono text-sm"
+                />
               </div>
               <div className="grid gap-1.5">
                 <Label htmlFor="mcp-args">Args (comma-separated)</Label>
-                <Input id="mcp-args" value={args} onChange={(e) => setArgs(e.target.value)} placeholder="--flag1, --flag2" className="font-mono text-sm" />
+                <Input
+                  id="mcp-args"
+                  value={args}
+                  onChange={(e) => setArgs(e.target.value)}
+                  placeholder="--flag1, --flag2"
+                  className="font-mono text-sm"
+                />
               </div>
             </>
           ) : (
             <>
               <div className="grid gap-1.5">
                 <Label htmlFor="mcp-url">URL *</Label>
-                <Input id="mcp-url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="http://localhost:3001/sse" className="font-mono text-sm" />
+                <Input
+                  id="mcp-url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  placeholder="http://localhost:3001/sse"
+                  className="font-mono text-sm"
+                />
               </div>
               <div className="grid gap-1.5">
                 <Label htmlFor="mcp-headers">Headers (JSON)</Label>
-                <Input id="mcp-headers" value={headers} onChange={(e) => setHeaders(e.target.value)} placeholder='{"Authorization": "Bearer ..."}' className="font-mono text-sm" />
+                <Input
+                  id="mcp-headers"
+                  value={headers}
+                  onChange={(e) => setHeaders(e.target.value)}
+                  placeholder='{"Authorization": "Bearer ..."}'
+                  className="font-mono text-sm"
+                />
               </div>
             </>
           )}
@@ -176,11 +216,22 @@ export function MCPFormDialog({ open, onOpenChange, server, onSubmit }: MCPFormD
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1.5">
               <Label htmlFor="mcp-prefix">Tool Prefix</Label>
-              <Input id="mcp-prefix" value={toolPrefix} onChange={(e) => setToolPrefix(e.target.value)} placeholder="mcp_" />
+              <Input
+                id="mcp-prefix"
+                value={toolPrefix}
+                onChange={(e) => setToolPrefix(e.target.value)}
+                placeholder="mcp_"
+              />
             </div>
             <div className="grid gap-1.5">
               <Label htmlFor="mcp-timeout">Timeout (seconds)</Label>
-              <Input id="mcp-timeout" type="number" value={timeout} onChange={(e) => setTimeout(Number(e.target.value))} min={1} />
+              <Input
+                id="mcp-timeout"
+                type="number"
+                value={timeout}
+                onChange={(e) => setTimeout(Number(e.target.value))}
+                min={1}
+              />
             </div>
           </div>
 
@@ -192,7 +243,9 @@ export function MCPFormDialog({ open, onOpenChange, server, onSubmit }: MCPFormD
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>Cancel</Button>
+          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>
+            Cancel
+          </Button>
           <Button onClick={handleSubmit} disabled={loading}>
             {loading ? "Saving..." : server ? "Update" : "Create"}
           </Button>

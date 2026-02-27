@@ -52,7 +52,7 @@ export function useConfig() {
         setSaving(false);
       }
     },
-    [ws, hash, load],
+    [ws, hash, load]
   );
 
   const patch = useCallback(
@@ -69,7 +69,7 @@ export function useConfig() {
         setSaving(false);
       }
     },
-    [ws, load],
+    [ws, load]
   );
 
   return { config, hash, configPath, loading, saving, error, refresh: load, applyRaw, patch };

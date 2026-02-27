@@ -181,7 +181,11 @@ function FileBlock({ name, mime, content }: { name: string; mime: string; conten
         onClick={() => setExpanded((v) => !v)}
         className="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-xs font-medium hover:bg-muted/50"
       >
-        {expanded ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
+        {expanded ? (
+          <ChevronDown className="h-3.5 w-3.5" />
+        ) : (
+          <ChevronRight className="h-3.5 w-3.5" />
+        )}
         <FileText className="h-3.5 w-3.5 text-muted-foreground" />
         <span>{name}</span>
         <span className="text-muted-foreground font-normal">{mime}</span>
@@ -242,9 +246,17 @@ export function RichContent({ content, role }: RichContentProps) {
           case "video-notice":
             return <VideoNoticeBadge key={i} content={block.content} />;
           case "markdown":
-            return <MarkdownRenderer key={i} content={block.content} className={role === "user" ? "text-sm" : ""} />;
+            return (
+              <MarkdownRenderer
+                key={i}
+                content={block.content}
+                className={role === "user" ? "text-sm" : ""}
+              />
+            );
           case "file":
-            return <FileBlock key={i} name={block.name} mime={block.mime} content={block.content} />;
+            return (
+              <FileBlock key={i} name={block.name} mime={block.mime} content={block.content} />
+            );
           case "reply":
             return <ReplyQuote key={i} sender={block.sender} body={block.body} />;
           case "location":

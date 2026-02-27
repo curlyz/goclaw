@@ -3,12 +3,7 @@ import { Lock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/use-auth-store";
 import type { AgentData, BootstrapFile } from "@/types/agent";
-import {
-  FileSidebar,
-  FileEditor,
-  RegenerateDialog,
-  OpenAgentEmptyState,
-} from "./file-sections";
+import { FileSidebar, FileEditor, RegenerateDialog, OpenAgentEmptyState } from "./file-sections";
 
 interface AgentFilesTabProps {
   agent: AgentData;
@@ -40,15 +35,11 @@ export function AgentFilesTab({
 
   // Hide MEMORY.json and BOOTSTRAP.md for predefined agents
   const displayFiles = files.filter(
-    (f) =>
-      f.name !== "MEMORY.json" &&
-      !(isPredefined && f.name === "BOOTSTRAP.md"),
+    (f) => f.name !== "MEMORY.json" && !(isPredefined && f.name === "BOOTSTRAP.md")
   );
-  const allMissing =
-    displayFiles.length > 0 && displayFiles.every((f) => f.missing);
+  const allMissing = displayFiles.length > 0 && displayFiles.every((f) => f.missing);
 
-  const isUserScoped = (fileName: string) =>
-    isPredefined && fileName === "USER.md";
+  const isUserScoped = (fileName: string) => isPredefined && fileName === "USER.md";
 
   useEffect(() => {
     if (!selectedFile) return;

@@ -31,7 +31,7 @@ export function ChatInput({ onSend, onAbort, isRunning, disabled }: ChatInputPro
         handleSend();
       }
     },
-    [handleSend, isRunning],
+    [handleSend, isRunning]
   );
 
   const handleInput = useCallback(() => {
@@ -55,12 +55,7 @@ export function ChatInput({ onSend, onAbort, isRunning, disabled }: ChatInputPro
         className="flex-1 resize-none rounded-lg border bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:opacity-50"
       />
       {isRunning ? (
-        <Button
-          variant="destructive"
-          size="icon"
-          onClick={onAbort}
-          title="Stop generation"
-        >
+        <Button variant="destructive" size="icon" onClick={onAbort} title="Stop generation">
           <Square className="h-4 w-4" />
         </Button>
       ) : (

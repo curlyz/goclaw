@@ -8,7 +8,12 @@ interface OtherConfigSectionProps {
   onChange: (v: string) => void;
 }
 
-export function OtherConfigSection({ enabled, value, onToggle, onChange }: OtherConfigSectionProps) {
+export function OtherConfigSection({
+  enabled,
+  value,
+  onToggle,
+  onChange,
+}: OtherConfigSectionProps) {
   return (
     <ConfigSection
       title="Other Config"

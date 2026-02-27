@@ -30,9 +30,7 @@ export function UsagePage() {
   };
 
   const agentEntries = summary?.byAgent
-    ? Object.entries(summary.byAgent).sort(
-        ([, a], [, b]) => b.totalTokens - a.totalTokens,
-      )
+    ? Object.entries(summary.byAgent).sort(([, a], [, b]) => b.totalTokens - a.totalTokens)
     : [];
 
   return (
@@ -41,7 +39,13 @@ export function UsagePage() {
         title="Usage"
         description="Token usage and costs by agent"
         actions={
-          <Button variant="outline" size="sm" onClick={handleRefresh} disabled={spinning} className="gap-1">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleRefresh}
+            disabled={spinning}
+            className="gap-1"
+          >
             <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
           </Button>
         }
@@ -65,15 +69,21 @@ export function UsagePage() {
                   <div className="mt-3 space-y-1 text-sm text-muted-foreground">
                     <div className="flex justify-between">
                       <span>Input tokens</span>
-                      <span className="font-medium text-foreground">{formatTokens(data.inputTokens)}</span>
+                      <span className="font-medium text-foreground">
+                        {formatTokens(data.inputTokens)}
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span>Output tokens</span>
-                      <span className="font-medium text-foreground">{formatTokens(data.outputTokens)}</span>
+                      <span className="font-medium text-foreground">
+                        {formatTokens(data.outputTokens)}
+                      </span>
                     </div>
                     <div className="flex justify-between border-t pt-1">
                       <span>Total</span>
-                      <span className="font-medium text-foreground">{formatTokens(data.totalTokens)}</span>
+                      <span className="font-medium text-foreground">
+                        {formatTokens(data.totalTokens)}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -130,7 +140,10 @@ export function UsagePage() {
                   total={total}
                   totalPages={totalPages}
                   onPageChange={setPage}
-                  onPageSizeChange={(size) => { setPageSize(size); setPage(1); }}
+                  onPageSizeChange={(size) => {
+                    setPageSize(size);
+                    setPage(1);
+                  }}
                 />
               </div>
             )}

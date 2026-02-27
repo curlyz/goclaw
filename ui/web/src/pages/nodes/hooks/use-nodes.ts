@@ -61,7 +61,7 @@ export function useNodes() {
       await ws.call(Methods.PAIRING_APPROVE, { code });
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
   const revokePairing = useCallback(
@@ -69,7 +69,7 @@ export function useNodes() {
       await ws.call(Methods.PAIRING_REVOKE, { senderId, channel });
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
   return { pendingPairings, pairedDevices, loading, refresh: load, approvePairing, revokePairing };

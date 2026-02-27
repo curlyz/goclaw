@@ -37,7 +37,7 @@ export function useSkills() {
       if (!ws.isConnected) return null;
       return ws.call<SkillInfo & { content: string }>(Methods.SKILLS_GET, { name });
     },
-    [ws],
+    [ws]
   );
 
   const uploadSkill = useCallback(
@@ -46,17 +46,17 @@ export function useSkills() {
       formData.append("file", file);
       return http.upload<{ id: string; slug: string; version: number; name: string }>(
         "/v1/skills/upload",
-        formData,
+        formData
       );
     },
-    [http],
+    [http]
   );
 
   const deleteSkill = useCallback(
     async (id: string) => {
       return http.delete<{ ok: string }>(`/v1/skills/${id}`);
     },
-    [http],
+    [http]
   );
 
   return { skills, loading, refresh: load, getSkill, uploadSkill, deleteSkill };

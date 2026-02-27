@@ -15,9 +15,7 @@ export function SidebarGroup({ label, collapsed, children }: SidebarGroupProps) 
         </p>
       )}
       {collapsed && <div className="mx-auto my-1 h-px w-6 bg-border" />}
-      <div className={cn("space-y-0.5", collapsed && "flex flex-col items-center")}>
-        {children}
-      </div>
+      <div className={cn("space-y-0.5", collapsed && "flex flex-col items-center")}>{children}</div>
     </div>
   );
 }

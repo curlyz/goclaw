@@ -4,13 +4,7 @@ import rehypeHighlight from "rehype-highlight";
 import { useClipboard } from "@/hooks/use-clipboard";
 import { Check, Copy } from "lucide-react";
 
-function CodeBlock({
-  className,
-  children,
-}: {
-  className?: string;
-  children?: React.ReactNode;
-}) {
+function CodeBlock({ className, children }: { className?: string; children?: React.ReactNode }) {
   const { copied, copy } = useClipboard();
   const text = String(children).replace(/\n$/, "");
   const lang = className?.replace("language-", "") ?? "";
@@ -68,18 +62,32 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
           table({ children, ...props }) {
             return (
               <div className="my-2 overflow-x-auto">
-                <table className="w-full border-collapse text-sm" {...props}>{children}</table>
+                <table className="w-full border-collapse text-sm" {...props}>
+                  {children}
+                </table>
               </div>
             );
           },
           thead({ children, ...props }) {
-            return <thead className="border-b bg-muted/50" {...props}>{children}</thead>;
+            return (
+              <thead className="border-b bg-muted/50" {...props}>
+                {children}
+              </thead>
+            );
           },
           th({ children, ...props }) {
-            return <th className="px-3 py-2 text-left font-medium" {...props}>{children}</th>;
+            return (
+              <th className="px-3 py-2 text-left font-medium" {...props}>
+                {children}
+              </th>
+            );
           },
           td({ children, ...props }) {
-            return <td className="border-t px-3 py-2" {...props}>{children}</td>;
+            return (
+              <td className="border-t px-3 py-2" {...props}>
+                {children}
+              </td>
+            );
           },
         }}
       >

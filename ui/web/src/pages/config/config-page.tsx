@@ -25,7 +25,8 @@ import { TelemetrySection } from "./sections/telemetry-section";
 import { BindingsSection } from "./sections/bindings-section";
 
 export function ConfigPage() {
-  const { config, hash, configPath, loading, saving, error, refresh, applyRaw, patch } = useConfig();
+  const { config, hash, configPath, loading, saving, error, refresh, applyRaw, patch } =
+    useConfig();
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && !config);
   const [rawText, setRawText] = useState("");
@@ -89,15 +90,19 @@ export function ConfigPage() {
         description="Gateway configuration"
         actions={
           <div className="flex items-center gap-2">
-            {configPath && (
-              <span className="text-xs text-muted-foreground">{configPath}</span>
-            )}
+            {configPath && <span className="text-xs text-muted-foreground">{configPath}</span>}
             {hash && (
               <Badge variant="outline" className="font-mono text-xs">
                 {hash.slice(0, 8)}
               </Badge>
             )}
-            <Button variant="outline" size="sm" onClick={refresh} disabled={spinning} className="gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={refresh}
+              disabled={spinning}
+              className="gap-1"
+            >
               <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
             </Button>
           </div>
@@ -107,10 +112,11 @@ export function ConfigPage() {
       <div className="mt-4 flex items-start gap-2 rounded-md border border-amber-500/30 bg-amber-500/5 px-3 py-2.5 text-sm text-amber-700 dark:text-amber-400">
         <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
         <span>
-          API keys and tokens are managed via environment variables and are not shown here.
-          Fields displaying <code className="rounded bg-muted px-1 font-mono text-xs">***</code> are
-          read-only secrets — edit them in your <code className="rounded bg-muted px-1 font-mono text-xs">.env.local</code> file
-          or server environment.
+          API keys and tokens are managed via environment variables and are not shown here. Fields
+          displaying <code className="rounded bg-muted px-1 font-mono text-xs">***</code> are
+          read-only secrets — edit them in your{" "}
+          <code className="rounded bg-muted px-1 font-mono text-xs">.env.local</code> file or server
+          environment.
         </span>
       </div>
 
@@ -144,17 +150,11 @@ export function ConfigPage() {
             )}
 
             <div className="flex items-center gap-2">
-              <Button
-                onClick={handleSave}
-                disabled={!dirty || saving}
-                className="gap-1"
-              >
+              <Button onClick={handleSave} disabled={!dirty || saving} className="gap-1">
                 <Save className="h-3.5 w-3.5" />
                 {saving ? "Saving..." : "Save"}
               </Button>
-              {dirty && (
-                <span className="text-xs text-muted-foreground">Unsaved changes</span>
-              )}
+              {dirty && <span className="text-xs text-muted-foreground">Unsaved changes</span>}
             </div>
           </div>
         </TabsContent>
@@ -164,7 +164,15 @@ export function ConfigPage() {
 }
 
 /** Compact redirect card shown in managed mode for sections that have dedicated pages. */
-function ManagedRedirect({ title, description, to }: { title: string; description: string; to: string }) {
+function ManagedRedirect({
+  title,
+  description,
+  to,
+}: {
+  title: string;
+  description: string;
+  to: string;
+}) {
   return (
     <Card>
       <CardHeader className="pb-3">
@@ -245,11 +253,7 @@ function ConfigUI({
         saving={saving}
       />
       <TtsSection data={config.tts as any} />
-      <CronSection
-        data={config.cron as any}
-        onSave={(v) => onPatch({ cron: v })}
-        saving={saving}
-      />
+      <CronSection data={config.cron as any} onSave={(v) => onPatch({ cron: v })} saving={saving} />
       <TelemetrySection
         data={config.telemetry as any}
         onSave={(v) => onPatch({ telemetry: v })}

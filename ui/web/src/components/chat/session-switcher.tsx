@@ -10,12 +10,7 @@ interface SessionSwitcherProps {
   loading?: boolean;
 }
 
-export function SessionSwitcher({
-  sessions,
-  activeKey,
-  onSelect,
-  loading,
-}: SessionSwitcherProps) {
+export function SessionSwitcher({ sessions, activeKey, onSelect, loading }: SessionSwitcherProps) {
   if (sessions.length === 0 && loading) {
     return (
       <div className="space-y-2 p-2">
@@ -47,9 +42,7 @@ export function SessionSwitcher({
             type="button"
             onClick={() => onSelect(session.key)}
             className={`flex w-full items-start gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-              isActive
-                ? "bg-accent text-accent-foreground"
-                : "hover:bg-muted"
+              isActive ? "bg-accent text-accent-foreground" : "hover:bg-muted"
             }`}
           >
             <MessageSquare className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />

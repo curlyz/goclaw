@@ -47,7 +47,7 @@ export function useApprovals() {
       await ws.call(Methods.APPROVALS_APPROVE, { id, always });
       setPending((prev) => prev.filter((a) => a.id !== id));
     },
-    [ws],
+    [ws]
   );
 
   const deny = useCallback(
@@ -55,7 +55,7 @@ export function useApprovals() {
       await ws.call(Methods.APPROVALS_DENY, { id });
       setPending((prev) => prev.filter((a) => a.id !== id));
     },
-    [ws],
+    [ws]
   );
 
   return { pending, loading, refresh: load, approve, deny };

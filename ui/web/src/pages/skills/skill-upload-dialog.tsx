@@ -51,7 +51,8 @@ export function SkillUploadDialog({ open, onOpenChange, onUpload }: SkillUploadD
         <DialogHeader>
           <DialogTitle>Upload Skill</DialogTitle>
           <DialogDescription>
-            Upload a ZIP file containing a SKILL.md at the root with YAML frontmatter (name, description, slug).
+            Upload a ZIP file containing a SKILL.md at the root with YAML frontmatter (name,
+            description, slug).
           </DialogDescription>
         </DialogHeader>
 
@@ -61,7 +62,9 @@ export function SkillUploadDialog({ open, onOpenChange, onUpload }: SkillUploadD
         >
           <Upload className="h-8 w-8 text-muted-foreground" />
           {file ? (
-            <p className="text-sm font-medium">{file.name} ({(file.size / 1024).toFixed(1)} KB)</p>
+            <p className="text-sm font-medium">
+              {file.name} ({(file.size / 1024).toFixed(1)} KB)
+            </p>
           ) : (
             <p className="text-sm text-muted-foreground">Click to select a .zip file</p>
           )}

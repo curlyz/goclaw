@@ -20,7 +20,9 @@ export function CompactionSection({ enabled, value, onToggle, onChange }: Compac
     >
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <InfoLabel tip="Minimum tokens reserved for the LLM response. Higher values give more room for output but reduce available context for history.">Reserve Tokens Floor</InfoLabel>
+          <InfoLabel tip="Minimum tokens reserved for the LLM response. Higher values give more room for output but reduce available context for history.">
+            Reserve Tokens Floor
+          </InfoLabel>
           <Input
             type="number"
             placeholder="20000"
@@ -29,7 +31,9 @@ export function CompactionSection({ enabled, value, onToggle, onChange }: Compac
           />
         </div>
         <div className="space-y-2">
-          <InfoLabel tip="Maximum fraction of the context window used for conversation history before compaction triggers (e.g. 0.75 = 75%).">Max History Share (0-1)</InfoLabel>
+          <InfoLabel tip="Maximum fraction of the context window used for conversation history before compaction triggers (e.g. 0.75 = 75%).">
+            Max History Share (0-1)
+          </InfoLabel>
           <Input
             type="number"
             step="0.05"
@@ -41,7 +45,9 @@ export function CompactionSection({ enabled, value, onToggle, onChange }: Compac
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <InfoLabel tip="Minimum number of messages in history before compaction can trigger, regardless of token usage.">Min Messages</InfoLabel>
+          <InfoLabel tip="Minimum number of messages in history before compaction can trigger, regardless of token usage.">
+            Min Messages
+          </InfoLabel>
           <Input
             type="number"
             placeholder="50"
@@ -50,7 +56,9 @@ export function CompactionSection({ enabled, value, onToggle, onChange }: Compac
           />
         </div>
         <div className="space-y-2">
-          <InfoLabel tip="Number of recent messages to preserve after compaction. The rest is replaced by a summary.">Keep Last Messages</InfoLabel>
+          <InfoLabel tip="Number of recent messages to preserve after compaction. The rest is replaced by a summary.">
+            Keep Last Messages
+          </InfoLabel>
           <Input
             type="number"
             placeholder="4"
@@ -67,11 +75,15 @@ export function CompactionSection({ enabled, value, onToggle, onChange }: Compac
               onChange({ ...value, memoryFlush: { ...value.memoryFlush, enabled: v } })
             }
           />
-          <InfoLabel tip="When enabled, compacted history is also saved to long-term memory for future retrieval.">Memory Flush</InfoLabel>
+          <InfoLabel tip="When enabled, compacted history is also saved to long-term memory for future retrieval.">
+            Memory Flush
+          </InfoLabel>
         </div>
         {value.memoryFlush?.enabled && (
           <div className="space-y-2 pl-6">
-            <InfoLabel tip="Token count threshold that triggers memory flush. When summary exceeds this, older memories are flushed to storage.">Soft Threshold (tokens)</InfoLabel>
+            <InfoLabel tip="Token count threshold that triggers memory flush. When summary exceeds this, older memories are flushed to storage.">
+              Soft Threshold (tokens)
+            </InfoLabel>
             <Input
               type="number"
               placeholder="4000"

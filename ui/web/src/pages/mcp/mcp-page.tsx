@@ -22,7 +22,17 @@ const transportBadge: Record<string, string> = {
 };
 
 export function MCPPage() {
-  const { servers, loading, refresh, createServer, updateServer, deleteServer, grantAgent, revokeAgent, listGrantsByAgent } = useMCP();
+  const {
+    servers,
+    loading,
+    refresh,
+    createServer,
+    updateServer,
+    deleteServer,
+    grantAgent,
+    revokeAgent,
+    listGrantsByAgent,
+  } = useMCP();
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && servers.length === 0);
   const [search, setSearch] = useState("");
@@ -35,12 +45,14 @@ export function MCPPage() {
   const filtered = servers.filter(
     (s) =>
       s.name.toLowerCase().includes(search.toLowerCase()) ||
-      (s.display_name || "").toLowerCase().includes(search.toLowerCase()),
+      (s.display_name || "").toLowerCase().includes(search.toLowerCase())
   );
 
   const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
 
-  useEffect(() => { resetPage(); }, [search, resetPage]);
+  useEffect(() => {
+    resetPage();
+  }, [search, resetPage]);
 
   const handleCreate = async (data: MCPServerInput) => {
     await createServer(data);
@@ -69,10 +81,23 @@ export function MCPPage() {
         description="Manage Model Context Protocol server connections"
         actions={
           <div className="flex gap-2">
-            <Button size="sm" onClick={() => { setEditServer(null); setFormOpen(true); }} className="gap-1">
+            <Button
+              size="sm"
+              onClick={() => {
+                setEditServer(null);
+                setFormOpen(true);
+              }}
+              className="gap-1"
+            >
               <Plus className="h-3.5 w-3.5" /> Add Server
             </Button>
-            <Button variant="outline" size="sm" onClick={refresh} disabled={spinning} className="gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={refresh}
+              disabled={spinning}
+              className="gap-1"
+            >
               <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
             </Button>
           </div>
@@ -95,7 +120,9 @@ export function MCPPage() {
           <EmptyState
             icon={Plug}
             title={search ? "No matching servers" : "No MCP servers"}
-            description={search ? "Try a different search term." : "Add your first MCP server to get started."}
+            description={
+              search ? "Try a different search term." : "Add your first MCP server to get started."
+            }
           />
         ) : (
           <div className="rounded-md border">
@@ -125,7 +152,12 @@ export function MCPPage() {
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <Badge variant={transportBadge[srv.transport] as "default" | "secondary" | "outline" ?? "outline"}>
+                      <Badge
+                        variant={
+                          (transportBadge[srv.transport] as "default" | "secondary" | "outline") ??
+                          "outline"
+                        }
+                      >
                         {srv.transport}
                       </Badge>
                     </td>
@@ -152,7 +184,10 @@ export function MCPPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => { setEditServer(srv); setFormOpen(true); }}
+                          onClick={() => {
+                            setEditServer(srv);
+                            setFormOpen(true);
+                          }}
                           className="gap-1"
                         >
                           <Pencil className="h-3.5 w-3.5" />

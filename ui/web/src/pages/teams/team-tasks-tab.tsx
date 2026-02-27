@@ -24,7 +24,9 @@ export function TeamTasksTab({ teamId, getTeamTasks }: TeamTasksTabProps) {
         if (!cancelled) setLoading(false);
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [teamId, getTeamTasks]);
 
   return (

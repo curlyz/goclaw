@@ -51,7 +51,7 @@ export function useUsage() {
         setLoading(false);
       }
     },
-    [ws],
+    [ws]
   );
 
   const loadSummary = useCallback(async () => {

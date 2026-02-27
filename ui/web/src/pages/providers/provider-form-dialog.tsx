@@ -32,7 +32,12 @@ const PROVIDER_TYPES = [
   { value: "openai_compat", label: "OpenAI Compatible" },
 ];
 
-export function ProviderFormDialog({ open, onOpenChange, provider, onSubmit }: ProviderFormDialogProps) {
+export function ProviderFormDialog({
+  open,
+  onOpenChange,
+  provider,
+  onSubmit,
+}: ProviderFormDialogProps) {
   const isEdit = !!provider;
   const [name, setName] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -140,7 +145,11 @@ export function ProviderFormDialog({ open, onOpenChange, provider, onSubmit }: P
               id="apiBase"
               value={apiBase}
               onChange={(e) => setApiBase(e.target.value)}
-              placeholder={providerType === "anthropic_native" ? "https://api.anthropic.com" : "https://openrouter.ai/api"}
+              placeholder={
+                providerType === "anthropic_native"
+                  ? "https://api.anthropic.com"
+                  : "https://openrouter.ai/api"
+              }
             />
           </div>
 

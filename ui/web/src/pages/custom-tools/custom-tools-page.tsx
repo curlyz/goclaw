@@ -8,7 +8,11 @@ import { SearchInput } from "@/components/shared/search-input";
 import { Pagination } from "@/components/shared/pagination";
 import { TableSkeleton } from "@/components/shared/loading-skeleton";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
-import { useCustomTools, type CustomToolData, type CustomToolInput } from "./hooks/use-custom-tools";
+import {
+  useCustomTools,
+  type CustomToolData,
+  type CustomToolInput,
+} from "./hooks/use-custom-tools";
 import { CustomToolFormDialog } from "./custom-tool-form-dialog";
 import { useMinLoading } from "@/hooks/use-min-loading";
 import { useDeferredLoading } from "@/hooks/use-deferred-loading";
@@ -27,12 +31,14 @@ export function CustomToolsPage() {
   const filtered = tools.filter(
     (t) =>
       t.name.toLowerCase().includes(search.toLowerCase()) ||
-      t.description.toLowerCase().includes(search.toLowerCase()),
+      t.description.toLowerCase().includes(search.toLowerCase())
   );
 
   const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
 
-  useEffect(() => { resetPage(); }, [search, resetPage]);
+  useEffect(() => {
+    resetPage();
+  }, [search, resetPage]);
 
   const handleCreate = async (data: CustomToolInput) => {
     await createTool(data);
@@ -61,10 +67,23 @@ export function CustomToolsPage() {
         description="Manage custom shell-based tools for agents"
         actions={
           <div className="flex gap-2">
-            <Button size="sm" onClick={() => { setEditTool(null); setFormOpen(true); }} className="gap-1">
+            <Button
+              size="sm"
+              onClick={() => {
+                setEditTool(null);
+                setFormOpen(true);
+              }}
+              className="gap-1"
+            >
               <Plus className="h-3.5 w-3.5" /> Create Tool
             </Button>
-            <Button variant="outline" size="sm" onClick={refresh} disabled={spinning} className="gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={refresh}
+              disabled={spinning}
+              className="gap-1"
+            >
               <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
             </Button>
           </div>
@@ -87,7 +106,11 @@ export function CustomToolsPage() {
           <EmptyState
             icon={Wrench}
             title={search ? "No matching tools" : "No custom tools"}
-            description={search ? "Try a different search term." : "Create your first custom tool to get started."}
+            description={
+              search
+                ? "Try a different search term."
+                : "Create your first custom tool to get started."
+            }
           />
         ) : (
           <div className="rounded-md border">
@@ -130,7 +153,10 @@ export function CustomToolsPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => { setEditTool(tool); setFormOpen(true); }}
+                          onClick={() => {
+                            setEditTool(tool);
+                            setFormOpen(true);
+                          }}
                           className="gap-1"
                         >
                           <Pencil className="h-3.5 w-3.5" /> Edit

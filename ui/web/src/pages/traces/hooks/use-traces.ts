@@ -87,7 +87,7 @@ export function useTraces() {
         setLoading(false);
       }
     },
-    [http],
+    [http]
   );
 
   const getTrace = useCallback(
@@ -98,7 +98,7 @@ export function useTraces() {
         return null;
       }
     },
-    [http],
+    [http]
   );
 
   return { traces, total, loading, load, getTrace };

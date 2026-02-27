@@ -6,67 +6,63 @@ import { ROUTES } from "@/lib/constants";
 
 // Lazy-loaded pages
 const LoginPage = lazy(() =>
-  import("@/pages/login/login-page").then((m) => ({ default: m.LoginPage })),
+  import("@/pages/login/login-page").then((m) => ({ default: m.LoginPage }))
 );
 const OverviewPage = lazy(() =>
-  import("@/pages/overview/overview-page").then((m) => ({ default: m.OverviewPage })),
+  import("@/pages/overview/overview-page").then((m) => ({ default: m.OverviewPage }))
 );
 const ChatPage = lazy(() =>
-  import("@/pages/chat/chat-page").then((m) => ({ default: m.ChatPage })),
+  import("@/pages/chat/chat-page").then((m) => ({ default: m.ChatPage }))
 );
 const AgentsPage = lazy(() =>
-  import("@/pages/agents/agents-page").then((m) => ({ default: m.AgentsPage })),
+  import("@/pages/agents/agents-page").then((m) => ({ default: m.AgentsPage }))
 );
 const SessionsPage = lazy(() =>
-  import("@/pages/sessions/sessions-page").then((m) => ({ default: m.SessionsPage })),
+  import("@/pages/sessions/sessions-page").then((m) => ({ default: m.SessionsPage }))
 );
 const SkillsPage = lazy(() =>
-  import("@/pages/skills/skills-page").then((m) => ({ default: m.SkillsPage })),
+  import("@/pages/skills/skills-page").then((m) => ({ default: m.SkillsPage }))
 );
 const CronPage = lazy(() =>
-  import("@/pages/cron/cron-page").then((m) => ({ default: m.CronPage })),
+  import("@/pages/cron/cron-page").then((m) => ({ default: m.CronPage }))
 );
 const ConfigPage = lazy(() =>
-  import("@/pages/config/config-page").then((m) => ({ default: m.ConfigPage })),
+  import("@/pages/config/config-page").then((m) => ({ default: m.ConfigPage }))
 );
 const TracesPage = lazy(() =>
-  import("@/pages/traces/traces-page").then((m) => ({ default: m.TracesPage })),
+  import("@/pages/traces/traces-page").then((m) => ({ default: m.TracesPage }))
 );
 const UsagePage = lazy(() =>
-  import("@/pages/usage/usage-page").then((m) => ({ default: m.UsagePage })),
+  import("@/pages/usage/usage-page").then((m) => ({ default: m.UsagePage }))
 );
 const ChannelsPage = lazy(() =>
-  import("@/pages/channels/channels-page").then((m) => ({ default: m.ChannelsPage })),
+  import("@/pages/channels/channels-page").then((m) => ({ default: m.ChannelsPage }))
 );
 const ApprovalsPage = lazy(() =>
-  import("@/pages/approvals/approvals-page").then((m) => ({ default: m.ApprovalsPage })),
+  import("@/pages/approvals/approvals-page").then((m) => ({ default: m.ApprovalsPage }))
 );
 const NodesPage = lazy(() =>
-  import("@/pages/nodes/nodes-page").then((m) => ({ default: m.NodesPage })),
+  import("@/pages/nodes/nodes-page").then((m) => ({ default: m.NodesPage }))
 );
 const LogsPage = lazy(() =>
-  import("@/pages/logs/logs-page").then((m) => ({ default: m.LogsPage })),
+  import("@/pages/logs/logs-page").then((m) => ({ default: m.LogsPage }))
 );
 const ProvidersPage = lazy(() =>
-  import("@/pages/providers/providers-page").then((m) => ({ default: m.ProvidersPage })),
+  import("@/pages/providers/providers-page").then((m) => ({ default: m.ProvidersPage }))
 );
 const CustomToolsPage = lazy(() =>
-  import("@/pages/custom-tools/custom-tools-page").then((m) => ({ default: m.CustomToolsPage })),
+  import("@/pages/custom-tools/custom-tools-page").then((m) => ({ default: m.CustomToolsPage }))
 );
-const MCPPage = lazy(() =>
-  import("@/pages/mcp/mcp-page").then((m) => ({ default: m.MCPPage })),
-);
+const MCPPage = lazy(() => import("@/pages/mcp/mcp-page").then((m) => ({ default: m.MCPPage })));
 const TeamsPage = lazy(() =>
-  import("@/pages/teams/teams-page").then((m) => ({ default: m.TeamsPage })),
+  import("@/pages/teams/teams-page").then((m) => ({ default: m.TeamsPage }))
 );
 const BuiltinToolsPage = lazy(() =>
-  import("@/pages/builtin-tools/builtin-tools-page").then((m) => ({ default: m.BuiltinToolsPage })),
+  import("@/pages/builtin-tools/builtin-tools-page").then((m) => ({ default: m.BuiltinToolsPage }))
 );
-const TtsPage = lazy(() =>
-  import("@/pages/tts/tts-page").then((m) => ({ default: m.TtsPage })),
-);
+const TtsPage = lazy(() => import("@/pages/tts/tts-page").then((m) => ({ default: m.TtsPage })));
 const DelegationsPage = lazy(() =>
-  import("@/pages/delegations/delegations-page").then((m) => ({ default: m.DelegationsPage })),
+  import("@/pages/delegations/delegations-page").then((m) => ({ default: m.DelegationsPage }))
 );
 
 function PageLoader() {

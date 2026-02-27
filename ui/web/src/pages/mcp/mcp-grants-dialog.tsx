@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import { Trash2, Plus } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -53,8 +48,18 @@ export function MCPGrantsDialog({
     setLoading(true);
     setError("");
     try {
-      const allow = toolAllow.trim() ? toolAllow.split(",").map((s) => s.trim()).filter(Boolean) : undefined;
-      const deny = toolDeny.trim() ? toolDeny.split(",").map((s) => s.trim()).filter(Boolean) : undefined;
+      const allow = toolAllow.trim()
+        ? toolAllow
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : undefined;
+      const deny = toolDeny.trim()
+        ? toolDeny
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : undefined;
       await onGrant(agentId.trim(), allow, deny);
       setGrants((prev) => [
         ...prev,
@@ -104,17 +109,31 @@ export function MCPGrantsDialog({
             <Label>Current Grants</Label>
             <div className="rounded-md border">
               {grants.map((grant) => (
-                <div key={grant.id} className="flex items-center justify-between border-b px-3 py-2 last:border-0">
+                <div
+                  key={grant.id}
+                  className="flex items-center justify-between border-b px-3 py-2 last:border-0"
+                >
                   <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="font-mono text-xs">{grant.agent_id}</Badge>
+                    <Badge variant="outline" className="font-mono text-xs">
+                      {grant.agent_id}
+                    </Badge>
                     {grant.tool_allow && (
-                      <span className="text-xs text-muted-foreground">allow: {grant.tool_allow.join(", ")}</span>
+                      <span className="text-xs text-muted-foreground">
+                        allow: {grant.tool_allow.join(", ")}
+                      </span>
                     )}
                     {grant.tool_deny && (
-                      <span className="text-xs text-muted-foreground">deny: {grant.tool_deny.join(", ")}</span>
+                      <span className="text-xs text-muted-foreground">
+                        deny: {grant.tool_deny.join(", ")}
+                      </span>
                     )}
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => handleRevoke(grant)} disabled={loading}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleRevoke(grant)}
+                    disabled={loading}
+                  >
                     <Trash2 className="h-3.5 w-3.5 text-destructive" />
                   </Button>
                 </div>
@@ -146,7 +165,12 @@ export function MCPGrantsDialog({
               className="text-sm"
             />
           </div>
-          <Button size="sm" onClick={handleGrant} disabled={loading || !agentId.trim()} className="gap-1">
+          <Button
+            size="sm"
+            onClick={handleGrant}
+            disabled={loading || !agentId.trim()}
+            className="gap-1"
+          >
             <Plus className="h-3.5 w-3.5" /> Grant
           </Button>
         </div>

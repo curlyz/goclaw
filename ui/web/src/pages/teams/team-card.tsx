@@ -29,9 +29,7 @@ export function TeamCard({ team, onClick }: TeamCardProps) {
 
       {/* Description */}
       {team.description && (
-        <div className="line-clamp-2 text-xs text-muted-foreground/70">
-          {team.description}
-        </div>
+        <div className="line-clamp-2 text-xs text-muted-foreground/70">{team.description}</div>
       )}
 
       {/* Bottom badges */}

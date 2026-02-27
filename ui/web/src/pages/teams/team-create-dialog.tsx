@@ -48,19 +48,25 @@ export function TeamCreateDialog({ open, onOpenChange, onCreate }: TeamCreateDia
           value: a.id,
           label: a.display_name || a.agent_key,
         })),
-    [agents],
+    [agents]
   );
 
   // Members must be predefined (need agent-level context for team collaboration)
   const memberOptions = useMemo(
     () =>
       agents
-        .filter((a) => a.agent_type === "predefined" && a.status === "active" && a.id !== lead && !members.includes(a.id))
+        .filter(
+          (a) =>
+            a.agent_type === "predefined" &&
+            a.status === "active" &&
+            a.id !== lead &&
+            !members.includes(a.id)
+        )
         .map((a) => ({
           value: a.id,
           label: a.display_name || a.agent_key,
         })),
-    [agents, lead, members],
+    [agents, lead, members]
   );
 
   const addMember = (agentId: string) => {
@@ -138,7 +144,9 @@ export function TeamCreateDialog({ open, onOpenChange, onCreate }: TeamCreateDia
               placeholder={agentsLoading ? "Loading agents..." : "Select lead agent..."}
             />
             {!agentsLoading && leadOptions.length === 0 && (
-              <p className="text-xs text-muted-foreground">No active agents found. Create agents first.</p>
+              <p className="text-xs text-muted-foreground">
+                No active agents found. Create agents first.
+              </p>
             )}
           </div>
 
@@ -179,7 +187,10 @@ export function TeamCreateDialog({ open, onOpenChange, onCreate }: TeamCreateDia
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>
             Cancel
           </Button>
-          <Button onClick={handleCreate} disabled={!name.trim() || !leadOptions.some((o) => o.value === lead) || loading}>
+          <Button
+            onClick={handleCreate}
+            disabled={!name.trim() || !leadOptions.some((o) => o.value === lead) || loading}
+          >
             {loading ? "Creating..." : "Create"}
           </Button>
         </DialogFooter>

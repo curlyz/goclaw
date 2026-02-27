@@ -81,7 +81,7 @@ export function useCron() {
       await ws.call(Methods.CRON_CREATE, params);
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
   const toggleJob = useCallback(
@@ -89,7 +89,7 @@ export function useCron() {
       await ws.call(Methods.CRON_TOGGLE, { jobId, enabled });
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
   const deleteJob = useCallback(
@@ -97,14 +97,14 @@ export function useCron() {
       await ws.call(Methods.CRON_DELETE, { jobId });
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
   const runJob = useCallback(
     async (jobId: string) => {
       await ws.call(Methods.CRON_RUN, { jobId, mode: "force" });
     },
-    [ws],
+    [ws]
   );
 
   const getRunLog = useCallback(
@@ -116,7 +116,7 @@ export function useCron() {
       });
       return res.entries ?? [];
     },
-    [ws],
+    [ws]
   );
 
   return { jobs, loading, refresh: load, createJob, toggleJob, deleteJob, runJob, getRunLog };

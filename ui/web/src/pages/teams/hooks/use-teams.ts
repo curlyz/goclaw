@@ -12,9 +12,7 @@ export function useTeams() {
     if (!ws.isConnected) return;
     setLoading(true);
     try {
-      const res = await ws.call<{ teams: TeamData[]; count: number }>(
-        Methods.TEAMS_LIST,
-      );
+      const res = await ws.call<{ teams: TeamData[]; count: number }>(Methods.TEAMS_LIST);
       setTeams(res.teams ?? []);
     } catch {
       // ignore
@@ -24,16 +22,11 @@ export function useTeams() {
   }, [ws]);
 
   const createTeam = useCallback(
-    async (params: {
-      name: string;
-      lead: string;
-      members: string[];
-      description?: string;
-    }) => {
+    async (params: { name: string; lead: string; members: string[]; description?: string }) => {
       await ws.call(Methods.TEAMS_CREATE, params);
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
   const deleteTeam = useCallback(
@@ -41,29 +34,27 @@ export function useTeams() {
       await ws.call(Methods.TEAMS_DELETE, { teamId });
       load();
     },
-    [ws, load],
+    [ws, load]
   );
 
   const getTeam = useCallback(
     async (teamId: string) => {
-      const res = await ws.call<{ team: TeamData; members: TeamMemberData[] }>(
-        Methods.TEAMS_GET,
-        { teamId },
-      );
+      const res = await ws.call<{ team: TeamData; members: TeamMemberData[] }>(Methods.TEAMS_GET, {
+        teamId,
+      });
       return res;
     },
-    [ws],
+    [ws]
   );
 
   const getTeamTasks = useCallback(
     async (teamId: string) => {
-      const res = await ws.call<{ tasks: TeamTaskData[]; count: number }>(
-        Methods.TEAMS_TASK_LIST,
-        { teamId },
-      );
+      const res = await ws.call<{ tasks: TeamTaskData[]; count: number }>(Methods.TEAMS_TASK_LIST, {
+        teamId,
+      });
       return res;
     },
-    [ws],
+    [ws]
   );
 
   return { teams, loading, load, createTeam, deleteTeam, getTeam, getTeamTasks };

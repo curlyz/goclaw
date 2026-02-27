@@ -74,7 +74,7 @@ export function useAgents() {
       setAgents((prev) => [...prev, res]);
       return res;
     },
-    [http],
+    [http]
   );
 
   const deleteAgent = useCallback(
@@ -82,7 +82,7 @@ export function useAgents() {
       await http.delete(`/v1/agents/${id}`);
       setAgents((prev) => prev.filter((a) => a.id !== id));
     },
-    [http],
+    [http]
   );
 
   return { agents, loading, error, refresh: load, createAgent, deleteAgent };

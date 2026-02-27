@@ -34,23 +34,17 @@ export function MemberList({ members }: MemberListProps) {
               {member.display_name || member.agent_key || member.agent_id.slice(0, 8)}
             </span>
             {member.display_name && member.agent_key && (
-              <p className="truncate text-xs text-muted-foreground">
-                {member.agent_key}
-              </p>
+              <p className="truncate text-xs text-muted-foreground">{member.agent_key}</p>
             )}
           </div>
           <div className="min-w-0">
             {member.frontmatter ? (
-              <p className="line-clamp-2 text-xs text-muted-foreground/70">
-                {member.frontmatter}
-              </p>
+              <p className="line-clamp-2 text-xs text-muted-foreground/70">{member.frontmatter}</p>
             ) : (
               <span className="text-xs text-muted-foreground/40">—</span>
             )}
           </div>
-          <Badge variant={roleBadgeVariant(member.role)}>
-            {member.role}
-          </Badge>
+          <Badge variant={roleBadgeVariant(member.role)}>{member.role}</Badge>
         </div>
       ))}
     </div>

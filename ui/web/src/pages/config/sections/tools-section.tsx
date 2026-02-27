@@ -6,7 +6,13 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -90,7 +96,14 @@ export function ToolsSection({ data, onSave, saving }: Props) {
             <Label>Allow</Label>
             <Input
               value={(draft.allow ?? []).join(", ")}
-              onChange={(e) => update({ allow: e.target.value.split(",").map((s: string) => s.trim()).filter(Boolean) })}
+              onChange={(e) =>
+                update({
+                  allow: e.target.value
+                    .split(",")
+                    .map((s: string) => s.trim())
+                    .filter(Boolean),
+                })
+              }
               placeholder="Comma-separated tool names"
             />
           </div>
@@ -98,7 +111,14 @@ export function ToolsSection({ data, onSave, saving }: Props) {
             <Label>Deny</Label>
             <Input
               value={(draft.deny ?? []).join(", ")}
-              onChange={(e) => update({ deny: e.target.value.split(",").map((s: string) => s.trim()).filter(Boolean) })}
+              onChange={(e) =>
+                update({
+                  deny: e.target.value
+                    .split(",")
+                    .map((s: string) => s.trim())
+                    .filter(Boolean),
+                })
+              }
               placeholder="Comma-separated"
             />
           </div>
@@ -106,7 +126,14 @@ export function ToolsSection({ data, onSave, saving }: Props) {
             <Label>Also Allow</Label>
             <Input
               value={(draft.alsoAllow ?? []).join(", ")}
-              onChange={(e) => update({ alsoAllow: e.target.value.split(",").map((s: string) => s.trim()).filter(Boolean) })}
+              onChange={(e) =>
+                update({
+                  alsoAllow: e.target.value
+                    .split(",")
+                    .map((s: string) => s.trim())
+                    .filter(Boolean),
+                })
+              }
               placeholder="Additive list"
             />
           </div>
@@ -131,7 +158,10 @@ export function ToolsSection({ data, onSave, saving }: Props) {
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1.5">
               <Label>Security</Label>
-              <Select value={exec.security ?? "full"} onValueChange={(v) => updateNested("execApproval", { security: v })}>
+              <Select
+                value={exec.security ?? "full"}
+                onValueChange={(v) => updateNested("execApproval", { security: v })}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -144,7 +174,10 @@ export function ToolsSection({ data, onSave, saving }: Props) {
             </div>
             <div className="grid gap-1.5">
               <Label>Ask Mode</Label>
-              <Select value={exec.ask ?? "off"} onValueChange={(v) => updateNested("execApproval", { ask: v })}>
+              <Select
+                value={exec.ask ?? "off"}
+                onValueChange={(v) => updateNested("execApproval", { ask: v })}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -184,7 +217,9 @@ export function ToolsSection({ data, onSave, saving }: Props) {
                 <Label>DuckDuckGo</Label>
                 <Switch
                   checked={ddg.enabled !== false}
-                  onCheckedChange={(v) => updateNested("web", { duckduckgo: { ...ddg, enabled: v } })}
+                  onCheckedChange={(v) =>
+                    updateNested("web", { duckduckgo: { ...ddg, enabled: v } })
+                  }
                 />
               </div>
               <div className="grid gap-1.5">
@@ -192,7 +227,11 @@ export function ToolsSection({ data, onSave, saving }: Props) {
                 <Input
                   type="number"
                   value={ddg.max_results ?? ""}
-                  onChange={(e) => updateNested("web", { duckduckgo: { ...ddg, max_results: Number(e.target.value) } })}
+                  onChange={(e) =>
+                    updateNested("web", {
+                      duckduckgo: { ...ddg, max_results: Number(e.target.value) },
+                    })
+                  }
                   placeholder="5"
                   min={1}
                 />
@@ -211,7 +250,11 @@ export function ToolsSection({ data, onSave, saving }: Props) {
                 <Input
                   type="number"
                   value={brave.max_results ?? ""}
-                  onChange={(e) => updateNested("web", { brave: { ...brave, max_results: Number(e.target.value) } })}
+                  onChange={(e) =>
+                    updateNested("web", {
+                      brave: { ...brave, max_results: Number(e.target.value) },
+                    })
+                  }
                   placeholder="5"
                   min={1}
                 />

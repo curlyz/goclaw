@@ -5,7 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
 interface TelemetryData {
@@ -62,7 +68,10 @@ export function TelemetrySection({ data, onSave, saving }: Props) {
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between">
           <Label>Enabled</Label>
-          <Switch checked={draft.enabled ?? false} onCheckedChange={(v) => update({ enabled: v })} />
+          <Switch
+            checked={draft.enabled ?? false}
+            onCheckedChange={(v) => update({ enabled: v })}
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -99,7 +108,10 @@ export function TelemetrySection({ data, onSave, saving }: Props) {
           </div>
           <div className="flex items-center justify-between">
             <Label>Insecure (no TLS)</Label>
-            <Switch checked={draft.insecure ?? false} onCheckedChange={(v) => update({ insecure: v })} />
+            <Switch
+              checked={draft.insecure ?? false}
+              onCheckedChange={(v) => update({ insecure: v })}
+            />
           </div>
         </div>
 

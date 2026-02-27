@@ -15,17 +15,13 @@ export function OpenAgentEmptyState({ files }: OpenAgentEmptyStateProps) {
         <div className="space-y-2 text-sm">
           <p className="font-medium">Open Agent - Per-User Context Files</p>
           <p className="text-muted-foreground">
-            This is an <strong>open</strong> agent. Context files (AGENTS.md,
-            SOUL.md, TOOLS.md, etc.) are personalized for each user. They are
-            automatically created from templates when a user first chats with
-            this agent.
+            This is an <strong>open</strong> agent. Context files (AGENTS.md, SOUL.md, TOOLS.md,
+            etc.) are personalized for each user. They are automatically created from templates when
+            a user first chats with this agent.
           </p>
           <p className="text-muted-foreground">
-            Agent-level files shown here are empty because open agents store all
-            context per-user in the{" "}
-            <code className="rounded bg-muted px-1 py-0.5 text-xs">
-              user_context_files
-            </code>{" "}
+            Agent-level files shown here are empty because open agents store all context per-user in
+            the <code className="rounded bg-muted px-1 py-0.5 text-xs">user_context_files</code>{" "}
             table.
           </p>
         </div>

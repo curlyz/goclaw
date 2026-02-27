@@ -27,12 +27,16 @@ export function SandboxSection({ enabled, value, onToggle, onChange }: SandboxSe
     >
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <InfoLabel tip="'off' disables sandboxing, 'non-main' sandboxes only sub-agents, 'all' sandboxes every execution including the main agent.">Mode</InfoLabel>
+          <InfoLabel tip="'off' disables sandboxing, 'non-main' sandboxes only sub-agents, 'all' sandboxes every execution including the main agent.">
+            Mode
+          </InfoLabel>
           <Select
             value={value.mode ?? ""}
             onValueChange={(v) => onChange({ ...value, mode: v as SandboxConfig["mode"] })}
           >
-            <SelectTrigger><SelectValue placeholder="off" /></SelectTrigger>
+            <SelectTrigger>
+              <SelectValue placeholder="off" />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="off">off</SelectItem>
               <SelectItem value="non-main">non-main</SelectItem>
@@ -41,14 +45,18 @@ export function SandboxSection({ enabled, value, onToggle, onChange }: SandboxSe
           </Select>
         </div>
         <div className="space-y-2">
-          <InfoLabel tip="How the sandbox accesses the host workspace. 'none' = isolated, 'ro' = read-only mount, 'rw' = full read-write access.">Workspace Access</InfoLabel>
+          <InfoLabel tip="How the sandbox accesses the host workspace. 'none' = isolated, 'ro' = read-only mount, 'rw' = full read-write access.">
+            Workspace Access
+          </InfoLabel>
           <Select
             value={value.workspace_access ?? ""}
             onValueChange={(v) =>
               onChange({ ...value, workspace_access: v as SandboxConfig["workspace_access"] })
             }
           >
-            <SelectTrigger><SelectValue placeholder="rw" /></SelectTrigger>
+            <SelectTrigger>
+              <SelectValue placeholder="rw" />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="none">none</SelectItem>
               <SelectItem value="ro">ro (read-only)</SelectItem>
@@ -58,7 +66,9 @@ export function SandboxSection({ enabled, value, onToggle, onChange }: SandboxSe
         </div>
       </div>
       <div className="space-y-2">
-        <InfoLabel tip="Docker image used for the sandbox container. Must be pre-built and available locally.">Image</InfoLabel>
+        <InfoLabel tip="Docker image used for the sandbox container. Must be pre-built and available locally.">
+          Image
+        </InfoLabel>
         <Input
           placeholder="goclaw-sandbox:bookworm-slim"
           value={value.image ?? ""}
@@ -67,12 +77,16 @@ export function SandboxSection({ enabled, value, onToggle, onChange }: SandboxSe
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <InfoLabel tip="Container lifecycle scope. 'session' = one container per chat session, 'agent' = shared across sessions, 'shared' = shared across all agents.">Scope</InfoLabel>
+          <InfoLabel tip="Container lifecycle scope. 'session' = one container per chat session, 'agent' = shared across sessions, 'shared' = shared across all agents.">
+            Scope
+          </InfoLabel>
           <Select
             value={value.scope ?? ""}
             onValueChange={(v) => onChange({ ...value, scope: v as SandboxConfig["scope"] })}
           >
-            <SelectTrigger><SelectValue placeholder="session" /></SelectTrigger>
+            <SelectTrigger>
+              <SelectValue placeholder="session" />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="session">session</SelectItem>
               <SelectItem value="agent">agent</SelectItem>
@@ -81,7 +95,9 @@ export function SandboxSection({ enabled, value, onToggle, onChange }: SandboxSe
           </Select>
         </div>
         <div className="space-y-2">
-          <InfoLabel tip="Maximum execution time in seconds for each command run inside the sandbox.">Timeout (sec)</InfoLabel>
+          <InfoLabel tip="Maximum execution time in seconds for each command run inside the sandbox.">
+            Timeout (sec)
+          </InfoLabel>
           <Input
             type="number"
             placeholder="300"
@@ -92,7 +108,9 @@ export function SandboxSection({ enabled, value, onToggle, onChange }: SandboxSe
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <InfoLabel tip="Maximum memory allocation for the sandbox container in megabytes.">Memory (MB)</InfoLabel>
+          <InfoLabel tip="Maximum memory allocation for the sandbox container in megabytes.">
+            Memory (MB)
+          </InfoLabel>
           <Input
             type="number"
             placeholder="512"
@@ -101,7 +119,9 @@ export function SandboxSection({ enabled, value, onToggle, onChange }: SandboxSe
           />
         </div>
         <div className="space-y-2">
-          <InfoLabel tip="CPU allocation for the sandbox container. Fractional values allowed (e.g. 0.5 = half a core).">CPUs</InfoLabel>
+          <InfoLabel tip="CPU allocation for the sandbox container. Fractional values allowed (e.g. 0.5 = half a core).">
+            CPUs
+          </InfoLabel>
           <Input
             type="number"
             step="0.5"
@@ -116,7 +136,9 @@ export function SandboxSection({ enabled, value, onToggle, onChange }: SandboxSe
           checked={value.network_enabled ?? false}
           onCheckedChange={(v) => onChange({ ...value, network_enabled: v })}
         />
-        <InfoLabel tip="Allow the sandbox container to access the network. Disable for fully isolated execution.">Network Enabled</InfoLabel>
+        <InfoLabel tip="Allow the sandbox container to access the network. Disable for fully isolated execution.">
+          Network Enabled
+        </InfoLabel>
       </div>
     </ConfigSection>
   );

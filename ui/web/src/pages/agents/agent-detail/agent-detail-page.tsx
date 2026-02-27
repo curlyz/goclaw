@@ -73,7 +73,15 @@ export function AgentDetailPage({ agentId, onBack }: AgentDetailPageProps) {
             {agent.is_default && (
               <Star className="h-4 w-4 shrink-0 fill-amber-400 text-amber-400" />
             )}
-            <Badge variant={agent.status === "active" ? "success" : agent.status === "summon_failed" ? "destructive" : "secondary"}>
+            <Badge
+              variant={
+                agent.status === "active"
+                  ? "success"
+                  : agent.status === "summon_failed"
+                    ? "destructive"
+                    : "secondary"
+              }
+            >
               {agent.status === "summon_failed" ? "Summon Failed" : agent.status}
             </Badge>
           </div>
@@ -84,11 +92,15 @@ export function AgentDetailPage({ agentId, onBack }: AgentDetailPageProps) {
                 <span className="text-border">|</span>
               </>
             )}
-            <Badge variant="outline" className="text-[11px]">{agent.agent_type}</Badge>
+            <Badge variant="outline" className="text-[11px]">
+              {agent.agent_type}
+            </Badge>
             {agent.provider && (
               <>
                 <span className="text-border">|</span>
-                <span>{agent.provider} / {agent.model}</span>
+                <span>
+                  {agent.provider} / {agent.model}
+                </span>
               </>
             )}
           </div>

@@ -83,26 +83,10 @@ export function OverviewPage() {
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          icon={Activity}
-          label="Status"
-          value={health?.status ?? "unknown"}
-        />
-        <StatCard
-          icon={Bot}
-          label="Agents"
-          value={status?.agents?.length ?? 0}
-        />
-        <StatCard
-          icon={History}
-          label="Sessions"
-          value={status?.sessions ?? 0}
-        />
-        <StatCard
-          icon={Zap}
-          label="Connected Clients"
-          value={status?.clients ?? 0}
-        />
+        <StatCard icon={Activity} label="Status" value={health?.status ?? "unknown"} />
+        <StatCard icon={Bot} label="Agents" value={status?.agents?.length ?? 0} />
+        <StatCard icon={History} label="Sessions" value={status?.sessions ?? 0} />
+        <StatCard icon={Zap} label="Connected Clients" value={status?.clients ?? 0} />
       </div>
     </div>
   );

@@ -3,12 +3,7 @@ import { Package, RefreshCw, Settings, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { PageHeader } from "@/components/shared/page-header";
 import { EmptyState } from "@/components/shared/empty-state";
 import { SearchInput } from "@/components/shared/search-input";
@@ -57,7 +52,7 @@ export function BuiltinToolsPage() {
     (t) =>
       t.name.toLowerCase().includes(search.toLowerCase()) ||
       t.display_name.toLowerCase().includes(search.toLowerCase()) ||
-      t.description.toLowerCase().includes(search.toLowerCase()),
+      t.description.toLowerCase().includes(search.toLowerCase())
   );
 
   const grouped = new Map<string, BuiltinToolData[]>();
@@ -67,7 +62,7 @@ export function BuiltinToolsPage() {
     grouped.get(cat)!.push(tool);
   }
   const sortedCategories = [...grouped.keys()].sort(
-    (a, b) => (CATEGORY_ORDER.indexOf(a) ?? 99) - (CATEGORY_ORDER.indexOf(b) ?? 99),
+    (a, b) => (CATEGORY_ORDER.indexOf(a) ?? 99) - (CATEGORY_ORDER.indexOf(b) ?? 99)
   );
 
   const handleToggle = async (tool: BuiltinToolData) => {
@@ -196,7 +191,10 @@ function ToolRow({
             <TooltipProvider delayDuration={200}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Badge variant="outline" className="ml-1 h-4 px-1 text-[10px] leading-none cursor-default">
+                  <Badge
+                    variant="outline"
+                    className="ml-1 h-4 px-1 text-[10px] leading-none cursor-default"
+                  >
                     req
                   </Badge>
                 </TooltipTrigger>
@@ -241,10 +239,7 @@ function ToolRow({
             </Tooltip>
           </TooltipProvider>
         )}
-        <Switch
-          checked={tool.enabled}
-          onCheckedChange={() => onToggle(tool)}
-        />
+        <Switch checked={tool.enabled} onCheckedChange={() => onToggle(tool)} />
       </div>
     </div>
   );

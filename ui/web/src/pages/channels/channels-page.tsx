@@ -9,7 +9,11 @@ import { SearchInput } from "@/components/shared/search-input";
 import { Pagination } from "@/components/shared/pagination";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { useChannels } from "./hooks/use-channels";
-import { useChannelInstances, type ChannelInstanceData, type ChannelInstanceInput } from "./hooks/use-channel-instances";
+import {
+  useChannelInstances,
+  type ChannelInstanceData,
+  type ChannelInstanceInput,
+} from "./hooks/use-channel-instances";
 import { ChannelInstanceFormDialog } from "./channel-instance-form-dialog";
 import { ChannelsStatusView, channelTypeLabels } from "./channels-status-view";
 import { useAgents } from "@/pages/agents/hooks/use-agents";
@@ -20,8 +24,13 @@ import { usePagination } from "@/hooks/use-pagination";
 export function ChannelsPage() {
   const { channels, loading: statusLoading, refresh: refreshStatus } = useChannels();
   const {
-    instances, loading: instancesLoading, supported,
-    refresh: refreshInstances, createInstance, updateInstance, deleteInstance,
+    instances,
+    loading: instancesLoading,
+    supported,
+    refresh: refreshInstances,
+    createInstance,
+    updateInstance,
+    deleteInstance,
   } = useChannelInstances();
   const { agents } = useAgents();
 
@@ -42,19 +51,28 @@ export function ChannelsPage() {
 
   // Standalone mode: show status-only cards
   if (!supported) {
-    return <ChannelsStatusView channels={channels} loading={statusLoading} spinning={spinning} refresh={refreshStatus} />;
+    return (
+      <ChannelsStatusView
+        channels={channels}
+        loading={statusLoading}
+        spinning={spinning}
+        refresh={refreshStatus}
+      />
+    );
   }
 
   const filtered = instances.filter(
     (inst) =>
       inst.name.toLowerCase().includes(search.toLowerCase()) ||
       (inst.display_name || "").toLowerCase().includes(search.toLowerCase()) ||
-      inst.channel_type.toLowerCase().includes(search.toLowerCase()),
+      inst.channel_type.toLowerCase().includes(search.toLowerCase())
   );
 
   const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
 
-  useEffect(() => { resetPage(); }, [search, resetPage]);
+  useEffect(() => {
+    resetPage();
+  }, [search, resetPage]);
 
   const handleCreate = async (data: ChannelInstanceInput) => {
     await createInstance(data);
@@ -92,10 +110,23 @@ export function ChannelsPage() {
         description="Manage channel instances"
         actions={
           <div className="flex gap-2">
-            <Button size="sm" onClick={() => { setEditInstance(null); setFormOpen(true); }} className="gap-1">
+            <Button
+              size="sm"
+              onClick={() => {
+                setEditInstance(null);
+                setFormOpen(true);
+              }}
+              className="gap-1"
+            >
               <Plus className="h-3.5 w-3.5" /> Add Channel
             </Button>
-            <Button variant="outline" size="sm" onClick={refresh} disabled={spinning} className="gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={refresh}
+              disabled={spinning}
+              className="gap-1"
+            >
               <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
             </Button>
           </div>
@@ -118,7 +149,11 @@ export function ChannelsPage() {
           <EmptyState
             icon={Radio}
             title={search ? "No matching channels" : "No channels"}
-            description={search ? "Try a different search term." : "Add your first channel instance to get started."}
+            description={
+              search
+                ? "Try a different search term."
+                : "Add your first channel instance to get started."
+            }
           />
         ) : (
           <div className="rounded-md border">
@@ -144,7 +179,9 @@ export function ChannelsPage() {
                           <div>
                             <span className="font-medium">{inst.display_name || inst.name}</span>
                             {inst.display_name && (
-                              <span className="ml-1 text-xs text-muted-foreground">({inst.name})</span>
+                              <span className="ml-1 text-xs text-muted-foreground">
+                                ({inst.name})
+                              </span>
                             )}
                           </div>
                         </div>
@@ -181,7 +218,10 @@ export function ChannelsPage() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => { setEditInstance(inst); setFormOpen(true); }}
+                            onClick={() => {
+                              setEditInstance(inst);
+                              setFormOpen(true);
+                            }}
                           >
                             <Pencil className="h-3.5 w-3.5" />
                           </Button>

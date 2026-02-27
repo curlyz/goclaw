@@ -21,7 +21,10 @@ export function useDelegations() {
         if (filters.limit) params.limit = String(filters.limit);
         if (filters.offset !== undefined) params.offset = String(filters.offset);
 
-        const res = await http.get<{ records: DelegationHistoryRecord[]; total?: number }>("/v1/delegations", params);
+        const res = await http.get<{ records: DelegationHistoryRecord[]; total?: number }>(
+          "/v1/delegations",
+          params
+        );
         setDelegations(res.records ?? []);
         setTotal(res.total ?? 0);
       } catch {
@@ -30,7 +33,7 @@ export function useDelegations() {
         setLoading(false);
       }
     },
-    [http],
+    [http]
   );
 
   const getDelegation = useCallback(
@@ -41,7 +44,7 @@ export function useDelegations() {
         return null;
       }
     },
-    [http],
+    [http]
   );
 
   return { delegations, total, loading, load, getDelegation };

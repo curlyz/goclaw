@@ -3,20 +3,31 @@ import type { AgentLinkData, AgentLinkSettings } from "@/types/agent";
 export const DIRECTION_OPTIONS = [
   { value: "outbound", label: "Outbound", desc: "This agent can delegate to the target" },
   { value: "inbound", label: "Inbound", desc: "The target can delegate to this agent" },
-  { value: "bidirectional", label: "Bidirectional", desc: "Both agents can delegate to each other" },
+  {
+    value: "bidirectional",
+    label: "Bidirectional",
+    desc: "Both agents can delegate to each other",
+  },
 ] as const;
 
 export function directionBadgeVariant(direction: string) {
   switch (direction) {
-    case "outbound": return "info" as const;
-    case "inbound": return "warning" as const;
-    case "bidirectional": return "success" as const;
-    default: return "outline" as const;
+    case "outbound":
+      return "info" as const;
+    case "inbound":
+      return "warning" as const;
+    case "bidirectional":
+      return "success" as const;
+    default:
+      return "outline" as const;
   }
 }
 
 export function parseCommaSeparated(val: string): string[] {
-  return val.split(",").map((s) => s.trim()).filter(Boolean);
+  return val
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
 }
 
 export function joinArray(arr?: string[]): string {

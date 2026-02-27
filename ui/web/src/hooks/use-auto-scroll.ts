@@ -4,10 +4,7 @@ import { useEffect, useRef, useCallback } from "react";
  * Auto-scroll to bottom of a container when content changes.
  * Only auto-scrolls if user is near the bottom (within threshold).
  */
-export function useAutoScroll<T extends HTMLElement>(
-  deps: unknown[],
-  threshold = 100,
-) {
+export function useAutoScroll<T extends HTMLElement>(deps: unknown[], threshold = 100) {
   const ref = useRef<T>(null);
   const isNearBottom = useRef(true);
 

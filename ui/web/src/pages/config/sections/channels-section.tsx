@@ -5,7 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -17,7 +23,11 @@ const CHANNEL_META: Record<string, { label: string; secretEnv: string; secretFie
   slack: { label: "Slack", secretEnv: "GOCLAW_SLACK_BOT_TOKEN", secretField: "bot_token" },
   whatsapp: { label: "WhatsApp", secretEnv: "", secretField: "" },
   zalo: { label: "Zalo", secretEnv: "GOCLAW_ZALO_TOKEN", secretField: "token" },
-  feishu: { label: "Feishu / Lark", secretEnv: "GOCLAW_FEISHU_APP_SECRET", secretField: "app_secret" },
+  feishu: {
+    label: "Feishu / Lark",
+    secretEnv: "GOCLAW_FEISHU_APP_SECRET",
+    secretField: "app_secret",
+  },
 };
 
 const DM_POLICIES = ["pairing", "allowlist", "open", "disabled"];
@@ -104,9 +114,16 @@ export function ChannelsSection({ data, onSave, saving }: Props) {
                   className="flex w-full cursor-pointer items-center gap-2 px-3 py-2.5 text-left text-sm hover:bg-muted/50"
                   onClick={() => toggle(ch)}
                 >
-                  {isOpen ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
+                  {isOpen ? (
+                    <ChevronDown className="h-3.5 w-3.5" />
+                  ) : (
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  )}
                   <span className="font-medium">{meta.label}</span>
-                  <Badge variant={chData.enabled ? "default" : "secondary"} className="ml-auto text-xs">
+                  <Badge
+                    variant={chData.enabled ? "default" : "secondary"}
+                    className="ml-auto text-xs"
+                  >
                     {chData.enabled ? "Enabled" : "Disabled"}
                   </Badge>
                 </button>
@@ -129,10 +146,14 @@ export function ChannelsSection({ data, onSave, saving }: Props) {
                           value={chData[meta.secretField] ?? ""}
                           disabled={isSecret(chData[meta.secretField])}
                           readOnly={isSecret(chData[meta.secretField])}
-                          onChange={(e) => updateChannel(ch, { [meta.secretField]: e.target.value })}
+                          onChange={(e) =>
+                            updateChannel(ch, { [meta.secretField]: e.target.value })
+                          }
                         />
                         {isSecret(chData[meta.secretField]) && meta.secretEnv && (
-                          <p className="text-xs text-muted-foreground">Managed via {meta.secretEnv}</p>
+                          <p className="text-xs text-muted-foreground">
+                            Managed via {meta.secretEnv}
+                          </p>
                         )}
                       </div>
                     )}
@@ -142,13 +163,18 @@ export function ChannelsSection({ data, onSave, saving }: Props) {
                       {chData.dm_policy !== undefined && (
                         <div className="grid gap-1.5">
                           <Label>DM Policy</Label>
-                          <Select value={chData.dm_policy ?? "pairing"} onValueChange={(v) => updateChannel(ch, { dm_policy: v })}>
+                          <Select
+                            value={chData.dm_policy ?? "pairing"}
+                            onValueChange={(v) => updateChannel(ch, { dm_policy: v })}
+                          >
                             <SelectTrigger>
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               {DM_POLICIES.map((p) => (
-                                <SelectItem key={p} value={p}>{p}</SelectItem>
+                                <SelectItem key={p} value={p}>
+                                  {p}
+                                </SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
@@ -157,13 +183,18 @@ export function ChannelsSection({ data, onSave, saving }: Props) {
                       {chData.group_policy !== undefined && (
                         <div className="grid gap-1.5">
                           <Label>Group Policy</Label>
-                          <Select value={chData.group_policy ?? "open"} onValueChange={(v) => updateChannel(ch, { group_policy: v })}>
+                          <Select
+                            value={chData.group_policy ?? "open"}
+                            onValueChange={(v) => updateChannel(ch, { group_policy: v })}
+                          >
                             <SelectTrigger>
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               {GROUP_POLICIES.map((p) => (
-                                <SelectItem key={p} value={p}>{p}</SelectItem>
+                                <SelectItem key={p} value={p}>
+                                  {p}
+                                </SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
@@ -179,7 +210,10 @@ export function ChannelsSection({ data, onSave, saving }: Props) {
                           value={(chData.allow_from ?? []).join(", ")}
                           onChange={(e) =>
                             updateChannel(ch, {
-                              allow_from: e.target.value.split(",").map((s: string) => s.trim()).filter(Boolean),
+                              allow_from: e.target.value
+                                .split(",")
+                                .map((s: string) => s.trim())
+                                .filter(Boolean),
                             })
                           }
                           placeholder="Comma-separated user IDs (empty = all)"
@@ -193,8 +227,13 @@ export function ChannelsSection({ data, onSave, saving }: Props) {
                         {chData.stream_mode !== undefined && (
                           <div className="grid gap-1.5">
                             <Label>Stream Mode</Label>
-                            <Select value={chData.stream_mode ?? "off"} onValueChange={(v) => updateChannel(ch, { stream_mode: v })}>
-                              <SelectTrigger><SelectValue /></SelectTrigger>
+                            <Select
+                              value={chData.stream_mode ?? "off"}
+                              onValueChange={(v) => updateChannel(ch, { stream_mode: v })}
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="off">Off</SelectItem>
                                 <SelectItem value="partial">Partial</SelectItem>
@@ -205,8 +244,13 @@ export function ChannelsSection({ data, onSave, saving }: Props) {
                         {chData.reaction_level !== undefined && (
                           <div className="grid gap-1.5">
                             <Label>Reaction Level</Label>
-                            <Select value={chData.reaction_level ?? "off"} onValueChange={(v) => updateChannel(ch, { reaction_level: v })}>
-                              <SelectTrigger><SelectValue /></SelectTrigger>
+                            <Select
+                              value={chData.reaction_level ?? "off"}
+                              onValueChange={(v) => updateChannel(ch, { reaction_level: v })}
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="off">Off</SelectItem>
                                 <SelectItem value="minimal">Minimal</SelectItem>
@@ -222,8 +266,13 @@ export function ChannelsSection({ data, onSave, saving }: Props) {
                     {ch === "feishu" && chData.connection_mode !== undefined && (
                       <div className="grid gap-1.5">
                         <Label>Connection Mode</Label>
-                        <Select value={chData.connection_mode ?? "websocket"} onValueChange={(v) => updateChannel(ch, { connection_mode: v })}>
-                          <SelectTrigger><SelectValue /></SelectTrigger>
+                        <Select
+                          value={chData.connection_mode ?? "websocket"}
+                          onValueChange={(v) => updateChannel(ch, { connection_mode: v })}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="websocket">WebSocket</SelectItem>
                             <SelectItem value="webhook">Webhook</SelectItem>

@@ -32,7 +32,7 @@ export function PairingForm({ onApproved }: PairingFormProps) {
       if (wsRef.current) wsRef.current.close();
       onApproved(sid, userId.trim());
     },
-    [userId, onApproved],
+    [userId, onApproved]
   );
 
   function handleSubmit(e: React.FormEvent) {
@@ -42,8 +42,7 @@ export function PairingForm({ onApproved }: PairingFormProps) {
     setStatus("connecting");
 
     const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl =
-      import.meta.env.VITE_WS_URL || `${proto}//${window.location.host}/ws`;
+    const wsUrl = import.meta.env.VITE_WS_URL || `${proto}//${window.location.host}/ws`;
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
@@ -58,7 +57,7 @@ export function PairingForm({ onApproved }: PairingFormProps) {
             user_id: userId.trim(),
             protocolVersion: PROTOCOL_VERSION,
           },
-        }),
+        })
       );
     };
 
@@ -79,11 +78,7 @@ export function PairingForm({ onApproved }: PairingFormProps) {
 
       const payload = frame.payload;
 
-      if (
-        payload.status === "pending_pairing" &&
-        payload.pairing_code &&
-        payload.sender_id
-      ) {
+      if (payload.status === "pending_pairing" && payload.pairing_code && payload.sender_id) {
         setCode(payload.pairing_code as string);
         setSenderID(payload.sender_id as string);
         setStatus("pending");
@@ -120,7 +115,7 @@ export function PairingForm({ onApproved }: PairingFormProps) {
           id,
           method: Methods.BROWSER_PAIRING_STATUS,
           params: { sender_id: sid },
-        }),
+        })
       );
       pollRef.current = setTimeout(poll, 3000);
     };
@@ -142,19 +137,13 @@ export function PairingForm({ onApproved }: PairingFormProps) {
 
   // Approved
   if (status === "approved") {
-    return (
-      <p className="text-center text-sm text-green-600">
-        Access approved! Redirecting...
-      </p>
-    );
+    return <p className="text-center text-sm text-green-600">Access approved! Redirecting...</p>;
   }
 
   // Request form
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {error && (
-        <p className="text-center text-sm text-destructive">{error}</p>
-      )}
+      {error && <p className="text-center text-sm text-destructive">{error}</p>}
 
       <div className="space-y-2">
         <label htmlFor="pairingUserId" className="text-sm font-medium">
@@ -172,8 +161,7 @@ export function PairingForm({ onApproved }: PairingFormProps) {
       </div>
 
       <p className="text-xs text-muted-foreground">
-        No token needed. A pairing code will be generated for an admin to
-        approve.
+        No token needed. A pairing code will be generated for an admin to approve.
       </p>
 
       <button
@@ -187,13 +175,7 @@ export function PairingForm({ onApproved }: PairingFormProps) {
   );
 }
 
-function PairingCodeDisplay({
-  code,
-  onCancel,
-}: {
-  code: string;
-  onCancel: () => void;
-}) {
+function PairingCodeDisplay({ code, onCancel }: { code: string; onCancel: () => void }) {
   return (
     <div className="space-y-4">
       <p className="text-center text-sm text-muted-foreground">
@@ -213,9 +195,7 @@ function PairingCodeDisplay({
 
       <p className="text-center text-xs text-muted-foreground">
         Or run:{" "}
-        <code className="rounded bg-muted px-1.5 py-0.5">
-          goclaw pairing approve {code}
-        </code>
+        <code className="rounded bg-muted px-1.5 py-0.5">goclaw pairing approve {code}</code>
       </p>
 
       <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">

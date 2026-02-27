@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { formatDate, formatDuration } from "@/lib/format";
 import type { DelegationHistoryRecord } from "@/types/delegation";
@@ -16,7 +11,11 @@ interface DelegationDetailDialogProps {
   getDelegation: (id: string) => Promise<DelegationHistoryRecord | null>;
 }
 
-export function DelegationDetailDialog({ delegationId, onClose, getDelegation }: DelegationDetailDialogProps) {
+export function DelegationDetailDialog({
+  delegationId,
+  onClose,
+  getDelegation,
+}: DelegationDetailDialogProps) {
   const [record, setRecord] = useState<DelegationHistoryRecord | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -55,27 +54,34 @@ export function DelegationDetailDialog({ delegationId, onClose, getDelegation }:
             <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
               <div>
                 <span className="text-muted-foreground">Source:</span>{" "}
-                <span className="font-medium">{record.source_agent_key || record.source_agent_id.slice(0, 8)}</span>
+                <span className="font-medium">
+                  {record.source_agent_key || record.source_agent_id.slice(0, 8)}
+                </span>
               </div>
               <div>
                 <span className="text-muted-foreground">Target:</span>{" "}
-                <span className="font-medium">{record.target_agent_key || record.target_agent_id.slice(0, 8)}</span>
+                <span className="font-medium">
+                  {record.target_agent_key || record.target_agent_id.slice(0, 8)}
+                </span>
               </div>
               <div>
                 <span className="text-muted-foreground">Status:</span>{" "}
-                <Badge variant={statusVariant} className="text-xs">{record.status}</Badge>
+                <Badge variant={statusVariant} className="text-xs">
+                  {record.status}
+                </Badge>
               </div>
               <div>
                 <span className="text-muted-foreground">Mode:</span>{" "}
-                <Badge variant="outline" className="text-xs">{record.mode}</Badge>
+                <Badge variant="outline" className="text-xs">
+                  {record.mode}
+                </Badge>
               </div>
               <div>
                 <span className="text-muted-foreground">Duration:</span>{" "}
                 {formatDuration(record.duration_ms)}
               </div>
               <div>
-                <span className="text-muted-foreground">Iterations:</span>{" "}
-                {record.iterations}
+                <span className="text-muted-foreground">Iterations:</span> {record.iterations}
               </div>
               <div>
                 <span className="text-muted-foreground">Created:</span>{" "}

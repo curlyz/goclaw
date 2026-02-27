@@ -15,9 +15,7 @@ export function useProviderModels(providerId: string | undefined) {
     async (id: string) => {
       setLoading(true);
       try {
-        const res = await http.get<{ models: ModelInfo[] }>(
-          `/v1/providers/${id}/models`,
-        );
+        const res = await http.get<{ models: ModelInfo[] }>(`/v1/providers/${id}/models`);
         setModels(res.models ?? []);
       } catch {
         setModels([]);
@@ -25,7 +23,7 @@ export function useProviderModels(providerId: string | undefined) {
         setLoading(false);
       }
     },
-    [http],
+    [http]
   );
 
   useEffect(() => {

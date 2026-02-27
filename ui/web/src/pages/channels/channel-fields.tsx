@@ -58,7 +58,9 @@ function FieldRenderer({
       return (
         <div className="grid gap-1.5">
           <Label htmlFor={id}>
-            {field.label}{labelSuffix}{editHint}
+            {field.label}
+            {labelSuffix}
+            {editHint}
           </Label>
           <Input
             id={id}
@@ -74,7 +76,10 @@ function FieldRenderer({
     case "number":
       return (
         <div className="grid gap-1.5">
-          <Label htmlFor={id}>{field.label}{labelSuffix}</Label>
+          <Label htmlFor={id}>
+            {field.label}
+            {labelSuffix}
+          </Label>
           <Input
             id={id}
             type="number"
@@ -102,7 +107,10 @@ function FieldRenderer({
     case "select":
       return (
         <div className="grid gap-1.5">
-          <Label>{field.label}{labelSuffix}</Label>
+          <Label>
+            {field.label}
+            {labelSuffix}
+          </Label>
           <Select
             value={(value as string) ?? (field.defaultValue as string) ?? ""}
             onValueChange={(v) => onChange(v)}
@@ -130,7 +138,10 @@ function FieldRenderer({
             id={id}
             value={Array.isArray(value) ? (value as string[]).join("\n") : ""}
             onChange={(e) => {
-              const lines = e.target.value.split("\n").map((l) => l.trim()).filter(Boolean);
+              const lines = e.target.value
+                .split("\n")
+                .map((l) => l.trim())
+                .filter(Boolean);
               onChange(lines.length > 0 ? lines : undefined);
             }}
             placeholder="One per line"

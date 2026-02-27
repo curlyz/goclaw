@@ -31,25 +31,19 @@ export function TeamsPage() {
 
   // Show detail view if route has :id
   if (detailId) {
-    return (
-      <TeamDetailPage
-        teamId={detailId}
-        onBack={() => navigate("/teams")}
-      />
-    );
+    return <TeamDetailPage teamId={detailId} onBack={() => navigate("/teams")} />;
   }
 
   const filtered = teams.filter((t) => {
     const q = search.toLowerCase();
-    return (
-      t.name.toLowerCase().includes(q) ||
-      (t.description ?? "").toLowerCase().includes(q)
-    );
+    return t.name.toLowerCase().includes(q) || (t.description ?? "").toLowerCase().includes(q);
   });
 
   const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
 
-  useEffect(() => { resetPage(); }, [search, resetPage]);
+  useEffect(() => {
+    resetPage();
+  }, [search, resetPage]);
 
   return (
     <div className="p-6">
@@ -84,20 +78,14 @@ export function TeamsPage() {
             icon={Users}
             title={search ? "No matching teams" : "No teams yet"}
             description={
-              search
-                ? "Try a different search term."
-                : "Create your first team to get started."
+              search ? "Try a different search term." : "Create your first team to get started."
             }
           />
         ) : (
           <>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {pageItems.map((team) => (
-                <TeamCard
-                  key={team.id}
-                  team={team}
-                  onClick={() => navigate(`/teams/${team.id}`)}
-                />
+                <TeamCard key={team.id} team={team} onClick={() => navigate(`/teams/${team.id}`)} />
               ))}
             </div>
             <div className="mt-4">

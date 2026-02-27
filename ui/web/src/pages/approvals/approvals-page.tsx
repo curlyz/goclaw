@@ -16,7 +16,10 @@ export function ApprovalsPage() {
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && pending.length === 0);
   const [denyTarget, setDenyTarget] = useState<PendingApproval | null>(null);
-  const [approveTarget, setApproveTarget] = useState<{ approval: PendingApproval; always: boolean } | null>(null);
+  const [approveTarget, setApproveTarget] = useState<{
+    approval: PendingApproval;
+    always: boolean;
+  } | null>(null);
 
   return (
     <div className="p-6">
@@ -25,10 +28,14 @@ export function ApprovalsPage() {
         description="Pending execution approvals"
         actions={
           <div className="flex items-center gap-2">
-            {pending.length > 0 && (
-              <Badge variant="destructive">{pending.length} pending</Badge>
-            )}
-            <Button variant="outline" size="sm" onClick={refresh} disabled={spinning} className="gap-1">
+            {pending.length > 0 && <Badge variant="destructive">{pending.length} pending</Badge>}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={refresh}
+              disabled={spinning}
+              className="gap-1"
+            >
               <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
             </Button>
           </div>
@@ -56,9 +63,7 @@ export function ApprovalsPage() {
                         {formatRelativeTime(new Date(approval.createdAt))}
                       </span>
                     </div>
-                    <pre className="mt-2 rounded-md bg-muted p-3 text-sm">
-                      {approval.command}
-                    </pre>
+                    <pre className="mt-2 rounded-md bg-muted p-3 text-sm">{approval.command}</pre>
                   </div>
                   <div className="flex flex-col gap-2">
                     <Button

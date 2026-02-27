@@ -71,9 +71,7 @@ export function LogsPage() {
             <div className="text-center">
               <Terminal className="mx-auto mb-2 h-8 w-8" />
               <p>
-                {tailing
-                  ? "Waiting for logs..."
-                  : "Click \"Start Tail\" to begin streaming logs."}
+                {tailing ? "Waiting for logs..." : 'Click "Start Tail" to begin streaming logs.'}
               </p>
             </div>
           </div>
@@ -86,9 +84,7 @@ export function LogsPage() {
               <span className={levelColors[entry.level] || "text-zinc-400"}>
                 [{entry.level?.toUpperCase() || "LOG"}]
               </span>{" "}
-              {entry.source && (
-                <span className="text-zinc-500">[{entry.source}] </span>
-              )}
+              {entry.source && <span className="text-zinc-500">[{entry.source}] </span>}
               <span>{entry.message}</span>
             </div>
           ))

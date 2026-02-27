@@ -12,8 +12,8 @@ interface AgentCardProps {
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export function AgentCard({ agent, onClick, onResummon }: AgentCardProps) {
-  const displayName = agent.display_name
-    || (UUID_RE.test(agent.agent_key) ? "Unnamed Agent" : agent.agent_key);
+  const displayName =
+    agent.display_name || (UUID_RE.test(agent.agent_key) ? "Unnamed Agent" : agent.agent_key);
 
   // Show agent_key as subtitle only if there's a display_name and agent_key is meaningful
   const showSubtitle = agent.display_name && !UUID_RE.test(agent.agent_key);
@@ -41,7 +41,10 @@ export function AgentCard({ agent, onClick, onResummon }: AgentCardProps) {
           )}
         </div>
         {agent.status === "summoning" ? (
-          <Badge variant="outline" className="shrink-0 animate-pulse border-violet-400 text-violet-600 dark:text-violet-400">
+          <Badge
+            variant="outline"
+            className="shrink-0 animate-pulse border-violet-400 text-violet-600 dark:text-violet-400"
+          >
             Summoning...
           </Badge>
         ) : agent.status === "summon_failed" ? (
@@ -64,14 +67,14 @@ export function AgentCard({ agent, onClick, onResummon }: AgentCardProps) {
 
       {/* Expertise summary */}
       {agent.frontmatter && (
-        <div className="line-clamp-3 text-xs text-muted-foreground/70">
-          {agent.frontmatter}
-        </div>
+        <div className="line-clamp-3 text-xs text-muted-foreground/70">{agent.frontmatter}</div>
       )}
 
       {/* Bottom badges */}
       <div className="flex items-center gap-1.5">
-        <Badge variant="outline" className="text-[11px]">{agent.agent_type}</Badge>
+        <Badge variant="outline" className="text-[11px]">
+          {agent.agent_type}
+        </Badge>
         {agent.context_window > 0 && (
           <span className="text-[11px] text-muted-foreground">
             {(agent.context_window / 1000).toFixed(0)}K ctx

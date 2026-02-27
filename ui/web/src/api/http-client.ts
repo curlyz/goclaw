@@ -6,7 +6,7 @@ export class HttpClient {
   constructor(
     private baseUrl: string,
     private getToken: () => string,
-    private getUserId: () => string,
+    private getUserId: () => string
   ) {}
 
   async get<T>(path: string, params?: Record<string, string>): Promise<T> {
@@ -47,10 +47,7 @@ export class HttpClient {
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({ error: res.statusText }));
-      throw new ApiError(
-        err.code ?? "HTTP_ERROR",
-        err.error ?? err.message ?? res.statusText,
-      );
+      throw new ApiError(err.code ?? "HTTP_ERROR", err.error ?? err.message ?? res.statusText);
     }
 
     return res.json() as Promise<T>;
@@ -88,10 +85,7 @@ export class HttpClient {
         this.onAuthFailure?.();
       }
       const err = await res.json().catch(() => ({ error: res.statusText }));
-      throw new ApiError(
-        err.code ?? "HTTP_ERROR",
-        err.error ?? err.message ?? res.statusText,
-      );
+      throw new ApiError(err.code ?? "HTTP_ERROR", err.error ?? err.message ?? res.statusText);
     }
 
     return res.json() as Promise<T>;

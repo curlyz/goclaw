@@ -29,7 +29,11 @@ export function AgentsPage() {
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [summoningAgent, setSummoningAgent] = useState<{ id: string; name: string } | null>(null);
 
-  const handleResummon = async (agent: { id: string; display_name?: string; agent_key: string }) => {
+  const handleResummon = async (agent: {
+    id: string;
+    display_name?: string;
+    agent_key: string;
+  }) => {
     try {
       await http.post(`/v1/agents/${agent.id}/resummon`);
       setSummoningAgent({ id: agent.id, name: agent.display_name || agent.agent_key });
@@ -40,25 +44,21 @@ export function AgentsPage() {
 
   // Show detail view if route has :id
   if (detailId) {
-    return (
-      <AgentDetailPage
-        agentId={detailId}
-        onBack={() => navigate("/agents")}
-      />
-    );
+    return <AgentDetailPage agentId={detailId} onBack={() => navigate("/agents")} />;
   }
 
   const filtered = agents.filter((a) => {
     const q = search.toLowerCase();
     return (
-      a.agent_key.toLowerCase().includes(q) ||
-      (a.display_name ?? "").toLowerCase().includes(q)
+      a.agent_key.toLowerCase().includes(q) || (a.display_name ?? "").toLowerCase().includes(q)
     );
   });
 
   const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
 
-  useEffect(() => { resetPage(); }, [search, resetPage]);
+  useEffect(() => {
+    resetPage();
+  }, [search, resetPage]);
 
   return (
     <div className="p-6">
@@ -93,9 +93,7 @@ export function AgentsPage() {
             icon={Bot}
             title={search ? "No matching agents" : "No agents yet"}
             description={
-              search
-                ? "Try a different search term."
-                : "Create your first agent to get started."
+              search ? "Try a different search term." : "Create your first agent to get started."
             }
           />
         ) : (
@@ -140,7 +138,12 @@ export function AgentsPage() {
           const created = await createAgent(data);
           refresh();
           // Auto-show summoning modal if agent is being summoned
-          if (created && typeof created === "object" && "status" in created && created.status === "summoning") {
+          if (
+            created &&
+            typeof created === "object" &&
+            "status" in created &&
+            created.status === "summoning"
+          ) {
             const ag = created as { id: string; display_name?: string; agent_key: string };
             setSummoningAgent({ id: ag.id, name: ag.display_name || ag.agent_key });
           }
@@ -165,7 +168,9 @@ export function AgentsPage() {
       {summoningAgent && (
         <SummoningModal
           open={!!summoningAgent}
-          onOpenChange={(open) => { if (!open) setSummoningAgent(null); }}
+          onOpenChange={(open) => {
+            if (!open) setSummoningAgent(null);
+          }}
           agentId={summoningAgent.id}
           agentName={summoningAgent.name}
           onCompleted={refresh}

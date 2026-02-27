@@ -57,7 +57,7 @@ export function useChannelInstances() {
       await load();
       return res;
     },
-    [http, load],
+    [http, load]
   );
 
   const updateInstance = useCallback(
@@ -65,7 +65,7 @@ export function useChannelInstances() {
       await http.put(`/v1/channels/instances/${id}`, data);
       await load();
     },
-    [http, load],
+    [http, load]
   );
 
   const deleteInstance = useCallback(
@@ -73,8 +73,16 @@ export function useChannelInstances() {
       await http.delete(`/v1/channels/instances/${id}`);
       await load();
     },
-    [http, load],
+    [http, load]
   );
 
-  return { instances, loading, supported, refresh: load, createInstance, updateInstance, deleteInstance };
+  return {
+    instances,
+    loading,
+    supported,
+    refresh: load,
+    createInstance,
+    updateInstance,
+    deleteInstance,
+  };
 }

@@ -20,10 +20,8 @@ const typeBadge: Record<string, { label: string; variant: "default" | "secondary
 };
 
 export function ProvidersPage() {
-  const {
-    providers, loading, refresh,
-    createProvider, updateProvider, deleteProvider,
-  } = useProviders();
+  const { providers, loading, refresh, createProvider, updateProvider, deleteProvider } =
+    useProviders();
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && providers.length === 0);
   const [search, setSearch] = useState("");
@@ -35,12 +33,14 @@ export function ProvidersPage() {
   const filtered = providers.filter(
     (p) =>
       p.name.toLowerCase().includes(search.toLowerCase()) ||
-      (p.display_name || "").toLowerCase().includes(search.toLowerCase()),
+      (p.display_name || "").toLowerCase().includes(search.toLowerCase())
   );
 
   const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
 
-  useEffect(() => { resetPage(); }, [search, resetPage]);
+  useEffect(() => {
+    resetPage();
+  }, [search, resetPage]);
 
   const handleCreate = async (data: ProviderInput) => {
     await createProvider(data);
@@ -69,10 +69,23 @@ export function ProvidersPage() {
         description="Manage LLM providers"
         actions={
           <div className="flex gap-2">
-            <Button size="sm" onClick={() => { setEditProvider(null); setFormOpen(true); }} className="gap-1">
+            <Button
+              size="sm"
+              onClick={() => {
+                setEditProvider(null);
+                setFormOpen(true);
+              }}
+              className="gap-1"
+            >
               <Plus className="h-3.5 w-3.5" /> Add Provider
             </Button>
-            <Button variant="outline" size="sm" onClick={refresh} disabled={spinning} className="gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={refresh}
+              disabled={spinning}
+              className="gap-1"
+            >
               <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
             </Button>
           </div>
@@ -95,7 +108,11 @@ export function ProvidersPage() {
           <EmptyState
             icon={Cpu}
             title={search ? "No matching providers" : "No providers"}
-            description={search ? "Try a different search term." : "Add your first LLM provider to get started."}
+            description={
+              search
+                ? "Try a different search term."
+                : "Add your first LLM provider to get started."
+            }
           />
         ) : (
           <div className="rounded-md border">
@@ -112,7 +129,10 @@ export function ProvidersPage() {
               </thead>
               <tbody>
                 {pageItems.map((p) => {
-                  const tb = typeBadge[p.provider_type] ?? { label: p.provider_type, variant: "outline" as const };
+                  const tb = typeBadge[p.provider_type] ?? {
+                    label: p.provider_type,
+                    variant: "outline" as const,
+                  };
                   return (
                     <tr key={p.id} className="border-b last:border-0 hover:bg-muted/30">
                       <td className="px-4 py-3">
@@ -134,7 +154,9 @@ export function ProvidersPage() {
                       </td>
                       <td className="px-4 py-3">
                         {p.api_key === "***" ? (
-                          <Badge variant="outline" className="font-mono text-xs">***</Badge>
+                          <Badge variant="outline" className="font-mono text-xs">
+                            ***
+                          </Badge>
                         ) : (
                           <span className="text-xs text-muted-foreground">Not set</span>
                         )}
@@ -149,7 +171,10 @@ export function ProvidersPage() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => { setEditProvider(p); setFormOpen(true); }}
+                            onClick={() => {
+                              setEditProvider(p);
+                              setFormOpen(true);
+                            }}
                           >
                             <Pencil className="h-3.5 w-3.5" />
                           </Button>

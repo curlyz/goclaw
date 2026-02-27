@@ -19,7 +19,7 @@ export class ApiError extends Error {
     public code: string,
     message: string,
     public details?: unknown,
-    public retryable?: boolean,
+    public retryable?: boolean
   ) {
     super(message);
     this.name = "ApiError";

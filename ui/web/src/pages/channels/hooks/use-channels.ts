@@ -17,7 +17,7 @@ export function useChannels() {
     setLoading(true);
     try {
       const res = await ws.call<{ channels: Record<string, ChannelStatus> }>(
-        Methods.CHANNELS_STATUS,
+        Methods.CHANNELS_STATUS
       );
       setChannels(res.channels ?? {});
     } catch {

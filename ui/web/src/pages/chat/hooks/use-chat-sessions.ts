@@ -18,13 +18,10 @@ export function useChatSessions(agentId: string) {
     if (!ws.isConnected) return;
     setLoading(true);
     try {
-      const res = await ws.call<{ sessions: SessionInfo[] }>(
-        Methods.SESSIONS_LIST,
-        { agentId },
-      );
+      const res = await ws.call<{ sessions: SessionInfo[] }>(Methods.SESSIONS_LIST, { agentId });
       const sorted = (res.sessions ?? []).sort(
         (a: SessionInfo, b: SessionInfo) =>
-          new Date(b.updated).getTime() - new Date(a.updated).getTime(),
+          new Date(b.updated).getTime() - new Date(a.updated).getTime()
       );
       setSessions(sorted);
     } catch {

@@ -107,7 +107,10 @@ export function SessionsPage() {
               total={total}
               totalPages={totalPages}
               onPageChange={setPage}
-              onPageSizeChange={(size) => { setPageSize(size); setPage(1); }}
+              onPageSizeChange={(size) => {
+                setPageSize(size);
+                setPage(1);
+              }}
             />
           </div>
         )}
@@ -116,20 +119,11 @@ export function SessionsPage() {
   );
 }
 
-function SessionRow({
-  session,
-  onClick,
-}: {
-  session: SessionInfo;
-  onClick: () => void;
-}) {
+function SessionRow({ session, onClick }: { session: SessionInfo; onClick: () => void }) {
   const parsed = parseSessionKey(session.key);
 
   return (
-    <tr
-      className="cursor-pointer border-b transition-colors hover:bg-muted/50"
-      onClick={onClick}
-    >
+    <tr className="cursor-pointer border-b transition-colors hover:bg-muted/50" onClick={onClick}>
       <td className="px-4 py-3">
         <div className="text-sm font-medium">{session.label || parsed.scope}</div>
         <div className="text-xs text-muted-foreground">{session.key}</div>
@@ -137,9 +131,7 @@ function SessionRow({
       <td className="px-4 py-3">
         <Badge variant="outline">{parsed.agentId}</Badge>
       </td>
-      <td className="px-4 py-3 text-sm text-muted-foreground">
-        {session.channel || "ws"}
-      </td>
+      <td className="px-4 py-3 text-sm text-muted-foreground">{session.channel || "ws"}</td>
       <td className="px-4 py-3 text-right text-sm">{session.messageCount}</td>
       <td className="px-4 py-3 text-right text-sm text-muted-foreground">
         {formatRelativeTime(session.updated)}

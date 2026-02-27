@@ -26,9 +26,12 @@ const ROLE_OPTIONS = [
 
 function roleBadgeVariant(role: string) {
   switch (role) {
-    case "owner": return "success" as const;
-    case "user": return "info" as const;
-    default: return "outline" as const;
+    case "owner":
+      return "success" as const;
+    case "user":
+      return "info" as const;
+    default:
+      return "outline" as const;
   }
 }
 
@@ -43,9 +46,7 @@ export function AgentSharesTab({ agentId }: AgentSharesTabProps) {
   const loadShares = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await http.get<{ shares: AgentShareData[] }>(
-        `/v1/agents/${agentId}/shares`,
-      );
+      const res = await http.get<{ shares: AgentShareData[] }>(`/v1/agents/${agentId}/shares`);
       setShares(res.shares ?? []);
     } catch {
       // ignore
@@ -139,9 +140,7 @@ export function AgentSharesTab({ agentId }: AgentSharesTabProps) {
               <div>
                 <span className="text-sm font-medium">{share.user_id}</span>
                 {share.granted_by && (
-                  <span className="ml-2 text-xs text-muted-foreground">
-                    by {share.granted_by}
-                  </span>
+                  <span className="ml-2 text-xs text-muted-foreground">by {share.granted_by}</span>
                 )}
               </div>
               <Badge variant={roleBadgeVariant(share.role)}>{share.role}</Badge>

@@ -39,10 +39,9 @@ export function useAgentDetail(agentId: string | undefined) {
 
       // Load files via WS (no access control)
       if (ws.isConnected) {
-        const filesRes = await ws.call<{ files: BootstrapFile[] }>(
-          Methods.AGENTS_FILES_LIST,
-          { agentId: ag.agent_key },
-        );
+        const filesRes = await ws.call<{ files: BootstrapFile[] }>(Methods.AGENTS_FILES_LIST, {
+          agentId: ag.agent_key,
+        });
         setFiles(filesRes.files ?? []);
       }
     } catch {
@@ -62,7 +61,7 @@ export function useAgentDetail(agentId: string | undefined) {
       await http.put(`/v1/agents/${agentId}`, updates);
       load();
     },
-    [agentId, http, load],
+    [agentId, http, load]
   );
 
   const getFile = useCallback(
@@ -74,7 +73,7 @@ export function useAgentDetail(agentId: string | undefined) {
       });
       return res.file;
     },
-    [agent, ws],
+    [agent, ws]
   );
 
   const setFile = useCallback(
@@ -87,7 +86,7 @@ export function useAgentDetail(agentId: string | undefined) {
       });
       load();
     },
-    [agent, ws, load],
+    [agent, ws, load]
   );
 
   const regenerateAgent = useCallback(
@@ -95,7 +94,7 @@ export function useAgentDetail(agentId: string | undefined) {
       if (!agentId) return;
       await http.post(`/v1/agents/${agentId}/regenerate`, { prompt });
     },
-    [agentId, http],
+    [agentId, http]
   );
 
   return { agent, files, loading, updateAgent, getFile, setFile, regenerateAgent, refresh: load };

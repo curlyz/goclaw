@@ -1,11 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useHttp } from "@/hooks/use-ws";
 import { useWsEvent } from "@/hooks/use-ws-event";
@@ -55,9 +50,7 @@ export function SummoningModal({
 
       if (data.type === "file_generated" && data.file) {
         const fileName = data.file;
-        setGeneratedFiles((prev) =>
-          prev.includes(fileName) ? prev : [...prev, fileName],
-        );
+        setGeneratedFiles((prev) => (prev.includes(fileName) ? prev : [...prev, fileName]));
       }
       if (data.type === "completed") {
         setStatus("completed");
@@ -69,7 +62,7 @@ export function SummoningModal({
         onCompleted();
       }
     },
-    [agentId, onCompleted],
+    [agentId, onCompleted]
   );
 
   useWsEvent("agent.summoning", handleSummoningEvent);
@@ -90,7 +83,13 @@ export function SummoningModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md" overlayTransparent onInteractOutside={(e) => { if (status === "summoning") e.preventDefault(); }}>
+      <DialogContent
+        className="sm:max-w-md"
+        overlayTransparent
+        onInteractOutside={(e) => {
+          if (status === "summoning") e.preventDefault();
+        }}
+      >
         <DialogHeader>
           <DialogTitle className="text-center">
             {status === "completed"
@@ -154,7 +153,10 @@ export function SummoningModal({
                 {errorMsg || "Using template files as fallback."}
               </span>
             ) : (
-              <>Weaving the soul of <span className="font-semibold text-foreground">{agentName}</span>...</>
+              <>
+                Weaving the soul of{" "}
+                <span className="font-semibold text-foreground">{agentName}</span>...
+              </>
             )}
           </p>
 

@@ -47,7 +47,7 @@ export function LlmConfigSection({
 
   const selectedProviderId = useMemo(
     () => enabledProviders.find((p) => p.name === provider)?.id,
-    [enabledProviders, provider],
+    [enabledProviders, provider]
   );
   const { models, loading: modelsLoading } = useProviderModels(selectedProviderId);
   const { verify, verifying, result: verifyResult, reset: resetVerify } = useProviderVerify();
@@ -128,7 +128,9 @@ export function LlmConfigSection({
             </div>
             {verifyResult && (
               <p className={`text-xs ${verifyResult.valid ? "text-emerald-400" : "text-red-400"}`}>
-                {verifyResult.valid ? "Model verified" : verifyResult.error || "Verification failed"}
+                {verifyResult.valid
+                  ? "Model verified"
+                  : verifyResult.error || "Verification failed"}
               </p>
             )}
           </div>

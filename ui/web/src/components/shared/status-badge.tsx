@@ -22,17 +22,19 @@ export function StatusBadge({ status, label, className }: StatusBadgeProps) {
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium",
         statusClasses[status],
-        className,
+        className
       )}
     >
-      <span className={cn(
-        "h-1.5 w-1.5 rounded-full",
-        status === "success" && "bg-green-500",
-        status === "warning" && "bg-yellow-500",
-        status === "error" && "bg-red-500",
-        status === "info" && "bg-blue-500",
-        status === "default" && "bg-muted-foreground",
-      )} />
+      <span
+        className={cn(
+          "h-1.5 w-1.5 rounded-full",
+          status === "success" && "bg-green-500",
+          status === "warning" && "bg-yellow-500",
+          status === "error" && "bg-red-500",
+          status === "info" && "bg-blue-500",
+          status === "default" && "bg-muted-foreground"
+        )}
+      />
       {label}
     </span>
   );

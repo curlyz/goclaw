@@ -14,8 +14,7 @@ interface UiState {
 
 export const useUiStore = create<UiState>((set) => ({
   theme: (localStorage.getItem(LOCAL_STORAGE_KEYS.THEME) as Theme) ?? "dark",
-  sidebarCollapsed:
-    localStorage.getItem(LOCAL_STORAGE_KEYS.SIDEBAR_COLLAPSED) === "true",
+  sidebarCollapsed: localStorage.getItem(LOCAL_STORAGE_KEYS.SIDEBAR_COLLAPSED) === "true",
 
   setTheme: (theme) => {
     localStorage.setItem(LOCAL_STORAGE_KEYS.THEME, theme);

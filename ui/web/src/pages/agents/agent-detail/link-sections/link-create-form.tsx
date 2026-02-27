@@ -158,11 +158,7 @@ export function LinkCreateForm({ agentOptions, onSubmit }: LinkCreateFormProps) 
         )}
 
         <div className="flex justify-end">
-          <Button
-            onClick={handleCreate}
-            disabled={!isValidTarget || creating}
-            className="gap-1.5"
-          >
+          <Button onClick={handleCreate} disabled={!isValidTarget || creating} className="gap-1.5">
             <Plus className="h-4 w-4" />
             {creating ? "Creating..." : "Create Link"}
           </Button>

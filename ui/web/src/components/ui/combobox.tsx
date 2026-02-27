@@ -15,13 +15,7 @@ interface ComboboxProps {
   className?: string;
 }
 
-export function Combobox({
-  value,
-  onChange,
-  options,
-  placeholder,
-  className,
-}: ComboboxProps) {
+export function Combobox({ value, onChange, options, placeholder, className }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -48,9 +42,7 @@ export function Combobox({
     if (!search) return options;
     const q = search.toLowerCase();
     return options.filter(
-      (o) =>
-        o.value.toLowerCase().includes(q) ||
-        (o.label && o.label.toLowerCase().includes(q)),
+      (o) => o.value.toLowerCase().includes(q) || (o.label && o.label.toLowerCase().includes(q))
     );
   }, [options, search]);
 
@@ -77,7 +69,7 @@ export function Combobox({
         placeholder={placeholder}
         className={cn(
           "border-input placeholder:text-muted-foreground dark:bg-input/30 h-9 w-full rounded-md border bg-transparent px-3 py-1 pr-8 text-sm shadow-xs outline-none transition-[color,box-shadow]",
-          "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+          "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
         )}
       />
       {options.length > 0 && (
@@ -97,9 +89,7 @@ export function Combobox({
               className="hover:bg-accent hover:text-accent-foreground relative flex w-full cursor-pointer items-center rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none"
             >
               <span className="truncate">{o.label || o.value}</span>
-              {o.value === value && (
-                <CheckIcon className="absolute right-2 size-4" />
-              )}
+              {o.value === value && <CheckIcon className="absolute right-2 size-4" />}
             </button>
           ))}
         </div>

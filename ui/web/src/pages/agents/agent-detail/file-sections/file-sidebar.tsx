@@ -9,12 +9,7 @@ interface FileSidebarProps {
   isUserScoped: (name: string) => boolean;
 }
 
-export function FileSidebar({
-  files,
-  selectedFile,
-  onSelect,
-  isUserScoped,
-}: FileSidebarProps) {
+export function FileSidebar({ files, selectedFile, onSelect, isUserScoped }: FileSidebarProps) {
   return (
     <div className="w-52 space-y-1 overflow-y-auto border-r pr-4">
       {files.map((file) => {
@@ -34,9 +29,7 @@ export function FileSidebar({
             }`}
           >
             <FileText className="h-3.5 w-3.5 shrink-0" />
-            <span className="min-w-0 flex-1 truncate text-left">
-              {file.name}
-            </span>
+            <span className="min-w-0 flex-1 truncate text-left">{file.name}</span>
             {userScoped ? (
               <Badge variant="outline" className="shrink-0 text-[10px]">
                 per-user
@@ -47,9 +40,7 @@ export function FileSidebar({
               </Badge>
             ) : (
               <span className="shrink-0 text-[10px] text-muted-foreground">
-                {file.size > 1024
-                  ? `${(file.size / 1024).toFixed(1)}K`
-                  : `${file.size}B`}
+                {file.size > 1024 ? `${(file.size / 1024).toFixed(1)}K` : `${file.size}B`}
               </span>
             )}
           </button>

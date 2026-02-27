@@ -32,7 +32,9 @@ export function TeamDelegationsTab({ teamId }: TeamDelegationsTabProps) {
         if (!cancelled) setLoading(false);
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [teamId, http]);
 
   if (loading) return <DeferredSpinner />;
@@ -63,22 +65,20 @@ export function TeamDelegationsTab({ teamId }: TeamDelegationsTabProps) {
           {records.map((d) => (
             <tr key={d.id} className="border-b last:border-0">
               <td className="px-4 py-3">
-                <span className="font-medium">{d.source_agent_key || d.source_agent_id.slice(0, 8)}</span>
+                <span className="font-medium">
+                  {d.source_agent_key || d.source_agent_id.slice(0, 8)}
+                </span>
                 <span className="mx-1 text-muted-foreground">&rarr;</span>
-                <span className="font-medium">{d.target_agent_key || d.target_agent_id.slice(0, 8)}</span>
+                <span className="font-medium">
+                  {d.target_agent_key || d.target_agent_id.slice(0, 8)}
+                </span>
               </td>
-              <td className="max-w-[250px] truncate px-4 py-3 text-muted-foreground">
-                {d.task}
-              </td>
+              <td className="max-w-[250px] truncate px-4 py-3 text-muted-foreground">{d.task}</td>
               <td className="px-4 py-3">
                 <StatusBadge status={d.status} />
               </td>
-              <td className="px-4 py-3 text-muted-foreground">
-                {formatDuration(d.duration_ms)}
-              </td>
-              <td className="px-4 py-3 text-muted-foreground">
-                {formatDate(d.created_at)}
-              </td>
+              <td className="px-4 py-3 text-muted-foreground">{formatDuration(d.duration_ms)}</td>
+              <td className="px-4 py-3 text-muted-foreground">{formatDate(d.created_at)}</td>
             </tr>
           ))}
         </tbody>
@@ -97,5 +97,9 @@ function StatusBadge({ status }: { status: string }) {
           ? "info"
           : "secondary";
 
-  return <Badge variant={variant} className="text-xs">{status || "unknown"}</Badge>;
+  return (
+    <Badge variant={variant} className="text-xs">
+      {status || "unknown"}
+    </Badge>
+  );
 }

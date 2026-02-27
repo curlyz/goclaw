@@ -5,7 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type AgentsData = Record<string, any>;
@@ -68,7 +74,9 @@ export function AgentsDefaultsSection({ data, onSave, saving }: Props) {
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-base">Agent Defaults</CardTitle>
-        <CardDescription>Default settings for all agents. Per-agent overrides are managed on the Agents page.</CardDescription>
+        <CardDescription>
+          Default settings for all agents. Per-agent overrides are managed on the Agents page.
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Core fields */}
@@ -159,12 +167,41 @@ export function AgentsDefaultsSection({ data, onSave, saving }: Props) {
           onToggle={() => toggleSub("subagents")}
         >
           <div className="grid grid-cols-2 gap-4">
-            <Field label="Max Concurrent" type="number" value={subagents.maxConcurrent} onChange={(v) => updateNested("subagents", { maxConcurrent: Number(v) })} placeholder="20" />
-            <Field label="Max Spawn Depth" type="number" value={subagents.maxSpawnDepth} onChange={(v) => updateNested("subagents", { maxSpawnDepth: Number(v) })} placeholder="1" />
-            <Field label="Max Children/Agent" type="number" value={subagents.maxChildrenPerAgent} onChange={(v) => updateNested("subagents", { maxChildrenPerAgent: Number(v) })} placeholder="5" />
-            <Field label="Archive After (min)" type="number" value={subagents.archiveAfterMinutes} onChange={(v) => updateNested("subagents", { archiveAfterMinutes: Number(v) })} placeholder="60" />
+            <Field
+              label="Max Concurrent"
+              type="number"
+              value={subagents.maxConcurrent}
+              onChange={(v) => updateNested("subagents", { maxConcurrent: Number(v) })}
+              placeholder="20"
+            />
+            <Field
+              label="Max Spawn Depth"
+              type="number"
+              value={subagents.maxSpawnDepth}
+              onChange={(v) => updateNested("subagents", { maxSpawnDepth: Number(v) })}
+              placeholder="1"
+            />
+            <Field
+              label="Max Children/Agent"
+              type="number"
+              value={subagents.maxChildrenPerAgent}
+              onChange={(v) => updateNested("subagents", { maxChildrenPerAgent: Number(v) })}
+              placeholder="5"
+            />
+            <Field
+              label="Archive After (min)"
+              type="number"
+              value={subagents.archiveAfterMinutes}
+              onChange={(v) => updateNested("subagents", { archiveAfterMinutes: Number(v) })}
+              placeholder="60"
+            />
           </div>
-          <Field label="Model Override" value={subagents.model} onChange={(v) => updateNested("subagents", { model: v })} placeholder="Use default" />
+          <Field
+            label="Model Override"
+            value={subagents.model}
+            onChange={(v) => updateNested("subagents", { model: v })}
+            placeholder="Use default"
+          />
         </SubSection>
 
         <SubSection
@@ -175,13 +212,39 @@ export function AgentsDefaultsSection({ data, onSave, saving }: Props) {
         >
           <div className="flex items-center justify-between">
             <Label>Enabled</Label>
-            <Switch checked={memory.enabled !== false} onCheckedChange={(v) => updateNested("memory", { enabled: v })} />
+            <Switch
+              checked={memory.enabled !== false}
+              onCheckedChange={(v) => updateNested("memory", { enabled: v })}
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <Field label="Embedding Provider" value={memory.embedding_provider} onChange={(v) => updateNested("memory", { embedding_provider: v })} placeholder="auto" />
-            <Field label="Embedding Model" value={memory.embedding_model} onChange={(v) => updateNested("memory", { embedding_model: v })} placeholder="text-embedding-3-small" />
-            <Field label="Max Results" type="number" value={memory.max_results} onChange={(v) => updateNested("memory", { max_results: Number(v) })} placeholder="6" />
-            <Field label="Min Score" type="number" step="0.01" value={memory.min_score} onChange={(v) => updateNested("memory", { min_score: Number(v) })} placeholder="0.35" />
+            <Field
+              label="Embedding Provider"
+              value={memory.embedding_provider}
+              onChange={(v) => updateNested("memory", { embedding_provider: v })}
+              placeholder="auto"
+            />
+            <Field
+              label="Embedding Model"
+              value={memory.embedding_model}
+              onChange={(v) => updateNested("memory", { embedding_model: v })}
+              placeholder="text-embedding-3-small"
+            />
+            <Field
+              label="Max Results"
+              type="number"
+              value={memory.max_results}
+              onChange={(v) => updateNested("memory", { max_results: Number(v) })}
+              placeholder="6"
+            />
+            <Field
+              label="Min Score"
+              type="number"
+              step="0.01"
+              value={memory.min_score}
+              onChange={(v) => updateNested("memory", { min_score: Number(v) })}
+              placeholder="0.35"
+            />
           </div>
         </SubSection>
 
@@ -192,8 +255,21 @@ export function AgentsDefaultsSection({ data, onSave, saving }: Props) {
           onToggle={() => toggleSub("compaction")}
         >
           <div className="grid grid-cols-2 gap-4">
-            <Field label="Reserve Tokens Floor" type="number" value={compaction.reserveTokensFloor} onChange={(v) => updateNested("compaction", { reserveTokensFloor: Number(v) })} placeholder="20000" />
-            <Field label="Max History Share" type="number" step="0.05" value={compaction.maxHistoryShare} onChange={(v) => updateNested("compaction", { maxHistoryShare: Number(v) })} placeholder="0.75" />
+            <Field
+              label="Reserve Tokens Floor"
+              type="number"
+              value={compaction.reserveTokensFloor}
+              onChange={(v) => updateNested("compaction", { reserveTokensFloor: Number(v) })}
+              placeholder="20000"
+            />
+            <Field
+              label="Max History Share"
+              type="number"
+              step="0.05"
+              value={compaction.maxHistoryShare}
+              onChange={(v) => updateNested("compaction", { maxHistoryShare: Number(v) })}
+              placeholder="0.75"
+            />
           </div>
         </SubSection>
 
@@ -206,15 +282,26 @@ export function AgentsDefaultsSection({ data, onSave, saving }: Props) {
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1.5">
               <Label>Mode</Label>
-              <Select value={pruning.mode ?? "off"} onValueChange={(v) => updateNested("contextPruning", { mode: v })}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+              <Select
+                value={pruning.mode ?? "off"}
+                onValueChange={(v) => updateNested("contextPruning", { mode: v })}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="off">Off</SelectItem>
                   <SelectItem value="cache-ttl">Cache TTL</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-            <Field label="Keep Last Assistants" type="number" value={pruning.keepLastAssistants} onChange={(v) => updateNested("contextPruning", { keepLastAssistants: Number(v) })} placeholder="3" />
+            <Field
+              label="Keep Last Assistants"
+              type="number"
+              value={pruning.keepLastAssistants}
+              onChange={(v) => updateNested("contextPruning", { keepLastAssistants: Number(v) })}
+              placeholder="3"
+            />
           </div>
         </SubSection>
 
@@ -225,10 +312,30 @@ export function AgentsDefaultsSection({ data, onSave, saving }: Props) {
           onToggle={() => toggleSub("heartbeat")}
         >
           <div className="grid grid-cols-2 gap-4">
-            <Field label="Every" value={heartbeat.every} onChange={(v) => updateNested("heartbeat", { every: v })} placeholder="30m (0m = disabled)" />
-            <Field label="Model Override" value={heartbeat.model} onChange={(v) => updateNested("heartbeat", { model: v })} placeholder="Use default" />
-            <Field label="Session" value={heartbeat.session} onChange={(v) => updateNested("heartbeat", { session: v })} placeholder="main" />
-            <Field label="Target" value={heartbeat.target} onChange={(v) => updateNested("heartbeat", { target: v })} placeholder="last" />
+            <Field
+              label="Every"
+              value={heartbeat.every}
+              onChange={(v) => updateNested("heartbeat", { every: v })}
+              placeholder="30m (0m = disabled)"
+            />
+            <Field
+              label="Model Override"
+              value={heartbeat.model}
+              onChange={(v) => updateNested("heartbeat", { model: v })}
+              placeholder="Use default"
+            />
+            <Field
+              label="Session"
+              value={heartbeat.session}
+              onChange={(v) => updateNested("heartbeat", { session: v })}
+              placeholder="main"
+            />
+            <Field
+              label="Target"
+              value={heartbeat.target}
+              onChange={(v) => updateNested("heartbeat", { target: v })}
+              placeholder="last"
+            />
           </div>
         </SubSection>
 
@@ -241,8 +348,13 @@ export function AgentsDefaultsSection({ data, onSave, saving }: Props) {
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-1.5">
               <Label>Mode</Label>
-              <Select value={sandbox.mode ?? "off"} onValueChange={(v) => updateNested("sandbox", { mode: v })}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+              <Select
+                value={sandbox.mode ?? "off"}
+                onValueChange={(v) => updateNested("sandbox", { mode: v })}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="off">Off</SelectItem>
                   <SelectItem value="non-main">Non-Main Only</SelectItem>
@@ -250,13 +362,40 @@ export function AgentsDefaultsSection({ data, onSave, saving }: Props) {
                 </SelectContent>
               </Select>
             </div>
-            <Field label="Image" value={sandbox.image} onChange={(v) => updateNested("sandbox", { image: v })} placeholder="goclaw-sandbox:bookworm-slim" />
-            <Field label="Memory (MB)" type="number" value={sandbox.memory_mb} onChange={(v) => updateNested("sandbox", { memory_mb: Number(v) })} placeholder="512" />
-            <Field label="CPUs" type="number" step="0.5" value={sandbox.cpus} onChange={(v) => updateNested("sandbox", { cpus: Number(v) })} placeholder="1.0" />
-            <Field label="Timeout (sec)" type="number" value={sandbox.timeout_sec} onChange={(v) => updateNested("sandbox", { timeout_sec: Number(v) })} placeholder="300" />
+            <Field
+              label="Image"
+              value={sandbox.image}
+              onChange={(v) => updateNested("sandbox", { image: v })}
+              placeholder="goclaw-sandbox:bookworm-slim"
+            />
+            <Field
+              label="Memory (MB)"
+              type="number"
+              value={sandbox.memory_mb}
+              onChange={(v) => updateNested("sandbox", { memory_mb: Number(v) })}
+              placeholder="512"
+            />
+            <Field
+              label="CPUs"
+              type="number"
+              step="0.5"
+              value={sandbox.cpus}
+              onChange={(v) => updateNested("sandbox", { cpus: Number(v) })}
+              placeholder="1.0"
+            />
+            <Field
+              label="Timeout (sec)"
+              type="number"
+              value={sandbox.timeout_sec}
+              onChange={(v) => updateNested("sandbox", { timeout_sec: Number(v) })}
+              placeholder="300"
+            />
             <div className="flex items-center justify-between">
               <Label>Network Enabled</Label>
-              <Switch checked={sandbox.network_enabled ?? false} onCheckedChange={(v) => updateNested("sandbox", { network_enabled: v })} />
+              <Switch
+                checked={sandbox.network_enabled ?? false}
+                onCheckedChange={(v) => updateNested("sandbox", { network_enabled: v })}
+              />
             </div>
           </div>
         </SubSection>

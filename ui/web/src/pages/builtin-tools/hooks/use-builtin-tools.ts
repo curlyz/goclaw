@@ -40,7 +40,7 @@ export function useBuiltinTools() {
       await http.put(`/v1/tools/builtin/${name}`, data);
       await load();
     },
-    [http, load],
+    [http, load]
   );
 
   return { tools, loading, refresh: load, updateTool };

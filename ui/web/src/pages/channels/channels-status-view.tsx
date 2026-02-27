@@ -24,7 +24,12 @@ interface ChannelsStatusViewProps {
   refresh: () => void;
 }
 
-export function ChannelsStatusView({ channels, loading, spinning, refresh }: ChannelsStatusViewProps) {
+export function ChannelsStatusView({
+  channels,
+  loading,
+  spinning,
+  refresh,
+}: ChannelsStatusViewProps) {
   const entries = Object.entries(channels);
   const showSkeleton = useDeferredLoading(loading && entries.length === 0);
 
@@ -34,7 +39,13 @@ export function ChannelsStatusView({ channels, loading, spinning, refresh }: Cha
         title="Channels"
         description="Communication channel status"
         actions={
-          <Button variant="outline" size="sm" onClick={refresh} disabled={spinning} className="gap-1">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={refresh}
+            disabled={spinning}
+            className="gap-1"
+          >
             <RefreshCw className={"h-3.5 w-3.5" + (spinning ? " animate-spin" : "")} /> Refresh
           </Button>
         }
@@ -58,9 +69,7 @@ export function ChannelsStatusView({ channels, loading, spinning, refresh }: Cha
             {entries.map(([name, status]: [string, ChannelStatus]) => (
               <div key={name} className="rounded-lg border p-4">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-medium">
-                    {channelTypeLabels[name] || name}
-                  </h4>
+                  <h4 className="text-sm font-medium">{channelTypeLabels[name] || name}</h4>
                   {status.enabled ? (
                     <Badge variant="success">enabled</Badge>
                   ) : (

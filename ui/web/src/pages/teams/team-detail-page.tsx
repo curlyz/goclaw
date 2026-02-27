@@ -37,7 +37,9 @@ export function TeamDetailPage({ teamId, onBack }: TeamDetailPageProps) {
         if (!cancelled) setLoading(false);
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [teamId, getTeam]);
 
   if (loading || !team) {
@@ -75,7 +77,9 @@ export function TeamDetailPage({ teamId, onBack }: TeamDetailPageProps) {
                 <span className="text-border">|</span>
               </>
             )}
-            <span>{members.length} member{members.length !== 1 ? "s" : ""}</span>
+            <span>
+              {members.length} member{members.length !== 1 ? "s" : ""}
+            </span>
           </div>
           {team.description && (
             <p className="mt-1 text-sm text-muted-foreground/70">{team.description}</p>

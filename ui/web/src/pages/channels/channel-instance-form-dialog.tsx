@@ -61,7 +61,7 @@ export function ChannelInstanceFormDialog({
       setName(instance?.name ?? "");
       setDisplayName(instance?.display_name ?? "");
       setChannelType(instance?.channel_type ?? "telegram");
-      setAgentId(instance?.agent_id ?? (agents[0]?.id ?? ""));
+      setAgentId(instance?.agent_id ?? agents[0]?.id ?? "");
       setCredsValues({}); // never pre-fill credentials
       setConfigValues(instance?.config ? { ...instance.config } : {});
       setEnabled(instance?.enabled ?? true);
@@ -103,12 +103,12 @@ export function ChannelInstanceFormDialog({
 
     // Build clean config (strip undefined/empty values)
     const cleanConfig = Object.fromEntries(
-      Object.entries(configValues).filter(([, v]) => v !== undefined && v !== "" && v !== null),
+      Object.entries(configValues).filter(([, v]) => v !== undefined && v !== "" && v !== null)
     );
 
     // Build credentials JSON from field values (only non-empty values)
     const cleanCreds = Object.fromEntries(
-      Object.entries(credsValues).filter(([, v]) => v !== undefined && v !== "" && v !== null),
+      Object.entries(credsValues).filter(([, v]) => v !== undefined && v !== "" && v !== null)
     );
 
     setLoading(true);
@@ -158,9 +158,7 @@ export function ChannelInstanceFormDialog({
               placeholder="my-telegram-bot"
               disabled={!!instance}
             />
-            <p className="text-xs text-muted-foreground">
-              Unique slug used as channel identifier
-            </p>
+            <p className="text-xs text-muted-foreground">Unique slug used as channel identifier</p>
           </div>
 
           <div className="grid gap-1.5">

@@ -31,7 +31,7 @@ export function useWsCall<T = unknown>(method: string): WsCallResult<T> {
         setLoading(false);
       }
     },
-    [ws, method],
+    [ws, method]
   );
 
   const reset = useCallback(() => {

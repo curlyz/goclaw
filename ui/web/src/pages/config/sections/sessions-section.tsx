@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface SessionsData {
   storage?: string;
@@ -78,7 +84,10 @@ export function SessionsSection({ data, onSave, saving }: Props) {
           </div>
           <div className="grid gap-1.5">
             <Label>DM Scope</Label>
-            <Select value={draft.dm_scope ?? "per-channel-peer"} onValueChange={(v) => update({ dm_scope: v })}>
+            <Select
+              value={draft.dm_scope ?? "per-channel-peer"}
+              onValueChange={(v) => update({ dm_scope: v })}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>

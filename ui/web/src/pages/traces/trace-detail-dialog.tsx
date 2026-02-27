@@ -1,10 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { formatDate, formatDuration, formatTokens, computeDurationMs } from "@/lib/format";
@@ -44,7 +39,12 @@ interface TraceDetailDialogProps {
   onNavigateTrace?: (traceId: string) => void;
 }
 
-export function TraceDetailDialog({ traceId, onClose, getTrace, onNavigateTrace }: TraceDetailDialogProps) {
+export function TraceDetailDialog({
+  traceId,
+  onClose,
+  getTrace,
+  onNavigateTrace,
+}: TraceDetailDialogProps) {
   const [trace, setTrace] = useState<TraceData | null>(null);
   const [spans, setSpans] = useState<SpanData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -90,26 +90,31 @@ export function TraceDetailDialog({ traceId, onClose, getTrace, onNavigateTrace 
               </div>
               <div>
                 <span className="text-muted-foreground">Duration:</span>{" "}
-                {formatDuration(trace.duration_ms || computeDurationMs(trace.start_time, trace.end_time))}
+                {formatDuration(
+                  trace.duration_ms || computeDurationMs(trace.start_time, trace.end_time)
+                )}
               </div>
               <div>
-                <span className="text-muted-foreground">Channel:</span>{" "}
-                {trace.channel || "—"}
+                <span className="text-muted-foreground">Channel:</span> {trace.channel || "—"}
               </div>
               <div>
                 <span className="text-muted-foreground">Tokens:</span>{" "}
-                {formatTokens(trace.total_input_tokens)} in / {formatTokens(trace.total_output_tokens)} out
-                {((trace.metadata?.total_cache_read_tokens ?? 0) > 0 || (trace.metadata?.total_cache_creation_tokens ?? 0) > 0) && (
+                {formatTokens(trace.total_input_tokens)} in /{" "}
+                {formatTokens(trace.total_output_tokens)} out
+                {((trace.metadata?.total_cache_read_tokens ?? 0) > 0 ||
+                  (trace.metadata?.total_cache_creation_tokens ?? 0) > 0) && (
                   <span className="ml-1 text-xs">
                     {(trace.metadata?.total_cache_read_tokens ?? 0) > 0 && (
-                      <span className="text-green-400">{formatTokens(trace.metadata!.total_cache_read_tokens!)} cached</span>
+                      <span className="text-green-400">
+                        {formatTokens(trace.metadata!.total_cache_read_tokens!)} cached
+                      </span>
                     )}
                   </span>
                 )}
               </div>
               <div>
-                <span className="text-muted-foreground">Spans:</span>{" "}
-                {trace.span_count} ({trace.llm_call_count} LLM, {trace.tool_call_count} tool)
+                <span className="text-muted-foreground">Spans:</span> {trace.span_count} (
+                {trace.llm_call_count} LLM, {trace.tool_call_count} tool)
               </div>
               <div>
                 <span className="text-muted-foreground">Started:</span>{" "}
@@ -175,10 +180,7 @@ function SpanTreeNode({ node, depth }: { node: SpanNode; depth: number }) {
 
   return (
     <div>
-      <div
-        className="mt-1.5 rounded-md border text-sm"
-        style={{ marginLeft: depth * 24 }}
-      >
+      <div className="mt-1.5 rounded-md border text-sm" style={{ marginLeft: depth * 24 }}>
         <div className="flex w-full items-center gap-1 px-2 py-2">
           {/* Tree toggle */}
           {hasChildren ? (
@@ -220,7 +222,9 @@ function SpanTreeNode({ node, depth }: { node: SpanNode; depth: number }) {
               </span>
             )}
             <span className="shrink-0 text-xs text-muted-foreground">
-              {formatDuration(span.duration_ms || computeDurationMs(span.start_time, span.end_time))}
+              {formatDuration(
+                span.duration_ms || computeDurationMs(span.start_time, span.end_time)
+              )}
             </span>
             <StatusBadge status={span.status} />
           </button>
@@ -238,14 +242,19 @@ function SpanTreeNode({ node, depth }: { node: SpanNode; depth: number }) {
               <div className="text-xs">
                 <span className="text-muted-foreground">Tokens:</span>{" "}
                 {formatTokens(span.input_tokens)} in / {formatTokens(span.output_tokens)} out
-                {((span.metadata?.cache_creation_tokens ?? 0) > 0 || (span.metadata?.cache_read_tokens ?? 0) > 0) && (
+                {((span.metadata?.cache_creation_tokens ?? 0) > 0 ||
+                  (span.metadata?.cache_read_tokens ?? 0) > 0) && (
                   <span className="ml-2 text-muted-foreground">
                     (cache:
                     {(span.metadata?.cache_read_tokens ?? 0) > 0 && (
-                      <span className="ml-1 text-green-400">{formatTokens(span.metadata!.cache_read_tokens!)} read</span>
+                      <span className="ml-1 text-green-400">
+                        {formatTokens(span.metadata!.cache_read_tokens!)} read
+                      </span>
                     )}
                     {(span.metadata?.cache_creation_tokens ?? 0) > 0 && (
-                      <span className="ml-1 text-yellow-400">{formatTokens(span.metadata!.cache_creation_tokens!)} write</span>
+                      <span className="ml-1 text-yellow-400">
+                        {formatTokens(span.metadata!.cache_creation_tokens!)} write
+                      </span>
                     )}
                     )
                   </span>
@@ -268,17 +277,16 @@ function SpanTreeNode({ node, depth }: { node: SpanNode; depth: number }) {
                 </pre>
               </div>
             )}
-            {span.error && (
-              <p className="break-all text-xs text-red-300">{span.error}</p>
-            )}
+            {span.error && <p className="break-all text-xs text-red-300">{span.error}</p>}
           </div>
         )}
       </div>
 
       {/* Render children when tree is expanded */}
-      {expanded && children.map((child) => (
-        <SpanTreeNode key={child.span.id} node={child} depth={depth + 1} />
-      ))}
+      {expanded &&
+        children.map((child) => (
+          <SpanTreeNode key={child.span.id} node={child} depth={depth + 1} />
+        ))}
     </div>
   );
 }
@@ -293,5 +301,9 @@ function StatusBadge({ status }: { status: string }) {
           ? "info"
           : "secondary";
 
-  return <Badge variant={variant} className="text-xs">{status || "unknown"}</Badge>;
+  return (
+    <Badge variant={variant} className="text-xs">
+      {status || "unknown"}
+    </Badge>
+  );
 }

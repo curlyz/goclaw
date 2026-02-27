@@ -79,7 +79,7 @@ export function useTtsConfig() {
         setSaving(false);
       }
     },
-    [ws, load],
+    [ws, load]
   );
 
   return { tts, loading, saving, error, refresh: load, save };

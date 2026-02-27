@@ -73,13 +73,23 @@ export function CronFormDialog({ open, onOpenChange, onSubmit }: CronFormDialogP
         <div className="space-y-4 overflow-y-auto min-h-0">
           <div className="space-y-2">
             <Label>Name</Label>
-            <Input value={name} onChange={(e) => setName(slugify(e.target.value))} placeholder="my-daily-task" />
-            <p className="text-xs text-muted-foreground">Lowercase letters, numbers, and hyphens only</p>
+            <Input
+              value={name}
+              onChange={(e) => setName(slugify(e.target.value))}
+              placeholder="my-daily-task"
+            />
+            <p className="text-xs text-muted-foreground">
+              Lowercase letters, numbers, and hyphens only
+            </p>
           </div>
 
           <div className="space-y-2">
             <Label>Agent ID (optional)</Label>
-            <Input value={agentId} onChange={(e) => setAgentId(e.target.value)} placeholder="default" />
+            <Input
+              value={agentId}
+              onChange={(e) => setAgentId(e.target.value)}
+              placeholder="default"
+            />
           </div>
 
           <div className="space-y-2">
@@ -119,7 +129,9 @@ export function CronFormDialog({ open, onOpenChange, onSubmit }: CronFormDialogP
                 onChange={(e) => setCronExpr(e.target.value)}
                 placeholder="0 * * * *"
               />
-              <p className="text-xs text-muted-foreground">Standard 5-field cron: min hour day month weekday</p>
+              <p className="text-xs text-muted-foreground">
+                Standard 5-field cron: min hour day month weekday
+              </p>
             </div>
           )}
 
@@ -143,7 +155,10 @@ export function CronFormDialog({ open, onOpenChange, onSubmit }: CronFormDialogP
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={saving || !name.trim() || !isValidSlug(name.trim()) || !message.trim()}>
+          <Button
+            onClick={handleSubmit}
+            disabled={saving || !name.trim() || !isValidSlug(name.trim()) || !message.trim()}
+          >
             {saving ? "Creating..." : "Create"}
           </Button>
         </DialogFooter>

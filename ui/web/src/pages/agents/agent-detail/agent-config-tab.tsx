@@ -49,17 +49,19 @@ export function AgentConfigTab({ agent, onUpdate }: AgentConfigTabProps) {
 
   // Extract quality_gates from other_config, manage separately
   const otherObj = (agent.other_config ?? {}) as Record<string, unknown>;
-  const initialGates = (Array.isArray(otherObj.quality_gates) ? otherObj.quality_gates : []) as QualityGateConfig[];
+  const initialGates = (
+    Array.isArray(otherObj.quality_gates) ? otherObj.quality_gates : []
+  ) as QualityGateConfig[];
   const { quality_gates: _qg, ...otherWithoutGates } = otherObj;
 
   const [qgEnabled, setQgEnabled] = useState(initialGates.length > 0);
   const [qualityGates, setQualityGates] = useState<QualityGateConfig[]>(initialGates);
 
   const [otherEnabled, setOtherEnabled] = useState(
-    agent.other_config != null && Object.keys(otherWithoutGates).length > 0,
+    agent.other_config != null && Object.keys(otherWithoutGates).length > 0
   );
   const [otherJson, setOtherJson] = useState(
-    Object.keys(otherWithoutGates).length > 0 ? JSON.stringify(otherWithoutGates, null, 2) : "{}",
+    Object.keys(otherWithoutGates).length > 0 ? JSON.stringify(otherWithoutGates, null, 2) : "{}"
   );
 
   const [saving, setSaving] = useState(false);
@@ -82,7 +84,11 @@ export function AgentConfigTab({ agent, onUpdate }: AgentConfigTabProps) {
       // Merge quality_gates back into other_config
       let otherBase: Record<string, unknown> = {};
       if (otherEnabled) {
-        try { otherBase = JSON.parse(otherJson); } catch { /* keep empty */ }
+        try {
+          otherBase = JSON.parse(otherJson);
+        } catch {
+          /* keep empty */
+        }
       }
       if (qgEnabled && qualityGates.length > 0) {
         otherBase.quality_gates = qualityGates;
@@ -103,56 +109,80 @@ export function AgentConfigTab({ agent, onUpdate }: AgentConfigTabProps) {
       <SubagentsSection
         enabled={subEnabled}
         value={sub}
-        onToggle={(v: boolean) => { setSubEnabled(v); if (!v) setSub({}); }}
+        onToggle={(v: boolean) => {
+          setSubEnabled(v);
+          if (!v) setSub({});
+        }}
         onChange={setSub}
       />
       <Separator />
       <ToolPolicySection
         enabled={toolsEnabled}
         value={tools}
-        onToggle={(v: boolean) => { setToolsEnabled(v); if (!v) setTools({}); }}
+        onToggle={(v: boolean) => {
+          setToolsEnabled(v);
+          if (!v) setTools({});
+        }}
         onChange={setTools}
       />
       <Separator />
       <CompactionSection
         enabled={compEnabled}
         value={comp}
-        onToggle={(v: boolean) => { setCompEnabled(v); if (!v) setComp({}); }}
+        onToggle={(v: boolean) => {
+          setCompEnabled(v);
+          if (!v) setComp({});
+        }}
         onChange={setComp}
       />
       <Separator />
       <ContextPruningSection
         enabled={pruneEnabled}
         value={prune}
-        onToggle={(v: boolean) => { setPruneEnabled(v); if (!v) setPrune({}); }}
+        onToggle={(v: boolean) => {
+          setPruneEnabled(v);
+          if (!v) setPrune({});
+        }}
         onChange={setPrune}
       />
       <Separator />
       <SandboxSection
         enabled={sbEnabled}
         value={sb}
-        onToggle={(v: boolean) => { setSbEnabled(v); if (!v) setSb({}); }}
+        onToggle={(v: boolean) => {
+          setSbEnabled(v);
+          if (!v) setSb({});
+        }}
         onChange={setSb}
       />
       <Separator />
       <MemorySection
         enabled={memEnabled}
         value={mem}
-        onToggle={(v: boolean) => { setMemEnabled(v); if (!v) setMem({}); }}
+        onToggle={(v: boolean) => {
+          setMemEnabled(v);
+          if (!v) setMem({});
+        }}
         onChange={setMem}
       />
       <Separator />
       <QualityGatesSection
         enabled={qgEnabled}
         value={qualityGates}
-        onToggle={(v: boolean) => { setQgEnabled(v); if (!v) setQualityGates([]); }}
+        onToggle={(v: boolean) => {
+          setQgEnabled(v);
+          if (!v) setQualityGates([]);
+        }}
         onChange={setQualityGates}
       />
       <Separator />
       <OtherConfigSection
         enabled={otherEnabled}
         value={otherJson}
-        onToggle={(v: boolean) => { setOtherEnabled(v); if (!v) setOtherJson("{}"); }}
+        onToggle={(v: boolean) => {
+          setOtherEnabled(v);
+          if (!v) setOtherJson("{}");
+        }}
         onChange={setOtherJson}
       />
 
