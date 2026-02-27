@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useQueryState } from "nuqs";
+import { parseAsString, parseAsInteger } from "nuqs";
 import { Zap, Eye, RefreshCw, Upload, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,13 +15,16 @@ import { SkillDetailDialog } from "./skill-detail-dialog";
 import { SkillUploadDialog } from "./skill-upload-dialog";
 import { useMinLoading } from "@/hooks/use-min-loading";
 import { useDeferredLoading } from "@/hooks/use-deferred-loading";
-import { usePagination } from "@/hooks/use-pagination";
 
 export function SkillsPage() {
   const { skills, loading, refresh, getSkill, uploadSkill, deleteSkill } = useSkills();
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && skills.length === 0);
-  const [search, setSearch] = useState("");
+
+  const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
+
   const [selectedSkill, setSelectedSkill] = useState<(SkillInfo & { content: string }) | null>(
     null
   );
@@ -28,17 +33,37 @@ export function SkillsPage() {
   const [deleteTarget, setDeleteTarget] = useState<SkillInfo | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  const filtered = skills.filter(
-    (s: SkillInfo) =>
-      s.name.toLowerCase().includes(search.toLowerCase()) ||
-      s.description.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = useMemo(() => {
+    if (!search) return skills;
+    const q = search.toLowerCase();
+    return skills.filter(
+      (s: SkillInfo) =>
+        s.name.toLowerCase().includes(q) || s.description.toLowerCase().includes(q)
+    );
+  }, [skills, search]);
 
-  const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
-
+  // Reset page when search reduces results below current page
   useEffect(() => {
-    resetPage();
-  }, [search, resetPage]);
+    const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+    if (page > totalPages) {
+      setPage(1);
+    }
+  }, [filtered.length, page, pageSize, setPage]);
+
+  const start = (page - 1) * pageSize;
+  const pageItems = useMemo(
+    () => filtered.slice(start, start + pageSize),
+    [filtered, start, pageSize]
+  );
+  const pagination = useMemo(
+    () => ({
+      page,
+      pageSize,
+      total: filtered.length,
+      totalPages: Math.ceil(filtered.length / pageSize) || 1,
+    }),
+    [page, pageSize, filtered.length]
+  );
 
   const handleViewSkill = async (name: string) => {
     setDetailLoading(true);
