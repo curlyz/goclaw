@@ -1,11 +1,11 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
-import { useClipboard } from "@/hooks/use-clipboard";
+import { useCopyToClipboard } from "usehooks-ts";
 import { Check, Copy } from "lucide-react";
 
 function CodeBlock({ className, children }: { className?: string; children?: React.ReactNode }) {
-  const { copied, copy } = useClipboard();
+  const [copied, copy] = useCopyToClipboard();
   const text = String(children).replace(/\n$/, "");
   const lang = className?.replace("language-", "") ?? "";
 

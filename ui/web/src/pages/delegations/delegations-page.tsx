@@ -15,7 +15,7 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { Pagination } from "@/components/shared/pagination";
 import { TableSkeleton } from "@/components/shared/loading-skeleton";
 import { useWsEvent } from "@/hooks/use-ws-event";
-import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
+import { useDebounceCallback } from "usehooks-ts";
 import { Events } from "@/api/protocol";
 import { formatDate, formatDuration } from "@/lib/format";
 import { useDelegations } from "./hooks/use-delegations";
@@ -66,7 +66,7 @@ export function DelegationsPage() {
 
   const handleRefresh = () => load(buildFilters());
 
-  const debouncedRefresh = useDebouncedCallback(() => load(buildFilters()), 3000);
+  const debouncedRefresh = useDebounceCallback(() => load(buildFilters()), 3000);
 
   const handleAgentEvent = useCallback(
     (payload: unknown) => {

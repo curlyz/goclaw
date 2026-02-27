@@ -1,6 +1,6 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useDebounce } from "@/hooks/use-debounce";
+import { useDebounceValue } from "usehooks-ts";
 import { useState, useEffect } from "react";
 
 interface SearchInputProps {
@@ -19,7 +19,7 @@ export function SearchInput({
   delay = 300,
 }: SearchInputProps) {
   const [local, setLocal] = useState(value);
-  const debounced = useDebounce(local, delay);
+  const [debounced] = useDebounceValue(local, delay);
 
   useEffect(() => {
     onChange(debounced);

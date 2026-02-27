@@ -8,7 +8,7 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { Pagination } from "@/components/shared/pagination";
 import { TableSkeleton } from "@/components/shared/loading-skeleton";
 import { useWsEvent } from "@/hooks/use-ws-event";
-import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
+import { useDebounceCallback } from "usehooks-ts";
 import { Events } from "@/api/protocol";
 import { formatDate, formatDuration, formatTokens, computeDurationMs } from "@/lib/format";
 import { useTraces, type TraceData } from "./hooks/use-traces";
@@ -49,7 +49,7 @@ export function TracesPage() {
   };
 
   // Auto-refresh when any agent run starts/completes (traces are created synchronously at run start)
-  const debouncedRefresh = useDebouncedCallback(() => {
+  const debouncedRefresh = useDebounceCallback(() => {
     load({
       agentId: agentFilterRef.current || undefined,
       limit: pageSizeRef.current,

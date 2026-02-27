@@ -6,7 +6,7 @@ import { MessageBubble } from "@/components/chat/message-bubble";
 import { MarkdownRenderer } from "@/components/shared/markdown-renderer";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { useWsEvent } from "@/hooks/use-ws-event";
-import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
+import { useDebounceCallback } from "usehooks-ts";
 import { Events } from "@/api/protocol";
 import { parseSessionKey } from "@/lib/session-key";
 import { formatDate, formatTokens } from "@/lib/format";
@@ -72,7 +72,7 @@ export function SessionDetailPage({
   }, [loadMessages]);
 
   // Auto-refresh when the agent for this session completes a run
-  const debouncedRefresh = useDebouncedCallback(loadMessages, 2000);
+  const debouncedRefresh = useDebounceCallback(loadMessages, 2000);
 
   const handleAgentEvent = useCallback(
     (payload: unknown) => {

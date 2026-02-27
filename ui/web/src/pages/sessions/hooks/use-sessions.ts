@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useWs } from "@/hooks/use-ws";
 import { useWsEvent } from "@/hooks/use-ws-event";
-import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
+import { useDebounceCallback } from "usehooks-ts";
 import { Methods, Events } from "@/api/protocol";
 import type { SessionInfo, SessionPreview, Message } from "@/types/session";
 import type { AgentEventPayload } from "@/types/chat";
@@ -41,7 +41,7 @@ export function useSessions(agentFilter?: string) {
   }, [load]);
 
   // Auto-refresh when any agent run completes (from any channel)
-  const debouncedRefresh = useDebouncedCallback(load, 2000);
+  const debouncedRefresh = useDebounceCallback(load, 2000);
 
   const handleAgentEvent = useCallback(
     (payload: unknown) => {
