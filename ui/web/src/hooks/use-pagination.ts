@@ -1,5 +1,15 @@
 import { useState, useMemo, useCallback } from "react";
 
+/**
+ * @deprecated Use nuqs instead for URL-synced pagination. Migrate to:
+ * ```tsx
+ * import { useQueryState } from "nuqs";
+ * import { parseAsInteger } from "nuqs";
+ *
+ * const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+ * const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
+ * ```
+ */
 export interface PaginationState {
   page: number;
   pageSize: number;
@@ -19,6 +29,9 @@ export interface UsePaginationReturn<T> {
   resetPage: () => void;
 }
 
+/**
+ * @deprecated Use nuqs instead for URL-synced pagination
+ */
 export function usePagination<T>(
   items: T[],
   options: UsePaginationOptions = {}
