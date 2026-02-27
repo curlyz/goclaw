@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router";
+import { useQueryState } from "nuqs";
+import { parseAsString, parseAsInteger } from "nuqs";
 import { History } from "lucide-react";
 import { PageHeader } from "@/components/shared/page-header";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -19,15 +21,45 @@ export function SessionsPage() {
   const navigate = useNavigate();
   const { sessions, total, loading, refresh, preview, deleteSession, resetSession } = useSessions();
   const showSkeleton = useDeferredLoading(loading && sessions.length === 0);
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
 
-  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
+
+  const filtered = useMemo(() => {
+    if (!search) return sessions;
+    const q = search.toLowerCase();
+    return sessions.filter(
+      (s) => s.key.toLowerCase().includes(q) || (s.label ?? "").toLowerCase().includes(q)
+    );
+  }, [sessions, search]);
+
+  // Reset page when search reduces results below current page
+  useEffect(() => {
+    const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+    if (page > totalPages) {
+      setPage(1);
+    }
+  }, [filtered.length, page, pageSize, setPage]);
+
+  const start = (page - 1) * pageSize;
+  const pageItems = useMemo(
+    () => filtered.slice(start, start + pageSize),
+    [filtered, start, pageSize]
+  );
+  const pagination = useMemo(
+    () => ({
+      page,
+      pageSize,
+      total: filtered.length,
+      totalPages: Math.ceil(filtered.length / pageSize) || 1,
+    }),
+    [page, pageSize, filtered.length]
+  );
 
   useEffect(() => {
     refresh({ limit: pageSize, offset: (page - 1) * pageSize });
-  }, [page, pageSize]);
+  }, [page, pageSize, refresh]);
 
   const detailSession = detailKey
     ? sessions.find((s) => s.key === decodeURIComponent(detailKey))
@@ -47,11 +79,6 @@ export function SessionsPage() {
       />
     );
   }
-
-  const filtered = sessions.filter((s) => {
-    const q = search.toLowerCase();
-    return s.key.toLowerCase().includes(q) || (s.label ?? "").toLowerCase().includes(q);
-  });
 
   return (
     <div className="p-6">
@@ -92,7 +119,7 @@ export function SessionsPage() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((session) => (
+                {pageItems.map((session) => (
                   <SessionRow
                     key={session.key}
                     session={session}
@@ -102,15 +129,12 @@ export function SessionsPage() {
               </tbody>
             </table>
             <Pagination
-              page={page}
-              pageSize={pageSize}
-              total={total}
-              totalPages={totalPages}
+              page={pagination.page}
+              pageSize={pagination.pageSize}
+              total={pagination.total}
+              totalPages={pagination.totalPages}
               onPageChange={setPage}
-              onPageSizeChange={(size) => {
-                setPageSize(size);
-                setPage(1);
-              }}
+              onPageSizeChange={setPageSize}
             />
           </div>
         )}
