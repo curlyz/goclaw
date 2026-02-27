@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useQueryState } from "nuqs";
+import { parseAsString } from "nuqs";
 import { Package, RefreshCw, Settings, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -45,7 +46,7 @@ export function BuiltinToolsPage() {
   const { tools, loading, refresh, updateTool } = useBuiltinTools();
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && tools.length === 0);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
   const [settingsTool, setSettingsTool] = useState<BuiltinToolData | null>(null);
 
   const filtered = tools.filter(
