@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router";
+import { useQueryState } from "nuqs";
+import { parseAsString, parseAsInteger } from "nuqs";
 import { Plus, Users } from "lucide-react";
 import { PageHeader } from "@/components/shared/page-header";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -13,7 +15,6 @@ import { useTeams } from "./hooks/use-teams";
 import { TeamCard } from "./team-card";
 import { TeamCreateDialog } from "./team-create-dialog";
 import { TeamDetailPage } from "./team-detail-page";
-import { usePagination } from "@/hooks/use-pagination";
 
 export function TeamsPage() {
   const { id: detailId } = useParams<{ id: string }>();
@@ -21,7 +22,10 @@ export function TeamsPage() {
   const { teams, loading, load, createTeam, deleteTeam } = useTeams();
   const showSkeleton = useDeferredLoading(loading && teams.length === 0);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
+
   const [createOpen, setCreateOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
 
@@ -34,16 +38,36 @@ export function TeamsPage() {
     return <TeamDetailPage teamId={detailId} onBack={() => navigate("/teams")} />;
   }
 
-  const filtered = teams.filter((t) => {
+  const filtered = useMemo(() => {
+    if (!search) return teams;
     const q = search.toLowerCase();
-    return t.name.toLowerCase().includes(q) || (t.description ?? "").toLowerCase().includes(q);
-  });
+    return teams.filter(
+      (t) => t.name.toLowerCase().includes(q) || (t.description ?? "").toLowerCase().includes(q)
+    );
+  }, [teams, search]);
 
-  const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
+  const start = (page - 1) * pageSize;
+  const pageItems = useMemo(
+    () => filtered.slice(start, start + pageSize),
+    [filtered, start, pageSize]
+  );
+
+  const pagination = useMemo(
+    () => ({
+      page,
+      pageSize,
+      total: filtered.length,
+      totalPages: Math.ceil(filtered.length / pageSize) || 1,
+    }),
+    [page, pageSize, filtered.length]
+  );
 
   useEffect(() => {
-    resetPage();
-  }, [search, resetPage]);
+    const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+    if (page > totalPages) {
+      setPage(1);
+    }
+  }, [filtered.length, page, pageSize, setPage]);
 
   return (
     <div className="p-6">
@@ -94,8 +118,8 @@ export function TeamsPage() {
                 pageSize={pagination.pageSize}
                 total={pagination.total}
                 totalPages={pagination.totalPages}
-                onPageChange={setPage}
-                onPageSizeChange={setPageSize}
+                onPageChange={(p) => setPage(p)}
+                onPageSizeChange={(s) => setPageSize(s)}
               />
             </div>
           </>

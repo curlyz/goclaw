@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router";
-import { useQueryState } from "nuqs/adapters/react-router";
+import { useQueryState } from "nuqs";
 import { parseAsString, parseAsInteger } from "nuqs";
 import { Plus, Bot } from "lucide-react";
 import { PageHeader } from "@/components/shared/page-header";
