@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router";
+import { useQueryState } from "nuqs/adapters/react-router";
+import { parseAsString, parseAsInteger } from "nuqs";
 import { Plus, Bot } from "lucide-react";
 import { PageHeader } from "@/components/shared/page-header";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -15,7 +17,6 @@ import { AgentCard } from "./agent-card";
 import { AgentCreateDialog } from "./agent-create-dialog";
 import { AgentDetailPage } from "./agent-detail/agent-detail-page";
 import { SummoningModal } from "./summoning-modal";
-import { usePagination } from "@/hooks/use-pagination";
 
 export function AgentsPage() {
   const { id: detailId } = useParams<{ id: string }>();
@@ -24,7 +25,9 @@ export function AgentsPage() {
   const { agents, loading, createAgent, deleteAgent, refresh } = useAgents();
   const showSkeleton = useDeferredLoading(loading && agents.length === 0);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
   const [createOpen, setCreateOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [summoningAgent, setSummoningAgent] = useState<{ id: string; name: string } | null>(null);
@@ -47,18 +50,38 @@ export function AgentsPage() {
     return <AgentDetailPage agentId={detailId} onBack={() => navigate("/agents")} />;
   }
 
-  const filtered = agents.filter((a) => {
+  const filtered = useMemo(() => {
+    if (!search) return agents;
     const q = search.toLowerCase();
-    return (
-      a.agent_key.toLowerCase().includes(q) || (a.display_name ?? "").toLowerCase().includes(q)
+    return agents.filter(
+      (a) =>
+        a.agent_key.toLowerCase().includes(q) ||
+        (a.display_name ?? "").toLowerCase().includes(q)
     );
-  });
+  }, [agents, search]);
 
-  const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
-
+  // Reset page when search reduces results below current page
   useEffect(() => {
-    resetPage();
-  }, [search, resetPage]);
+    const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+    if (page > totalPages) {
+      setPage(1);
+    }
+  }, [filtered.length, page, pageSize, setPage]);
+
+  const start = (page - 1) * pageSize;
+  const pageItems = useMemo(
+    () => filtered.slice(start, start + pageSize),
+    [filtered, start, pageSize]
+  );
+  const pagination = useMemo(
+    () => ({
+      page,
+      pageSize,
+      total: filtered.length,
+      totalPages: Math.ceil(filtered.length / pageSize) || 1,
+    }),
+    [page, pageSize, filtered.length]
+  );
 
   return (
     <div className="p-6">
