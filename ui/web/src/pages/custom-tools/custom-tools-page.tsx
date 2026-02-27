@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useQueryState } from "nuqs";
+import { parseAsString, parseAsInteger } from "nuqs";
 import { Wrench, Plus, RefreshCw, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,29 +18,52 @@ import {
 import { CustomToolFormDialog } from "./custom-tool-form-dialog";
 import { useMinLoading } from "@/hooks/use-min-loading";
 import { useDeferredLoading } from "@/hooks/use-deferred-loading";
-import { usePagination } from "@/hooks/use-pagination";
 
 export function CustomToolsPage() {
   const { tools, loading, refresh, createTool, updateTool, deleteTool } = useCustomTools();
   const spinning = useMinLoading(loading);
   const showSkeleton = useDeferredLoading(loading && tools.length === 0);
-  const [search, setSearch] = useState("");
+
+  const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [pageSize, setPageSize] = useQueryState("pageSize", parseAsInteger.withDefault(20));
+
   const [formOpen, setFormOpen] = useState(false);
   const [editTool, setEditTool] = useState<CustomToolData | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<CustomToolData | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  const filtered = tools.filter(
-    (t) =>
-      t.name.toLowerCase().includes(search.toLowerCase()) ||
-      t.description.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = useMemo(() => {
+    if (!search) return tools;
+    const q = search.toLowerCase();
+    return tools.filter(
+      (t: CustomToolData) =>
+        t.name.toLowerCase().includes(q) || t.description.toLowerCase().includes(q)
+    );
+  }, [tools, search]);
 
-  const { pageItems, pagination, setPage, setPageSize, resetPage } = usePagination(filtered);
-
+  // Reset page when search reduces results below current page
   useEffect(() => {
-    resetPage();
-  }, [search, resetPage]);
+    const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+    if (page > totalPages) {
+      setPage(1);
+    }
+  }, [filtered.length, page, pageSize, setPage]);
+
+  const start = (page - 1) * pageSize;
+  const pageItems = useMemo(
+    () => filtered.slice(start, start + pageSize),
+    [filtered, start, pageSize]
+  );
+  const pagination = useMemo(
+    () => ({
+      page,
+      pageSize,
+      total: filtered.length,
+      totalPages: Math.ceil(filtered.length / pageSize) || 1,
+    }),
+    [page, pageSize, filtered.length]
+  );
 
   const handleCreate = async (data: CustomToolInput) => {
     await createTool(data);
